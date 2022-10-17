@@ -28,12 +28,6 @@ def list_all():
     raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
-def quit_menu():
-    print('Vous avez quitté la to do list.')
-    print('VOUS AVEZ TAPE QUIT')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
-
-
 def print_menu():
     print("voici le menu :")
     print("Ajouter une tâche (commande 'add')")
@@ -45,15 +39,20 @@ def print_menu():
     print("Quitter (command 'quit')")
 
 
-def user_input():
-    user_choice = input('Que souhaitez-vous faire ?\n')
-
+def user_input(user_choice):
     try:
         if user_choice == 'add':
             add()
-        elif user_choice == 'quit':
-            quit_menu()
-
+        elif user_choice == 'done':
+            done()
+        elif user_choice == 'update':
+            update()
+        elif user_choice == 'list':
+            list()
+        elif user_choice == 'list-done':
+            list_done()
+        elif user_choice == 'list-all':
+            list_all()
         else:
             raise ValueError('La fonctionnalité n\'existe pas !')
 
@@ -61,8 +60,16 @@ def user_input():
         print(e)
 
 
-if __name__ == '__main__':
+def main():
     want_to_quit = False
     while not want_to_quit:
         print_menu()
-        user_input()
+        user_choice = input('Que souhaitez-vous faire ?\n')
+        if user_choice == 'quit':
+            want_to_quit = True
+        else:
+            user_input(user_choice)
+
+
+if __name__ == '__main__':
+    main()
