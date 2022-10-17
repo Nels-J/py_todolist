@@ -1,5 +1,7 @@
 #menu
 print("Bienvenue sur votre todolist. Que souhaitez vous faire?")
+
+
 userInput = input(
                   "add => ajouter une tâche \n"
                   "done => marquer une tâche comme finie \n"
@@ -9,31 +11,34 @@ userInput = input(
                   "list-all => lister toutes les tâches\n"
                   "quit => quitter l'application"
 )
+
+
 # Fonctions:
-def add(input):
-    try:
-        print("la fonction 'add()' n'est pas encore implémentée pour: ", input)
-    except Exception as e:
-        print(e)
+
+
 
 #dispatch
 while userInput != "quit":
-    if userInput == "add":
-       add(userInput)
-    elif userInput == "done":
-       print("done")
-    elif userInput == "update":
-       print("update")
-    elif userInput == "list":
-       print("list")
-    elif userInput == "list-done":
-       print("list-done")
-    elif userInput == "list-all":
-       print("list-all")
-    elif userInput == "quit":
-       print("quit")
-    else:
-       print("Invalid answer")
+    try:
+        if userInput == "add":
+            raise ValueError()
+        elif userInput == "done":
+            raise ValueError()
+        elif userInput == "update":
+            raise ValueError()
+        elif userInput == "list":
+            raise ValueError()
+        elif userInput == "list-done":
+            raise ValueError()
+        elif userInput == "list-all":
+            raise ValueError()
+        elif userInput == "quit":
+            raise ValueError()
+        else:
+            print("Réponse invalide")
+    except ValueError:
+            print("La fonction de l'instruction ", userInput, "n'est pas encore implémentée")
+            raise
     userInput = input(
         "add => ajouter une tâche \n"
         "done => marquer une tâche comme finie \n"
@@ -42,4 +47,5 @@ while userInput != "quit":
         "list-done => lister les tâches terminées\n"
         "list-all => lister toutes les tâches\n"
         "quit => quitter l'application")
+
 
