@@ -9,6 +9,6 @@ def main_menu():
         "\nLister toutes les tâches (list-all)"
         "\nQuitter (quit)")
     print("********Que voulez-vous faire ?**********")
-
+    reponse = input()
 
 main_menu()
