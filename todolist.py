@@ -21,20 +21,14 @@ def user_input():
         user_input()
 
 
+def quit():
+    print("\nGoodbye\n")
+
+
 def validate_command(new_command):
     if new_command == "quit":
-        print("\nGoodbye\n")
-    elif new_command == "add":
-        raise Exception("\nCommand under development: please pick another one\n")
-    elif new_command == "done":
-        raise Exception("\nCommand under development: please pick another one\n")
-    elif new_command == "update":
-        raise Exception("\nCommand under development: please pick another one\n")
-    elif new_command == "list":
-        raise Exception("\nCommand under development: please pick another one\n")
-    elif new_command == "list-done":
-        raise Exception("\nCommand under development: please pick another one\n")
-    elif new_command == "list-all":
+        quit()
+    elif new_command == "add" or new_command == "done" or new_command == "update" or new_command == "list" or new_command == "list-done" or new_command == "list-all":
         raise Exception("\nCommand under development: please pick another one\n")
     else:
         raise Exception('\ninvalid command, please retry\n')
