@@ -38,7 +38,6 @@ while userInput != "quit":
             print("Réponse invalide")
     except ValueError:
             print("La fonction de l'instruction ", userInput, "n'est pas encore implémentée")
-            raise
     userInput = input(
         "add => ajouter une tâche \n"
         "done => marquer une tâche comme finie \n"
