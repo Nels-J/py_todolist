@@ -24,7 +24,7 @@ def main_menu():
         elif response == 'list-all':
             list_all()
         elif response == 'quit':
-            quitte()
+            return
         else:
             raise Exception
 
@@ -59,10 +59,6 @@ def list_done():
 
 def list_all():
     raise NotImplementedError
-
-
-def quitte():
-    raise SystemExit
 
 
 main_menu()
