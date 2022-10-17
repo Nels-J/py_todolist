@@ -34,7 +34,7 @@ def main_menu():
             message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
 
         print(message)
-
+    main_menu()
 
 
 def add():
