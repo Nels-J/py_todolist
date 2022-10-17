@@ -19,15 +19,17 @@ def show_menu(todo_list):
         elif response == 'quit':
             quit()
         else:
-            show_menu(todo_list)
+            raise ValueError
+
+    except ValueError:
+        print("Rien ne correspond à votre demande")
+        show_menu(todo_list)
     except Exception:
         print("Oops! Une exception")
-
+        show_menu(todo_list)
 
 def add(todo_list):
     raise Exception
-
-
 # task_name = input('veuillez saisir le nom de votre tâche ?')
 # todolist.append([task_name, 'en cours'])
 # show_menu(todo_list)
@@ -53,13 +55,11 @@ def done(todo_list):
 
 
 def quit():
-    raise Exception
+    exit()
 
 
 def list_all(todolist):
     raise Exception
-
-
 # for task in todolist:
 #     print(task[0] + ": " + task[1])
 
