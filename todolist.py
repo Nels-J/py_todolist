@@ -25,11 +25,45 @@ def quit():
     print("\nGoodbye\n")
 
 
+def add():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
+def done():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
+def update():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
+def list():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
+def list_done():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
+def list_all():
+    raise Exception("\nCommand under development: please pick another one\n")
+
+
 def validate_command(new_command):
     if new_command == "quit":
         quit()
-    elif new_command == "add" or new_command == "done" or new_command == "update" or new_command == "list" or new_command == "list-done" or new_command == "list-all":
-        raise Exception("\nCommand under development: please pick another one\n")
+    elif new_command == "add":
+        add()
+    elif new_command == "done":
+        done()
+    elif new_command == "update":
+        update()
+    elif new_command == "list":
+        list()
+    elif new_command == "list-done":
+        list_done()
+    elif new_command == "list-all":
+        list_all()
     else:
         raise Exception('\ninvalid command, please retry\n')
 
