@@ -14,26 +14,51 @@ userInput = input(
 
 
 # Fonctions:
+def add_task():
+    raise ValueError()
 
+
+def done_task():
+    raise ValueError()
+
+
+def update_task():
+    raise ValueError()
+
+
+def list_pending_tasks():
+    raise ValueError()
+
+
+def list_done_tasks():
+    raise ValueError()
+
+
+def list_all_tasks():
+    raise ValueError()
+
+
+def quit_todo_list():
+    raise ValueError()
 
 
 #dispatch
 while userInput != "quit":
     try:
         if userInput == "add":
-            raise ValueError()
+            add_task()
         elif userInput == "done":
-            raise ValueError()
+            done_task()
         elif userInput == "update":
-            raise ValueError()
+            update_task()
         elif userInput == "list":
-            raise ValueError()
+            list_pending_tasks()
         elif userInput == "list-done":
-            raise ValueError()
+            list_done_tasks()
         elif userInput == "list-all":
-            raise ValueError()
+            list_all_tasks()
         elif userInput == "quit":
-            raise ValueError()
+            quit_todo_list()
         else:
             print("Réponse invalide")
     except ValueError:
