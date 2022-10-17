@@ -1,5 +1,3 @@
-todo = []
-done = []
 #menu
 print("Bienvenue sur votre todolist. Que souhaitez vous faire?")
 userInput = input(
@@ -11,9 +9,17 @@ userInput = input(
                   "list-all => lister toutes les tâches\n"
                   "quit => quitter l'application"
 )
+# Fonctions:
+def add(input):
+    try:
+        print("la fonction 'add()' n'est pas encore implémentée pour: ", input)
+    except Exception as e:
+        print(e)
+
+#dispatch
 while userInput != "quit":
     if userInput == "add":
-       print("add")
+       add(userInput)
     elif userInput == "done":
        print("done")
     elif userInput == "update":
@@ -36,3 +42,4 @@ while userInput != "quit":
         "list-done => lister les tâches terminées\n"
         "list-all => lister toutes les tâches\n"
         "quit => quitter l'application")
+
