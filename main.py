@@ -1,9 +1,37 @@
 def add():
     print('VOUS AVEZ TAPE ADD')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+
+def done():
+    print('VOUS AVEZ TAPE DONE')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+
+def update():
+    print('VOUS AVEZ TAPE UPDATE')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+
+def list():
+    print('VOUS AVEZ TAPE LIST')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+
+def list_done():
+    print('VOUS AVEZ TAPE LIST DONE')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+
+def list_all():
+    print('VOUS AVEZ TAPE LIST ALL')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
 def quit_menu():
     print('Vous avez quitté la to do list.')
+    print('VOUS AVEZ TAPE QUIT')
+    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
 def print_menu():
@@ -19,14 +47,18 @@ def print_menu():
 
 def user_input():
     user_choice = input('Que souhaitez-vous faire ?\n')
+
     try:
         if user_choice == 'add':
             add()
-        else:
-            raise ValueError
+        elif user_choice == 'quit':
+            quit_menu()
 
-    except ValueError:
-        print('La fonctionnalité n\'a pas encore été implémentée !')
+        else:
+            raise ValueError('La fonctionnalité n\'existe pas !')
+
+    except ValueError as e:
+        print(e)
 
 
 if __name__ == '__main__':
