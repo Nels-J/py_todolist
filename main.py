@@ -35,7 +35,7 @@ def user_input_handle(message, task):
 
 
 def add(task):
-    if task != "":
+    if task != "" and task is not None:
         print(f'vous allez remplacer "{task}"')
     print('saisissez le nom de votre tache')
     task = input()
