@@ -11,7 +11,11 @@ def done():
 
 
 def add():
-    raise NotImplementedError("Commande non implémentée\n")
+    try:
+        task = input("Saisir la tache : ")
+        print(task)
+    except:
+        raise NotImplementedError("Commande non implémentée\n")
 
 
 def update():
