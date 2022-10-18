@@ -1,14 +1,14 @@
 def print_menu():
-    print("To add a new task, use 'add' command")
-    print("To close a task, use 'done' command")
-    print("To amend task name, use 'update' command")
-    print("To list pending tasks, use 'list' command")
-    print("To list closed tasks, use 'list-done' command")
-    print("To list all tasks, use 'list-all' command")
-    print("To exit the application, use 'quit' command")
+    print("add       : add new task")
+    print("done      : close task")
+    print("update    : amend task name")
+    print("list      : list pending tasks")
+    print("list-done : list closed tasks")
+    print("list-all  : list all tasks")
+    print("quit      : exit the application")
 
 
-def add_task(task):
+def add_task():
     task = (input('Name of task :'), False)
     print('task saved ;-)')
     return task
@@ -16,7 +16,7 @@ def add_task(task):
 
 def close_task(task):
     print('Task closed')
-    return (task[0], True)
+    return task[0], True
 
 
 def update_task(task):
@@ -56,29 +56,35 @@ def list_all_tasks(task):
         print('no tasks')
 
 
+def do_action(task, user_input):
+    try:
+        if user_input == "add":
+            task = add_task()
+        elif user_input == "done":
+            task = close_task(task)
+        elif user_input == "update":
+            task = update_task(task)
+        elif user_input == "list":
+            list_pending_tasks(task)
+        elif user_input == "list-done":
+            list_done_tasks(task)
+        elif user_input == "list-all":
+            list_all_tasks(task)
+        else:
+            raise Exception('invalid command, please retry')
+    except Exception as err:
+        print(err)
+    finally:
+        return task
+
+
 def main():
     print('\nWelcome to your To Do List application !\n')
     print_menu()
     task: (str, bool) = None
     user_input = input("\nPlease enter your command :")
     while user_input != "quit":
-        try:
-            if user_input == "add":
-                task = add_task(task)
-            elif user_input == "done":
-                task = close_task(task)
-            elif user_input == "update":
-                task = update_task(task)
-            elif user_input == "list":
-                list_pending_tasks(task)
-            elif user_input == "list-done":
-                list_done_tasks(task)
-            elif user_input == "list-all":
-                list_all_tasks(task)
-            else:
-                raise Exception('invalid command, please retry')
-        except Exception as err:
-            print(err)
+        task = do_action(task, user_input)
         user_input = input("Please enter your command :")
     print("Goodbye")
 
