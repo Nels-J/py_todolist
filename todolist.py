@@ -18,8 +18,13 @@ def close_task():
     raise Exception("Command under development: please pick another one")
 
 
-def update_task():
-    raise Exception("Command under development: please pick another one")
+def update_task(task):
+    if task == "":
+        raise Exception("task empty")
+    else:
+        task = input('Rename task :')
+        print('task updated ;-)')
+        return task
 
 
 def list_pending_tasks():
@@ -38,7 +43,7 @@ def list_all_tasks(task):
 def main():
     print('\nWelcome to your To Do List application !\n')
     print_menu()
-    task = "default"
+    task: str = ""
     user_input = input("\nPlease enter your command :")
     while user_input != "quit":
         try:
@@ -47,7 +52,7 @@ def main():
             elif user_input == "done":
                 close_task()
             elif user_input == "update":
-                update_task()
+                task = update_task(task)
             elif user_input == "list":
                 list_pending_tasks()
             elif user_input == "list-done":
