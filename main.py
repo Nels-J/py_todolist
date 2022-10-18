@@ -23,7 +23,7 @@ def user_input_handle(message, task):
         elif message == 'list-done':
             list_done()
         elif message == 'list-all':
-            list_all()
+            return list_all(task)
         else:
             raise Exception
 
@@ -69,8 +69,9 @@ def list_done():
     raise NotImplementedError
 
 
-def list_all():
-    raise NotImplementedError
+def list_all(task):
+    print(task)
+    return task
 
 
 def main():
