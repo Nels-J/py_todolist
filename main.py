@@ -19,9 +19,9 @@ def user_input_handle(message, task):
         elif message == 'update':
             return update(task)
         elif message == 'list':
-            list_not_done()
+            return list_not_done(task)
         elif message == 'list-done':
-            list_done()
+            return list_done(task)
         elif message == 'list-all':
             return list_all(task)
         else:
@@ -61,12 +61,20 @@ def update(task):
     return task_name, task[1]
 
 
-def list_not_done():
-    raise NotImplementedError
+def list_not_done(task):
+    if task[1] == 'undone':
+        print(task[0])
+        return task
+    print('pas de tâche non finie')
+    return task
 
 
-def list_done():
-    raise NotImplementedError
+def list_done(task):
+    if task[1] == 'done':
+        print(task[0])
+        return task
+    print('pas de tache finie')
+    return task
 
 
 def list_all(task):
