@@ -16,11 +16,11 @@ def todo_list():
                 liste = update(liste)
                 print(liste)
             elif response == 'list':
-                list_not_done(tache)
+                list_not_done(liste)
             elif response == 'list-done':
-                list_done(tache)
+                list_done(liste)
             elif response == 'list-all':
-                list_all(tache)
+                list_all(liste)
             elif response == 'quit':
                 return
             else:
@@ -42,9 +42,9 @@ def add(t):
 
 def done(l):
     for idx, name in enumerate(l):
-        print(name[0], 'tache n°:', idx+1, )
+        print(name[0], 'tache n°:', idx + 1, )
 
-    r = int(input('entrer le numéro de tache a valider : '))-1
+    r = int(input('entrer le numéro de tache a valider : ')) - 1
     print(l[r])
     l[r] = l[r][0], 1
     return l
@@ -53,7 +53,7 @@ def done(l):
 def update(l):
     print(l)
     for idx, name in enumerate(l):
-        print(f'{name[0]} tache n° {idx + 1 }')
+        print(f'{name[0]} tache n° {idx + 1}')
 
     r = int(input('entrer le numéro de tache a modifier : ')) - 1
     resp = input("Quel est le nouveau nom de votre tâche ?")
@@ -61,12 +61,15 @@ def update(l):
     return l
 
 
+def list_not_done(l):
+    has_no_tasks_not_done = True
+    for item in l:
+        if item[1] == 0:
+            has_no_tasks_not_done = False
+            print(item)
+    if has_no_tasks_not_done:
+        print('Aucune tâche à afficher')
 
-def list_not_done(t):
-    if t[1] == 0:
-        return print(t[0])
-    else:
-        return print("aucune tache a afficher")
 
 
 def list_done(t):
@@ -76,8 +79,8 @@ def list_done(t):
         return print("aucune tache a afficher")
 
 
-def list_all(t):
-    return print(t[0])
+def list_all(l):
+    return print(l)
 
 
 def menu():
@@ -92,9 +95,9 @@ def menu():
     print("********Que voulez-vous faire ?**********")
 
 
-
 def main():
     todo_list()
+
 
 if __name__ == '__main__':
     main()
