@@ -35,7 +35,9 @@ def user_input_handle(message):
 
 
 def add():
-    raise NotImplementedError
+    print('saisissez le nom de votre tache')
+    task = input()
+    print(f'votre tache "{task}" a bien été ajoutée')
 
 def done():
     raise NotImplementedError
