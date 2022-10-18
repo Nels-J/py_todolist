@@ -15,7 +15,7 @@ def user_input_handle(message, task):
         if message == 'add':
             return add(task)
         elif message == 'done':
-            done()
+            return done(task)
         elif message == 'update':
             return update(task)
         elif message == 'list':
@@ -43,14 +43,18 @@ def add(task):
     return task_name, 'undone'
 
 
-def done():
-    raise NotImplementedError
+def done(task):
+    if task[0] == '':
+        print('Aucune tache trouvée')
+        return task
+    print('Votre tache est done')
+    return task[0], 'done'
 
 
 def update(task):
     if task[0] == '':
         print('Aucune tache trouvée')
-        return task, ''
+        return task
     print(f'La tache porte le nom de {task[0]}, par quoi voulez-vous le remplacer ?')
     task_name = input()
     print('Le nom à bien été changé')
