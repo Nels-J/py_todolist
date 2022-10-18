@@ -1,6 +1,9 @@
 def add():
-    print('VOUS AVEZ TAPE ADD')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+    user_task = input("Veuillez saisir votre nouvelle tâche")
+    return user_task
+
+    # print('VOUS AVEZ TAPE ADD')
+    # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
 def done():
@@ -13,9 +16,11 @@ def update():
     raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
-def list():
-    print('VOUS AVEZ TAPE LIST')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def list(task):
+    print(task)
+
+    # print('VOUS AVEZ TAPE LIST')
+    # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
 def list_done():
@@ -39,16 +44,16 @@ def print_menu():
     print("Quitter (command 'quit')")
 
 
-def user_input(user_choice):
+def user_input(user_choice, task):
     try:
         if user_choice == 'add':
-            add()
+            return add()
         elif user_choice == 'done':
             done()
         elif user_choice == 'update':
             update()
         elif user_choice == 'list':
-            list()
+            return list(task)
         elif user_choice == 'list-done':
             list_done()
         elif user_choice == 'list-all':
@@ -62,13 +67,14 @@ def user_input(user_choice):
 
 def main():
     want_to_quit = False
+    task = ""
     while not want_to_quit:
         print_menu()
         user_choice = input('Que souhaitez-vous faire ?\n')
         if user_choice == 'quit':
             want_to_quit = True
         else:
-            user_input(user_choice)
+            task = user_input(user_choice, task)
 
 
 if __name__ == '__main__':
