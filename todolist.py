@@ -27,15 +27,18 @@ def add():
 
 
 def update(task):
-    try:
-        new_task = (input(f'''Ancienne tâche : {task[0]}
-        Modifier la tache : '''), task[1])
-        print(f'''Vous venez de modifier la tache comme suit: 
-        {new_task[0]}
-        ''')
-        return new_task
-    except:
-        raise NotImplementedError("Commande non implémentée\n")
+    if task[0]:
+        try:
+            new_task = (input(f'''Ancienne tâche : {task[0]}
+            Modifier la tache : '''), task[1])
+            print(f'''Vous venez de modifier la tache comme suit: 
+            {new_task[0]}
+            ''')
+            return new_task
+        except:
+            raise NotImplementedError("Commande non implémentée\n")
+    else:
+        print("Pas de tâche")
 
 
 def display_list(task):
