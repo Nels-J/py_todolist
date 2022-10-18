@@ -10,10 +10,11 @@ def done(tasks, task):
     index_tache = None
     while index_tache is None:
         try:
-            index_tache = int(input("Indiquez le numéro de la tâche à effectuer")) - 1
+            list_all(tasks)
+            index_tache = int(input("Indiquez le numéro de la tâche terminée")) - 1
         except Exception as err:
             print("entrée invalide : merci d'entrer un entier")
-    if index_tache <= 0 or index_tache + 1 > len(tasks):
+    if index_tache < 0 or index_tache + 1 > len(tasks):
         print("Cette tâche n'existe pas")
     else:
         task = (tasks[index_tache][0], True)
@@ -27,7 +28,9 @@ def update(tasks, task):
     index_tache = None
     while index_tache is None:
         try:
+            list_all(tasks)
             index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
+
         except Exception as err:
             print("entrée invalide : merci d'entrer un entier")
     if index_tache < 0 or index_tache + 1 > len(tasks):
@@ -65,17 +68,19 @@ def list_done(tasks):
 def list_all(tasks):
     done_tasks = []
     pending_tasks = []
-    for task in tasks:
+    for index, task in enumerate(tasks):
         if task[1]:
-            done_tasks.append(task)
+            done_tasks.append((task, index))
         else:
-            pending_tasks.append(task)
-    print('Voici les tâches en cours')
-    for task in pending_tasks:
-        print(task[0])
-    print('Voici les tâches terminées :')
-    for task in done_tasks:
-        print(task[0])
+            pending_tasks.append((task, index))
+    if len(pending_tasks) > 0:
+        print('Voici les tâches en cours')
+        for task in pending_tasks:
+            print(task[1] + 1, ":", task[0][0])
+    if len(done_tasks) > 0:
+        print('Voici les tâches terminées :')
+        for task in done_tasks:
+            print(task[1] + 1, ":", task[0][0])
 
 
 def print_menu():
