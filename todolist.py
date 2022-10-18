@@ -59,11 +59,16 @@ def list_all_tasks(list_tasks):
 
 
 def do_action(list_tasks, user_input):
+    actions = {
+        "add": add_task
+    }
     try:
         if user_input == "add":
-            add_task(list_tasks)
+            do = actions.get("add")
+            do(list_tasks)
         elif user_input == "done":
-            close_task(list_tasks)
+            do = close_task
+            do(list_tasks)
         elif user_input == "update":
             update_task(list_tasks)
         elif user_input == "list":
