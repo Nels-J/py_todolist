@@ -54,9 +54,8 @@ def list_all_tasks(list_tasks):
     if len(list_tasks) == 0:
         print('No tasks')
         return
-    print("List of all your tasks :")
-    for i, name in enumerate(list_tasks):
-        print('tache n°:', i, name[0])
+    list_done_tasks(list_tasks)
+    list_pending_tasks(list_tasks)
 
 
 def do_action(list_tasks, user_input):
