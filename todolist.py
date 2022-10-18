@@ -9,7 +9,7 @@ def print_menu():
 
 
 def add_task(task):
-    task = input('Name of task :')
+    task = (input('Name of task :'), False)
     print('task saved ;-)')
     return task
 
@@ -19,10 +19,10 @@ def close_task():
 
 
 def update_task(task):
-    if task == "":
+    if task is None:
         raise Exception("task empty")
     else:
-        task = input('Rename task :')
+        task = (input('Rename task :'), task[1])
         print('task updated ;-)')
         return task
 
@@ -43,7 +43,7 @@ def list_all_tasks(task):
 def main():
     print('\nWelcome to your To Do List application !\n')
     print_menu()
-    task: str = ""
+    task: (str, bool) = None
     user_input = input("\nPlease enter your command :")
     while user_input != "quit":
         try:
