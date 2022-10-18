@@ -2,12 +2,12 @@ def todo_list():
     menu()
     response = input()
     liste = []
-    menu_handle = {'add': ("Ajouter une tâche (add)", 'add', add),
-                   'done': ("Effectuer une tâche (done)", done),
-                   'update': ("Modifier le libellé d'une tâche (update)", 'update', update),
-                   'list': ("Lister les tâches en cours (list)", 'list', list_not_done),
-                   'list-done': ("Lister les tâches terminées (list-done)", 'list-done', list_done),
-                   'list-all': ("Lister toutes les tâches (list-all)", 'list-all', list_all)}
+    menu_handle = {'add': ("Ajouter une tâche", 'add', add),
+                   'done': ("Effectuer une tâche", done),
+                   'update': ("Modifier le libellé d'une tâche", 'update', update),
+                   'list': ("Lister les tâches en cours", 'list', list_not_done),
+                   'list-done': ("Lister les tâches terminées", 'list-done', list_done),
+                   'list-all': ("Lister toutes les tâches", 'list-all', list_all)}
 
     while response != "quit":
         try:
