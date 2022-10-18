@@ -1,8 +1,9 @@
 def main():
-    action = ask_commande()
+    task = ""
+    action = ask_action()
     while action != "quitter":
-        do_commande(action)
-        action = ask_commande()
+        task = do_action(action, task)
+        action = ask_action()
     print("Goodbye\n")
 
 
@@ -13,7 +14,10 @@ def done():
 def add():
     try:
         task = input("Saisir la tache : ")
-        print(task)
+        print(f'''Vous venez de créer la tache: 
+        {task}
+        ''')
+        return task
     except:
         raise NotImplementedError("Commande non implémentée\n")
 
@@ -22,52 +26,65 @@ def update():
     raise NotImplementedError("Commande non implémentée\n")
 
 
-def display_list():
-    raise NotImplementedError("Commande non implémentée\n")
+def display_list(task):
+    try:
+        print(task)
+    except:
+        raise NotImplementedError("Commande non implémentée\n")
 
 
 def list_done():
     raise NotImplementedError("Commande non implémentée\n")
 
 
-def list_all():
-    raise NotImplementedError("Commande non implémentée\n")
+def list_all(task):
+    try:
+        print(task)
+    except:
+        raise NotImplementedError("Commande non implémentée\n")
 
 
 def menu():
     print("Ajouter une linge : add ")
     print("Marquer comme éffectuée : done")
     print("Mettre à jour : update")
-    print("Afficher la liste non éffectuées: display_list")
-    print("Afficher list éffectuées : list-done")
-    print("Afficher list tout : list-all")
+    print("Afficher la liste non éffectuées: list")
+    print("Afficher list éffectuées : list_done")
+    print("Afficher list tout : all")
     print("Quitter : quitter")
 
 
-def ask_commande():
+def ask_action():
     menu()
     commande = input("\nEnter a command: ")
     return commande
 
 
-def do_commande(commande):
+def do_action(commande, task):
     try:
         if commande == "add":
-            add()
+            task = add()
+            return task
         elif commande == "done":
             done()
+            return task
         elif commande == "update":
             update()
-        elif commande == "display_list":
-            display_list()
-        elif commande == "list-done":
+            return task
+        elif commande == "list":
+            display_list(task)
+            return task
+        elif commande == "list_done":
             list_done()
-        elif commande == "list-all":
-            list_all()
+            return task
+        elif commande == "all":
+            list_all(task)
+            return task
         else:
             raise ValueError("Commande inconnue\n")
     except(ValueError, NotImplementedError) as e:
         print(e)
+        return task
 
 
 if __name__ == "__main__":
