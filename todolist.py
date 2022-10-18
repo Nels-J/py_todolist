@@ -23,13 +23,17 @@ def close_task(list_tasks):
     print('Task closed')
 
 
-def update_task(task):
-    if task is None:
-        raise Exception("task empty")
-    else:
-        task = (input('Rename task :'), task[1])
-        print('task updated ;-)')
-        return task
+def update_task(list_tasks):
+    if len(list_tasks) == 0:
+        print('No tasks')
+        return
+
+    for i, name in enumerate(list_tasks):
+        print('tache n°:', i, name[0])
+    index_task_to_update = int(input('What task do you want to update?'))
+    new_task_name = input('What is new name of the task?')
+    list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
+    print('Task name update')
 
 
 def list_pending_tasks(task):
@@ -53,8 +57,12 @@ def is_done(task):
 
 
 def list_all_tasks(list_tasks):
+    if len(list_tasks) == 0:
+        print('No tasks')
+        return
     print("List of all your tasks :")
-    print(list_tasks)
+    for i, name in enumerate(list_tasks):
+        print('tache n°:', i, name[0])
 
 
 def do_action(list_tasks, user_input):
@@ -64,11 +72,11 @@ def do_action(list_tasks, user_input):
         elif user_input == "done":
             close_task(list_tasks)
         elif user_input == "update":
-            task = update_task(task)
+            update_task(list_tasks)
         elif user_input == "list":
-            list_pending_tasks(task)
+            list_pending_tasks()
         elif user_input == "list-done":
-            list_done_tasks(task)
+            list_done_tasks()
         elif user_input == "list-all":
             list_all_tasks(list_tasks)
         elif user_input == "quit":
