@@ -2,12 +2,16 @@ def todo_list():
     menu()
     response = input()
     liste = []
-    menu_handle = {'add': add, 'done': done, 'update': update, 'list': list_not_done, 'list-done': list_done,
-                   'list-all': list_all}
+    menu_handle = {'add': ("Ajouter une tâche (add)", 'add', add),
+                   'done': ("Effectuer une tâche (done)", done),
+                   'update': ("Modifier le libellé d'une tâche (update)", 'update', update),
+                   'list': ("Lister les tâches en cours (list)", 'list', list_not_done),
+                   'list-done': ("Lister les tâches terminées (list-done)", 'list-done', list_done),
+                   'list-all': ("Lister toutes les tâches (list-all)", 'list-all', list_all)}
 
     while response != "quit":
         try:
-            menu_handle.get(response)(liste)
+            menu_handle.get(response)[2](liste)
 
         except Exception as e:
             message = "la commande n'existe pas"
