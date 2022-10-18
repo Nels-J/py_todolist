@@ -1,7 +1,8 @@
-def add():
+def add(tasks):
     user_task = input("Veuillez saisir votre nouvelle tâche")
     task = (user_task, False)
-    return task
+    tasks.append(task)
+    return tasks
 
     # print('VOUS AVEZ TAPE ADD')
     # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
@@ -36,8 +37,8 @@ def list_done(task):
         print("Aucune tâche finie pour l'instant!")
 
 
-def list_all(task):
-    print(task)
+def list_all(tasks):
+    print(tasks)
 
 
 def print_menu():
@@ -51,10 +52,10 @@ def print_menu():
     print("Quitter (command 'quit')")
 
 
-def user_command(user_choice, task):
+def user_command(user_choice, task, tasks):
     try:
         if user_choice == 'add':
-            return add()
+            return add(tasks)
         elif user_choice == 'done':
             return done(task)
         elif user_choice == 'update':
@@ -66,7 +67,7 @@ def user_command(user_choice, task):
             list_done(task)
             return task
         elif user_choice == 'list-all':
-            list_all(task)
+            list_all(tasks)
         else:
             raise ValueError('La fonctionnalité n\'existe pas !')
 
@@ -77,13 +78,14 @@ def user_command(user_choice, task):
 def main():
     want_to_quit = False
     task = ()
+    tasks = []
     while not want_to_quit:
         print_menu()
         user_choice = input('Que souhaitez-vous faire ?\n')
         if user_choice == 'quit':
             want_to_quit = True
         else:
-            task = user_command(user_choice, task)
+            task = user_command(user_choice, task, tasks)
 
 
 if __name__ == '__main__':
