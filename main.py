@@ -13,17 +13,17 @@ def main_menu():
 def user_input_handle(message, task):
     try:
         if message == 'add':
-            return add(task)
+            task = add(task)
         elif message == 'done':
-            return done(task)
+            task = done(task)
         elif message == 'update':
-            return update(task)
+            task = update(task)
         elif message == 'list':
-            return list_not_done(task)
+            list_not_done(task)
         elif message == 'list-done':
-            return list_done(task)
+            list_done(task)
         elif message == 'list-all':
-            return list_all(task)
+            list_all(task)
         else:
             raise Exception
 
@@ -32,6 +32,7 @@ def user_input_handle(message, task):
         if e.__class__ == NotImplementedError:
             message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
         print(message)
+    return task
 
 
 def add(task):
@@ -64,22 +65,19 @@ def update(task):
 def list_not_done(task):
     if task[1] == 'undone':
         print(task[0])
-        return task
-    print('pas de tâche non finie')
-    return task
+    else:
+        print('pas de tâche non finie')
 
 
 def list_done(task):
     if task[1] == 'done':
         print(task[0])
-        return task
-    print('pas de tache finie')
-    return task
+    else:
+        print('pas de tache finie')
 
 
 def list_all(task):
     print(task)
-    return task
 
 
 def main():
