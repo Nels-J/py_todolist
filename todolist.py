@@ -42,7 +42,9 @@ def display_list(task, tasks):
 
 
 def list_all(task, tasks):
-    print(task)
+    print("******* Toutes vos tâches: *******")
+    for task in tasks:
+        print(task[0], "=>", task[1])
 
 
 def list_done(task, tasks):
