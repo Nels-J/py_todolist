@@ -8,11 +8,15 @@ def main():
     print("Goodbye\n")
 
 
-def done(task, tasks):
-    new_task = (task[0], "Terminé")
-    task = new_task
-    print("La tâche finie est:", task)
-    return new_task, tasks
+def done(tasks):
+    done_task = (tasks[0][0], "Terminé")
+    tasks[0] = done_task
+    print(f'''Votre tâche: {tasks[0][0]} est à présent: {tasks[0][1]}''')
+    print("******* Votre nouvelle liste de tâches :*******")
+    for task in tasks:
+        print(task[0], "=>", task[1])
+    return tasks
+
 
 
 def add(tasks):
@@ -75,7 +79,7 @@ def do_action(commande, task, tasks):
         if commande == "add":
             task, tasks = add(tasks)
         elif commande == "done":
-            task, tasks = done(task, tasks)
+            task, tasks = done(tasks)
         elif commande == "update":
             task, tasks = update(tasks)
         elif commande == "list":
