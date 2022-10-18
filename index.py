@@ -41,9 +41,7 @@ def add(t):
 
 
 def done(l):
-    for idx, name in enumerate(l):
-        print(name[0], 'tache n°:', idx + 1, )
-
+    list_not_done(l)
     r = int(input('entrer le numéro de tache a valider : ')) - 1
     print(l[r])
     l[r] = l[r][0], 1
@@ -51,22 +49,25 @@ def done(l):
 
 
 def update(l):
-    print(l)
-    for idx, name in enumerate(l):
-        print(f'{name[0]} tache n° {idx + 1}')
-
-    r = int(input('entrer le numéro de tache a modifier : ')) - 1
-    resp = input("Quel est le nouveau nom de votre tâche ?")
-    l[r] = resp, l[r][1]
+    if len(l) == 0:
+        print("il n'y a rien ici")
+    else:
+        list_all(l)
+        r = int(input('entrer le numéro de tache a modifier : ')) - 1
+        if r >= len(l):
+            print("c'est pas bon")
+            return l
+        resp = input("Quel est le nouveau nom de votre tâche ?")
+        l[r] = resp, l[r][1]
     return l
 
 
 def list_not_done(l):
     has_no_tasks_not_done = True
-    for item in l:
+    for idx, item in enumerate(l):
         if item[1] == 0:
             has_no_tasks_not_done = False
-            print(item)
+            print(item[0], 'tache n°:', idx + 1 )
     if has_no_tasks_not_done:
         print('Aucune tâche à afficher')
 
@@ -80,7 +81,8 @@ def list_done(t):
 
 
 def list_all(l):
-    return print(l)
+    for idx, item in enumerate(l):
+        print(item[0], 'tache n°:', idx + 1)
 
 
 def menu():
