@@ -1,12 +1,12 @@
-def add(tasks, task):
+def add(tasks):
     user_task = input("Veuillez saisir votre nouvelle tâche")
     task = (user_task, False)
     tasks.append(task)
     print("tâche créée")
-    return tasks, task
+    return tasks
 
 
-def done(tasks, task):
+def done(tasks):
     index_tache = None
     while index_tache is None:
         try:
@@ -21,10 +21,10 @@ def done(tasks, task):
         tasks[index_tache] = task
         is_in_list = True
         print("tâche terminée")
-    return tasks, task
+    return tasks
 
 
-def update(tasks, task):
+def update(tasks):
     index_tache = None
     while index_tache is None:
         try:
@@ -40,7 +40,7 @@ def update(tasks, task):
         task = (nouveau_nom_tache, tasks[index_tache][1])
         tasks[index_tache] = task
         print("tâche modifée")
-    return tasks, task
+    return tasks
 
 
 def list(tasks):
@@ -101,11 +101,11 @@ def print_menu():
 def user_command(tasks, task, user_choice):
     try:
         if user_choice == 'add':
-            tasks, task = add(tasks, task)
+            tasks = add(tasks)
         elif user_choice == 'done':
-            tasks, task = done(tasks, task)
+            tasks = done(tasks)
         elif user_choice == 'update':
-            tasks, task = update(tasks, task)
+            tasks = update(tasks)
         elif user_choice == 'list':
             list(tasks)
         elif user_choice == 'list-done':
