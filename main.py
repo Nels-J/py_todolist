@@ -17,7 +17,7 @@ def user_input_handle(message, task):
         elif message == 'done':
             done()
         elif message == 'update':
-            update()
+            return update(task)
         elif message == 'list':
             list_not_done()
         elif message == 'list-done':
@@ -46,9 +46,14 @@ def done():
     raise NotImplementedError
 
 
-def update():
-    raise NotImplementedError
-
+def update(task):
+    if task == '' or task is None:
+        print('Aucune tache trouvée')
+        return task
+    print(f'La tache porte le nom de {task}, par quoi voulez-vous le remplacer ?')
+    task = input()
+    print('Le nom à bien été changé')
+    return task
 
 def list_not_done():
     raise NotImplementedError
