@@ -53,7 +53,7 @@ def list(tasks):
         for pending_task in pending_tasks:
             print(pending_task[0] + 1, ":", pending_task[1][0])
     else:
-        print("Aucune tâche finie pour l'instant!")
+        print("Aucune tâche en cours pour l'instant!")
 
 
 def list_done(tasks):
@@ -87,49 +87,52 @@ def list_all(tasks):
             print(task[1] + 1, ":", task[0][0])
 
 
-def print_menu():
+def print_menu(menu):
     print("voici le menu :")
-    print("add       : Ajouter une tâche")
-    print("done      : Effectuer une tâche")
-    print("update    : Modifier le libellé d'une tâche")
-    print("list      : Lister les tâches en cours")
-    print("list-done : Lister les tâches terminées")
-    print("list-all  : Lister toutes les tâches")
-    print("quit      : Quitter")
+    # print("add       : Ajouter une tâche")
+    # print("done      : Effectuer une tâche")
+    # print("update    : Modifier le libellé d'une tâche")
+    # print("list      : Lister les tâches en cours")
+    # print("list-done : Lister les tâches terminées")
+    # print("list-all  : Lister toutes les tâches")
+    for cle, valeur in menu.items():
+        print(cle,":",valeur[0])
+    print("quit : Quitter")
 
 
-def user_command(tasks, task, user_choice):
+def is_valid(user_choice, menu):
+    # vérifier que user_choice est une clé du dictionnaire menu
+    return True
+
+def user_command(tasks, user_choice, menu):
     try:
-        if user_choice == 'add':
-            tasks = add(tasks)
-        elif user_choice == 'done':
-            tasks = done(tasks)
-        elif user_choice == 'update':
-            tasks = update(tasks)
-        elif user_choice == 'list':
-            list(tasks)
-        elif user_choice == 'list-done':
-            list_done(tasks)
-        elif user_choice == 'list-all':
-            list_all(tasks)
+        if is_valid(user_choice, menu):
+            menu[user_choice][1](tasks)
         else:
             raise ValueError('La fonctionnalité n\'existe pas !')
     except ValueError as e:
         print(e)
-    return tasks, task
+    return tasks
 
 
 def main():
     want_to_quit = False
     task = ()
     tasks = []
-    print_menu()
+    menu = {"add": ("Ajouter une tâche", add),
+            "done": ("Effectuer une tâche", done),
+            "update": ("Modifier le libellé d'une tâche", update),
+            "list": ("Lister les tâches en cours", list),
+            "list-done": ("Lister les tâches terminées", list_done),
+            "list-all": ("Lister toutes les tâches", list_all),
+            }
+    print_menu(menu)
     while not want_to_quit:
         user_choice = input('Que souhaitez-vous faire ?\n')
         if user_choice == 'quit':
             want_to_quit = True
         else:
-            tasks, task = user_command(tasks, task, user_choice)
+            tasks = user_command(tasks, user_choice, menu)
 
 
 if __name__ == '__main__':
