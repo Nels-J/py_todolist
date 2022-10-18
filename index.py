@@ -73,12 +73,14 @@ def list_not_done(l):
 
 
 
-def list_done(t):
-    if t[1] == 1:
-        return print(t[0])
-    else:
-        return print("aucune tache a afficher")
-
+def list_done(l):
+    has_no_tasks_done = True
+    for idx, item in enumerate(l):
+        if item[1] == 1:
+            has_no_tasks_done = False
+            print(item[0], 'tache n°:', idx + 1)
+    if has_no_tasks_done:
+        print('Aucune tâche à afficher')
 
 def list_all(l):
     for idx, item in enumerate(l):
