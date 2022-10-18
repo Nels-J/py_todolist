@@ -18,7 +18,10 @@ def update(task):
 
 
 def list(task):
-    print(task)
+    if task[1]== False:
+        print(task)
+    else:
+        print("Aucune tâche en cours")
 
 
 # print('VOUS AVEZ TAPE LIST')
@@ -26,7 +29,11 @@ def list(task):
 
 
 def list_done(task):
-    print(task)
+    done = task[1]
+    if done:
+        print(task)
+    else:
+        print("Aucune tâche finie pour l'instant!")
 
 
 def list_all(task):
@@ -57,6 +64,7 @@ def user_command(user_choice, task):
             return task
         elif user_choice == 'list-done':
             list_done(task)
+            return task
         elif user_choice == 'list-all':
             list_all(task)
         else:
