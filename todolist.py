@@ -1,69 +1,54 @@
 def main():
-    task = "", "A faire"
+    task = ("", "")
     action = ask_action()
-    while action != "quitter":
+    while action != "quit":
         task = do_action(action, task)
         action = ask_action()
     print("Goodbye\n")
 
 
 def done(task):
-    try:
-        new_task = (task[0], "Terminé")
-        return new_task
-    except:
-        raise NotImplementedError("Commande non implémentée\n")
+    new_task = (task[0], "Terminé")
+    return new_task
 
 
 def add():
-    try:
-        task = (input("Saisir la tache : "), "A faire")
-        print(f'''Vous venez de créer la tache: 
+    task = (input("Saisir la tache : "), "A faire")
+    print(f'''Vous venez de créer la tache: 
         {task[0]}
         ''')
-        return task
-    except:
-        raise NotImplementedError("Commande non implémentée\n")
+    return task
 
 
 def update(task):
     if task[0]:
-        try:
-            new_task = (input(f'''Ancienne tâche : {task[0]}
+        new_task = (input(f'''Ancienne tâche : {task[0]}
             Modifier la tache : '''), task[1])
-            print(f'''Vous venez de modifier la tache comme suit: 
+        print(f'''Vous venez de modifier la tache comme suit: 
             {new_task[0]}
             ''')
-            return new_task
-        except:
-            raise NotImplementedError("Commande non implémentée\n")
+        return new_task
     else:
         print("Pas de tâche")
 
 
 def display_list(task):
     if task[1] == "A faire":
-        try:
-            print(task[0])
-        except:
-            raise NotImplementedError("Commande non implémentée\n")
+        print(task[0])
 
 
 def list_all(task):
-    try:
-        print(task)
-    except:
-        raise NotImplementedError("Commande non implémentée\n")
+    print(task)
 
 
 def menu():
-    print("Ajouter une linge : add ")
-    print("Marquer comme éffectuée : done")
+    print("Ajouter une ligne : add ")
+    print("Marquer comme terminée : done")
     print("Mettre à jour : update")
-    print("Afficher la liste non éffectuées: list")
-    print("Afficher list éffectuées : list_done")
-    print("Afficher list tout : all")
-    print("Quitter : quitter")
+    print("Afficher la liste des tâches non terminées: list")
+    print("Afficher la liste des tâches terminées : list_done")
+    print("Afficher toutes les tâches : all")
+    print("Quitter : quit")
 
 
 def ask_action():
@@ -74,10 +59,7 @@ def ask_action():
 
 def list_done(task):
     if task[1] != "A faire":
-        try:
-            print(task[0])
-        except:
-            raise NotImplementedError("Commande non implémentée\n")
+        print(task[0])
 
 
 def do_action(commande, task):
