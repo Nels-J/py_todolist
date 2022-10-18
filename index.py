@@ -1,7 +1,7 @@
 def todo_list():
     menu()
     response = ""
-    tache = "",
+    tache = "", 0
     liste = []
     while response != "quit":
         response = input()
@@ -13,7 +13,7 @@ def todo_list():
                 liste = done(liste)
                 print(liste)
             elif response == 'update':
-                tache = update(tache)
+                liste = update(liste)
                 print(liste)
             elif response == 'list':
                 list_not_done(tache)
@@ -31,7 +31,7 @@ def todo_list():
             if e.__class__ == NotImplementedError:
                 message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
 
-            print(message)
+            print(e)
         menu()
 
 
@@ -50,12 +50,16 @@ def done(l):
     return l
 
 
-def update(t):
-    e = input("quel nouveau nom souhaitez-vous ? \n")
-    if t[1] == 1:
-        return e, 1
-    else:
-        return e, 0
+def update(l):
+    print(l)
+    for idx, name in enumerate(l):
+        print(f'{name[0]} tache n° {idx + 1 }')
+
+    r = int(input('entrer le numéro de tache a modifier : ')) - 1
+    resp = input("Quel est le nouveau nom de votre tâche ?")
+    l[r] = resp, l[r][1]
+    return l
+
 
 
 def list_not_done(t):
