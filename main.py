@@ -10,20 +10,20 @@ def main_menu():
     print("********Que voulez-vous faire ?**********")
 
 
-def user_input_handle(message, task):
+def user_input_handle(message, tasks):
     try:
         if message == 'add':
-            task = add(task)
+            tasks = add(tasks)
         elif message == 'done':
-            task = done(task)
+            tasks = done(tasks)
         elif message == 'update':
-            task = update(task)
+            tasks = update(tasks)
         elif message == 'list':
-            list_not_done(task)
+            list_not_done(tasks)
         elif message == 'list-done':
-            list_done(task)
+            list_done(tasks)
         elif message == 'list-all':
-            list_all(task)
+            list_all(tasks)
         else:
             raise Exception
 
@@ -32,65 +32,63 @@ def user_input_handle(message, task):
         if e.__class__ == NotImplementedError:
             message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
         print(message)
-    return task
+    return tasks
 
 
-def add(task):
-    if task[0] != "":
-        print(f'vous allez remplacer "{task[0]}"')
+def add(tasks):
     print('saisissez le nom de votre tache')
     task_name = input()
     print(f'votre tache "{task_name}" a bien été ajoutée')
-    return task_name, 'undone'
+    tasks.append((task_name, 'undone'))
+    return tasks
 
 
-def done(task):
-    if task[0] == '':
+def done(tasks):
+    if len(tasks) == 0:
         print('Aucune tache trouvée')
-        return task
+        return tasks
     print('Votre tache est done')
-    return task[0], 'done'
+    return tasks[0], 'done'
 
 
-def update(task):
-    if task[0] == '':
+def update(tasks):
+    if tasks[0] == '':
         print('Aucune tache trouvée')
-        return task
-    print(f'La tache porte le nom de {task[0]}, par quoi voulez-vous le remplacer ?')
+        return tasks
+    print(f'La tache porte le nom de {tasks[0]}, par quoi voulez-vous le remplacer ?')
     task_name = input()
     print('Le nom à bien été changé')
-    return task_name, task[1]
+    return task_name, tasks[1]
 
 
-def list_not_done(task):
-    if task[1] == 'undone':
-        print(task[0])
-    else:
-        print('pas de tâche non finie')
+def list_not_done(tasks):
+    for task in tasks:
+        if task[1] == 'undone':
+            print(task[0])
 
 
-def list_done(task):
-    if task[1] == 'done':
-        print(task[0])
+def list_done(tasks):
+    if tasks[1] == 'done':
+        print(tasks[0])
     else:
         print('pas de tache finie')
 
 
-def list_all(task):
-    print(task)
+def list_all(tasks):
+    print(tasks)
 
 
 def main():
-    task = ('', '')
-    todo_list(task)
+    tasks = []
+    todo_list(tasks)
 
 
-def todo_list(task):
+def todo_list(tasks):
     main_menu()
     response = input()
     if response != 'quit':
-        task = user_input_handle(response, task)
-        todo_list(task)
+        tasks = user_input_handle(response, tasks)
+        todo_list(tasks)
 
 
 if __name__ == '__main__':
