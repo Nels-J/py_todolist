@@ -7,14 +7,11 @@ def todo_list():
         response = input()
         try:
             if response == 'add':
-                liste = add(liste)
-                print(liste)
+                add(liste)
             elif response == 'done':
-                liste = done(liste)
-                print(liste)
+                done(liste)
             elif response == 'update':
-                liste = update(liste)
-                print(liste)
+                update(liste)
             elif response == 'list':
                 list_not_done(liste)
             elif response == 'list-done':
@@ -37,16 +34,13 @@ def todo_list():
 
 def add(l):
     t = input("quelle tache souhaitez-vous ajouter ? \n")
-    l.append(t, 0)
-    return l
+    l.append((t, 0))
 
 
 def done(l):
     list_not_done(l)
     r = int(input('entrer le numéro de tache a valider : ')) - 1
-    print(l[r])
     l[r] = l[r][0], 1
-    return l
 
 
 def update(l):
@@ -60,7 +54,6 @@ def update(l):
             return l
         resp = input("Quel est le nouveau nom de votre tâche ?")
         l[r] = resp, l[r][1]
-    return l
 
 
 def list_not_done(l):
