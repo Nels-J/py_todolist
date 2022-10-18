@@ -19,7 +19,7 @@ def close_task(list_tasks):
         print('tache n°:', i, name[0])
     index_task_to_close = int(input('What task do you want to close?'))
 
-    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], False)
+    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
     print('Task closed')
 
 
@@ -36,24 +36,18 @@ def update_task(list_tasks):
     print('Task name update')
 
 
-def list_pending_tasks(task):
+def list_pending_tasks(list_tasks):
     print("List of your pending tasks :")
-    if not is_done(task):
-        print(task)
-    else:
-        print('no pending tasks')
+    for task in list_tasks:
+        if not task[1]:
+            print(task[0])
 
 
-def list_done_tasks(task):
-    print("List of your closed tasks :")
-    if is_done(task):
-        print(task)
-    else:
-        print('no closed tasks')
-
-
-def is_done(task):
-    return task[1]
+def list_done_tasks(list_tasks):
+    print("List of your tasks already done :")
+    for task in list_tasks:
+        if task[1]:
+            print(task[0])
 
 
 def list_all_tasks(list_tasks):
@@ -74,9 +68,9 @@ def do_action(list_tasks, user_input):
         elif user_input == "update":
             update_task(list_tasks)
         elif user_input == "list":
-            list_pending_tasks()
+            list_pending_tasks(list_tasks)
         elif user_input == "list-done":
-            list_done_tasks()
+            list_done_tasks(list_tasks)
         elif user_input == "list-all":
             list_all_tasks(list_tasks)
         elif user_input == "quit":
@@ -98,6 +92,7 @@ def main():
         user_input = input("Please enter your command :")
         list_tasks = do_action(list_tasks, user_input)
     print("Goodbye")
+    print('╭∩╮(◉_◉)╭∩╮')
 
 
 if __name__ == "__main__":
