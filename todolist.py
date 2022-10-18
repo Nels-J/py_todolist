@@ -8,8 +8,10 @@ def print_menu():
     print("To exit the application, use 'quit' command")
 
 
-def add_task():
-    raise Exception("Command under development: please pick another one")
+def add_task(task):
+    task = input('Name of task :')
+    print('task saved ;-)')
+
 
 
 def close_task():
@@ -35,11 +37,12 @@ def list_all_tasks():
 def main():
     print('\nWelcome to your To Do List application !\n')
     print_menu()
+    task:str = ""
     user_input = input("\nPlease enter your command :")
     while user_input != "quit":
         try:
             if user_input == "add":
-                add_task()
+                add_task(task)
             elif user_input == "done":
                 close_task()
             elif user_input == "update":
