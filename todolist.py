@@ -14,8 +14,9 @@ def add_task(task):
     return task
 
 
-def close_task():
-    raise Exception("Command under development: please pick another one")
+def close_task(task):
+    print('Task closed')
+    return (task[0], True)
 
 
 def update_task(task):
@@ -35,9 +36,16 @@ def list_done_tasks():
     raise Exception("Command under development: please pick another one")
 
 
+def is_done(task):
+    return task[1]
+
+
 def list_all_tasks(task):
     print("List of your tasks :")
-    print(task)
+    if not is_done(task):
+        print(task)
+    else:
+        print('no pending tasks')
 
 
 def main():
@@ -50,7 +58,7 @@ def main():
             if user_input == "add":
                 task = add_task(task)
             elif user_input == "done":
-                close_task()
+                task = close_task(task)
             elif user_input == "update":
                 task = update_task(task)
             elif user_input == "list":
