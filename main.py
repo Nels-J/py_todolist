@@ -35,25 +35,27 @@ def user_input_handle(message, task):
 
 
 def add(task):
-    if task != "" and task is not None:
-        print(f'vous allez remplacer "{task}"')
+    if task[0] != "":
+        print(f'vous allez remplacer "{task[0]}"')
     print('saisissez le nom de votre tache')
-    task = input()
-    print(f'votre tache "{task}" a bien été ajoutée')
-    return task
+    task_name = input()
+    print(f'votre tache "{task_name}" a bien été ajoutée')
+    return task_name, 'undone'
+
 
 def done():
     raise NotImplementedError
 
 
 def update(task):
-    if task == '' or task is None:
+    if task[0] == '':
         print('Aucune tache trouvée')
-        return task
-    print(f'La tache porte le nom de {task}, par quoi voulez-vous le remplacer ?')
-    task = input()
+        return task, ''
+    print(f'La tache porte le nom de {task[0]}, par quoi voulez-vous le remplacer ?')
+    task_name = input()
     print('Le nom à bien été changé')
-    return task
+    return task_name, task[1]
+
 
 def list_not_done():
     raise NotImplementedError
@@ -68,7 +70,7 @@ def list_all():
 
 
 def main():
-    task = ''
+    task = ('', '')
     todo_list(task)
 
 
