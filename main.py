@@ -19,7 +19,7 @@ def update(task):
 
 
 def list(task):
-    if task[1]== False:
+    if task[1] == False:
         print(task)
     else:
         print("Aucune tâche en cours")
@@ -29,10 +29,10 @@ def list(task):
 # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
-def list_done(task):
-    done = task[1]
-    if done:
-        print(task)
+def list_done(tasks):
+    done_tasks = [task for task in tasks if task[1] == True]
+    if done_tasks:
+        print(done_tasks)
     else:
         print("Aucune tâche finie pour l'instant!")
 
