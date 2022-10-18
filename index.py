@@ -2,18 +2,19 @@ def main_menu():
     menu()
     response = ""
     tache = "",
+    liste = []
     while response != "quit":
         response = input()
         try:
             if response == 'add':
-                tache = add(tache)
-                print(tache)
+                liste.append(add(tache))
+                print(liste)
             elif response == 'done':
-                tache = done(tache)
-                print(tache)
+                liste = done(liste)
+                print(liste)
             elif response == 'update':
                 tache = update(tache)
-                print(tache)
+                print(liste)
             elif response == 'list':
                 list_not_done(tache)
             elif response == 'list-done':
@@ -39,8 +40,14 @@ def add(t):
     return t, 0
 
 
-def done(t):
-    return t[0], 1
+def done(l):
+    for idx, name in enumerate(l):
+        print(name[0], 'tache n°:', idx, )
+
+    r = int(input('entrer le numéro de tache a valider : '))
+    print(l[r])
+    l.remove([r]) = l[r], 1
+    return l
 
 
 def update(t):
