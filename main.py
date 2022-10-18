@@ -10,10 +10,10 @@ def main_menu():
     print("********Que voulez-vous faire ?**********")
 
 
-def user_input_handle(message):
+def user_input_handle(message, task):
     try:
         if message == 'add':
-            add()
+            return add(task)
         elif message == 'done':
             done()
         elif message == 'update':
@@ -34,10 +34,13 @@ def user_input_handle(message):
         print(message)
 
 
-def add():
+def add(task):
+    if task != "":
+        print(f'vous allez remplacer "{task}"')
     print('saisissez le nom de votre tache')
     task = input()
     print(f'votre tache "{task}" a bien été ajoutée')
+    return task
 
 def done():
     raise NotImplementedError
@@ -60,11 +63,16 @@ def list_all():
 
 
 def main():
+    task = ''
+    todo_list(task)
+
+
+def todo_list(task):
     main_menu()
     response = input()
     if response != 'quit':
-        user_input_handle(response)
-        main()
+        task = user_input_handle(response, task)
+        todo_list(task)
 
 
 if __name__ == '__main__':
