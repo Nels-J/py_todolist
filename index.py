@@ -1,11 +1,14 @@
 def todo_list():
     menu()
     response = ""
-    tache = "", 0
     liste = []
+    # menu_handle = {'add': ('Ajouter une tâche (add)', 'add', add)}
+
     while response != "quit":
         response = input()
         try:
+
+            # menu_handle.get('add')[2](liste)
             if response == 'add':
                 add(liste)
             elif response == 'done':
@@ -61,7 +64,7 @@ def list_not_done(l):
     for idx, item in enumerate(l):
         if item[1] == 0:
             has_no_tasks_not_done = False
-            print(item[0], 'tache n°:', idx + 1 )
+            print(item[0], 'tache n°:', idx + 1)
     if has_no_tasks_not_done:
         print('Aucune tâche à afficher')
 
