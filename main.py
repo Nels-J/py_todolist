@@ -9,11 +9,6 @@ def main_menu():
         "\nQuitter (quit)")
     print("********Que voulez-vous faire ?**********")
 
-    response = input()
-    if response != 'quit':
-        user_input_handle(response)
-        main_menu()
-
 
 def user_input_handle(message):
     try:
@@ -42,7 +37,6 @@ def user_input_handle(message):
 def add():
     raise NotImplementedError
 
-
 def done():
     raise NotImplementedError
 
@@ -63,4 +57,14 @@ def list_all():
     raise NotImplementedError
 
 
-main_menu()
+def main():
+    main_menu()
+    response = input()
+    if response != 'quit':
+        user_input_handle(response)
+        main()
+
+
+if __name__ == '__main__':
+    main()
+
