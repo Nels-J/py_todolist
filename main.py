@@ -45,22 +45,26 @@ def update(tasks, task):
 
 def list(tasks):
     pending_tasks = []
-    for item in tasks:
+    for index, item in enumerate(tasks):
         if not item[1]:
-            pending_tasks.append(item)
+            pending_tasks.append((index, item))
     if len(pending_tasks) > 0:
-        print(pending_tasks)
+        print("Les tâches en cours sont :")
+        for pending_task in pending_tasks:
+            print(pending_task[0] + 1, ":", pending_task[1][0])
     else:
         print("Aucune tâche finie pour l'instant!")
 
 
 def list_done(tasks):
     done_tasks = []
-    for item in tasks:
+    for index, item in enumerate(tasks):
         if item[1]:
-            done_tasks.append(item)
+            done_tasks.append((index, item))
     if len(done_tasks) > 0:
-        print(done_tasks)
+        print("Les tâches terminées sont :")
+        for done_task in done_tasks:
+            print(done_task[0] + 1, ":", done_task[1][0])
     else:
         print("Aucune tâche finie pour l'instant!")
 
@@ -74,7 +78,7 @@ def list_all(tasks):
         else:
             pending_tasks.append((task, index))
     if len(pending_tasks) > 0:
-        print('Voici les tâches en cours')
+        print('Voici les tâches en cours :')
         for task in pending_tasks:
             print(task[1] + 1, ":", task[0][0])
     if len(done_tasks) > 0:
