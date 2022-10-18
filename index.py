@@ -1,4 +1,4 @@
-def main_menu():
+def todo_list():
     menu()
     response = ""
     tache = "",
@@ -42,11 +42,11 @@ def add(t):
 
 def done(l):
     for idx, name in enumerate(l):
-        print(name[0], 'tache n°:', idx, )
+        print(name[0], 'tache n°:', idx+1, )
 
-    r = int(input('entrer le numéro de tache a valider : '))
+    r = int(input('entrer le numéro de tache a valider : '))-1
     print(l[r])
-    l.remove([r]) = l[r], 1
+    l[r] = l[r][0], 1
     return l
 
 
@@ -88,4 +88,9 @@ def menu():
     print("********Que voulez-vous faire ?**********")
 
 
-main_menu()
+
+def main():
+    todo_list()
+
+if __name__ == '__main__':
+    main()
