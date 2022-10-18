@@ -1,44 +1,53 @@
 def main():
     task = ("", "")
+    tasks = []
     action = ask_action()
     while action != "quit":
-        task = do_action(action, task)
+        task = do_action(action, task, tasks)
         action = ask_action()
     print("Goodbye\n")
 
 
-def done(task):
+def done(task, tasks):
     new_task = (task[0], "Terminé")
-    return new_task
+    return new_task, tasks
 
 
-def add():
+def add(tasks):
     task = (input("Saisir la tache : "), "A faire")
     print(f'''Vous venez de créer la tache: 
         {task[0]}
         ''')
-    return task
+    tasks.append(task)
+    print("tasks=>", tasks)
+    return task, tasks
 
 
-def update(task):
+def update(task, tasks):
     if task[0]:
         new_task = (input(f'''Ancienne tâche : {task[0]}
             Modifier la tache : '''), task[1])
         print(f'''Vous venez de modifier la tache comme suit: 
             {new_task[0]}
             ''')
-        return new_task
+        return new_task, tasks
     else:
         print("Pas de tâche")
+        return task, tasks
 
 
-def display_list(task):
+def display_list(task, tasks):
     if task[1] == "A faire":
         print(task[0])
 
 
-def list_all(task):
+def list_all(task, tasks):
     print(task)
+
+
+def list_done(task, tasks):
+    if task[1] != "A faire":
+        print(task[0])
 
 
 def menu():
@@ -57,31 +66,26 @@ def ask_action():
     return commande
 
 
-def list_done(task):
-    if task[1] != "A faire":
-        print(task[0])
-
-
-def do_action(commande, task):
+def do_action(commande, task, tasks):
     try:
         if commande == "add":
-            task = add()
+            task, tasks = add(tasks)
         elif commande == "done":
-            task = done(task)
+            task, tasks = done(task, tasks)
         elif commande == "update":
-            task = update(task)
+            task, tasks = update(task, tasks)
         elif commande == "list":
-            display_list(task)
+            display_list(task, tasks)
         elif commande == "list_done":
-            list_done(task)
+            list_done(task, tasks)
         elif commande == "all":
-            list_all(task)
+            list_all(task, tasks)
         else:
             raise ValueError("Commande inconnue\n")
     except(ValueError, NotImplementedError) as e:
         print(e)
 
-    return task
+    return task, tasks
 
 
 if __name__ == "__main__":
