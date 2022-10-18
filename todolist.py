@@ -14,9 +14,13 @@ def add_task(list_tasks):
     print('task saved ;-)')
 
 
-def close_task(task):
+def close_task(list_tasks):
+    for i, name in enumerate(list_tasks):
+        print('tache n°:', i, name[0])
+    index_task_to_close = int(input('What task do you want to close?'))
+
+    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], False)
     print('Task closed')
-    return task[0], True
 
 
 def update_task(task):
@@ -48,12 +52,9 @@ def is_done(task):
     return task[1]
 
 
-def list_all_tasks(task):
+def list_all_tasks(list_tasks):
     print("List of all your tasks :")
-    if task:
-        print(task)
-    else:
-        print('no tasks')
+    print(list_tasks)
 
 
 def do_action(list_tasks, user_input):
@@ -61,7 +62,7 @@ def do_action(list_tasks, user_input):
         if user_input == "add":
             add_task(list_tasks)
         elif user_input == "done":
-            task = close_task(task)
+            close_task(list_tasks)
         elif user_input == "update":
             task = update_task(task)
         elif user_input == "list":
@@ -69,7 +70,9 @@ def do_action(list_tasks, user_input):
         elif user_input == "list-done":
             list_done_tasks(task)
         elif user_input == "list-all":
-            list_all_tasks(task)
+            list_all_tasks(list_tasks)
+        elif user_input == "quit":
+            return
         else:
             raise Exception('invalid command, please retry')
     except Exception as err:
@@ -80,12 +83,12 @@ def do_action(list_tasks, user_input):
 
 def main():
     print('\nWelcome to your To Do List application !\n')
-    print_menu()
-    list_tasks: list = [(str, bool)]
-    user_input = input("\nPlease enter your command :")
+    list_tasks = []
+    user_input = ""
     while user_input != "quit":
-        list_tasks = do_action(list_tasks, user_input)
+        print_menu()
         user_input = input("Please enter your command :")
+        list_tasks = do_action(list_tasks, user_input)
     print("Goodbye")
 
 
