@@ -54,26 +54,17 @@ def list_all(tasks):
     list_done(tasks)
 
 
-def user_input(user_choice, tasks: list):
-    try:
-        if user_choice == 'add':
-            add(tasks)
-        elif user_choice == 'done':
-            done(tasks)
-        elif user_choice == 'update':
-            update(tasks)
-        elif user_choice == 'list':
-            list_in_progress(tasks)
-        elif user_choice == 'list-done':
-            list_done(tasks)
-        elif user_choice == 'list-all':
-            list_all(tasks)
-        else:
-            raise ValueError('La fonctionnalité n\'existe pas !')
-
-    except ValueError as e:
-        print(e)
-
+def user_input(user_choice: str, tasks: list):
+    choices = {
+        'add': (print_menu, add),
+        'done': (print_menu, done),
+        'update': (print_menu, update),
+        'list': (print_menu, list_in_progress),
+        'list-done': (print_menu, list_done),
+        'list-all': (print_menu, list_all),
+    }
+    choices[user_choice][0]
+    choices[user_choice][1](tasks)
     return tasks
 
 
@@ -91,4 +82,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print('╭∩╮(◉_◉)╭∩╮')
+    print('╭∩╮(UwU)╭∩╮')
