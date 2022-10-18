@@ -1,37 +1,57 @@
-def add(tasks):
+def add(tasks, task):
     user_task = input("Veuillez saisir votre nouvelle tâche")
     task = (user_task, False)
     tasks.append(task)
-    return tasks
-
-    # print('VOUS AVEZ TAPE ADD')
-    # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+    print("tâche créée")
+    return tasks, task
 
 
-def done(task):
-    return task[0], True
-
-
-def update(task):
-    task_new_name = input("Veuillez saisir le nouveau nom de la tâche")
-    done = task[1]
-    return task_new_name, done
-
-
-def list(task):
-    if task[1] == False:
-        print(task)
+def done(tasks, task):
+    index_tache = int(input("Indiquez le numéro de la tâche à terminer")) - 1
+    if index_tache <= 0 or index_tache + 1 > len(tasks):
+        print("Cette tâche n'existe pas")
     else:
-        print("Aucune tâche en cours")
+        task = (tasks[index_tache - 1][0], True)
+        tasks[index_tache] = task
+        is_in_list = True
+        print("tâche terminée")
+    return tasks, task
 
 
-# print('VOUS AVEZ TAPE LIST')
-# raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def update(tasks, task):
+    index_tache = None
+    while index_tache is None:
+        try:
+            index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
+        except Exception as err:
+            print("entrée invalide : merci d'entrer un entier")
+    if index_tache < 0 or index_tache + 1 > len(tasks):
+        print("Cette tâche n'existe pas")
+    else:
+        nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
+        task = (nouveau_nom_tache, False)
+        tasks[index_tache] = task
+        print("tâche modifée")
+    return tasks, task
+
+
+def list(tasks):
+    pending_tasks = []
+    for item in tasks:
+        if not item[1]:
+            pending_tasks.append(item)
+    if len(pending_tasks) > 0:
+        print(pending_tasks)
+    else:
+        print("Aucune tâche finie pour l'instant!")
 
 
 def list_done(tasks):
-    done_tasks = [task for task in tasks if task[1] == True]
-    if done_tasks:
+    done_tasks = []
+    for item in tasks:
+        if item[1]:
+            dont_tasks.append(item)
+    if len(done_tasks) > 0:
         print(done_tasks)
     else:
         print("Aucune tâche finie pour l'instant!")
@@ -43,49 +63,47 @@ def list_all(tasks):
 
 def print_menu():
     print("voici le menu :")
-    print("Ajouter une tâche (commande 'add')")
-    print("Effectuer une tâche (commande 'done')")
-    print("Modifier le libellé d'une tâche (commande 'update')")
-    print("Lister les tâches en cours (commande 'list')")
-    print("Lister les tâches terminées (commande 'list-done')")
-    print("Lister toutes les tâches (commande 'list-all')")
-    print("Quitter (command 'quit')")
+    print("add       : Ajouter une tâche")
+    print("done      : Effectuer une tâche")
+    print("update    : Modifier le libellé d'une tâche")
+    print("list      : Lister les tâches en cours")
+    print("list-done : Lister les tâches terminées")
+    print("list-all  : Lister toutes les tâches")
+    print("quit      : Quitter")
 
 
-def user_command(user_choice, task, tasks):
+def user_command(tasks, task, user_choice):
     try:
         if user_choice == 'add':
-            return add(tasks)
+            tasks, task = add(tasks, task)
         elif user_choice == 'done':
-            return done(task)
+            tasks, task = done(tasks, task)
         elif user_choice == 'update':
-            return update(task)
+            tasks, task = update(tasks, task)
         elif user_choice == 'list':
-            list(task)
-            return task
+            list(tasks)
         elif user_choice == 'list-done':
-            list_done(task)
-            return task
+            list_done(tasks)
         elif user_choice == 'list-all':
             list_all(tasks)
         else:
             raise ValueError('La fonctionnalité n\'existe pas !')
-
     except ValueError as e:
         print(e)
+    return tasks, task
 
 
 def main():
     want_to_quit = False
     task = ()
     tasks = []
+    print_menu()
     while not want_to_quit:
-        print_menu()
         user_choice = input('Que souhaitez-vous faire ?\n')
         if user_choice == 'quit':
             want_to_quit = True
         else:
-            task = user_command(user_choice, task, tasks)
+            tasks, task = user_command(tasks, task, user_choice)
 
 
 if __name__ == '__main__':
