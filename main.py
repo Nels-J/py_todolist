@@ -7,11 +7,16 @@ def add(tasks, task):
 
 
 def done(tasks, task):
-    index_tache = int(input("Indiquez le numéro de la tâche à terminer")) - 1
+    index_tache = None
+    while index_tache is None:
+        try:
+            index_tache = int(input("Indiquez le numéro de la tâche à effectuer")) - 1
+        except Exception as err:
+            print("entrée invalide : merci d'entrer un entier")
     if index_tache <= 0 or index_tache + 1 > len(tasks):
         print("Cette tâche n'existe pas")
     else:
-        task = (tasks[index_tache - 1][0], True)
+        task = (tasks[index_tache][0], True)
         tasks[index_tache] = task
         is_in_list = True
         print("tâche terminée")
@@ -29,7 +34,7 @@ def update(tasks, task):
         print("Cette tâche n'existe pas")
     else:
         nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
-        task = (nouveau_nom_tache, False)
+        task = (nouveau_nom_tache, tasks[index_tache][1])
         tasks[index_tache] = task
         print("tâche modifée")
     return tasks, task
@@ -50,7 +55,7 @@ def list_done(tasks):
     done_tasks = []
     for item in tasks:
         if item[1]:
-            dont_tasks.append(item)
+            done_tasks.append(item)
     if len(done_tasks) > 0:
         print(done_tasks)
     else:
