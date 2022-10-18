@@ -82,9 +82,12 @@ def list_done(l):
     if has_no_tasks_done:
         print('Aucune tâche à afficher')
 
+
 def list_all(l):
-    for idx, item in enumerate(l):
-        print(item[0], 'tache n°:', idx + 1)
+    print('en cours')
+    list_not_done(l)
+    print('terminé')
+    list_done(l)
 
 
 def menu():
