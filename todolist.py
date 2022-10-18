@@ -11,7 +11,7 @@ def print_menu():
 def add_task(task):
     task = input('Name of task :')
     print('task saved ;-)')
-
+    return task
 
 
 def close_task():
@@ -30,19 +30,20 @@ def list_done_tasks():
     raise Exception("Command under development: please pick another one")
 
 
-def list_all_tasks():
-    raise Exception("Command under development: please pick another one")
+def list_all_tasks(task):
+    print("List of your tasks :")
+    print(task)
 
 
 def main():
     print('\nWelcome to your To Do List application !\n')
     print_menu()
-    task:str = ""
+    task = "default"
     user_input = input("\nPlease enter your command :")
     while user_input != "quit":
         try:
             if user_input == "add":
-                add_task(task)
+                task = add_task(task)
             elif user_input == "done":
                 close_task()
             elif user_input == "update":
@@ -52,13 +53,14 @@ def main():
             elif user_input == "list-done":
                 list_done_tasks()
             elif user_input == "list-all":
-                list_all_tasks()
+                list_all_tasks(task)
             else:
                 raise Exception('invalid command, please retry')
         except Exception as err:
             print(err)
         user_input = input("Please enter your command :")
     print("Goodbye")
+
 
 if __name__ == "__main__":
     main()
