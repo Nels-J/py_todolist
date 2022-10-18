@@ -63,7 +63,19 @@ def list_done(tasks):
 
 
 def list_all(tasks):
-    print(tasks)
+    done_tasks = []
+    pending_tasks = []
+    for task in tasks:
+        if task[1]:
+            done_tasks.append(task)
+        else:
+            pending_tasks.append(task)
+    print('Voici les tâches en cours')
+    for task in pending_tasks:
+        print(task[0])
+    print('Voici les tâches terminées :')
+    for task in done_tasks:
+        print(task[0])
 
 
 def print_menu():
