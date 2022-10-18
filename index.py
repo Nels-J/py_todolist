@@ -7,7 +7,7 @@ def todo_list():
         response = input()
         try:
             if response == 'add':
-                liste.append(add(tache))
+                liste = add(liste)
                 print(liste)
             elif response == 'done':
                 liste = done(liste)
@@ -35,9 +35,10 @@ def todo_list():
         menu()
 
 
-def add(t):
+def add(l):
     t = input("quelle tache souhaitez-vous ajouter ? \n")
-    return t, 0
+    l.append(t, 0)
+    return l
 
 
 def done(l):
@@ -70,7 +71,6 @@ def list_not_done(l):
             print(item[0], 'tache n°:', idx + 1 )
     if has_no_tasks_not_done:
         print('Aucune tâche à afficher')
-
 
 
 def list_done(l):
