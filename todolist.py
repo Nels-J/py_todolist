@@ -9,14 +9,14 @@ def main():
 
 
 def done(tasks):
-    done_task = (tasks[0][0], "Terminé")
-    tasks[0] = done_task
-    print(f'''Votre tâche: {tasks[0][0]} est à présent: {tasks[0][1]}''')
+    index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
+    done_task = (tasks[index][0], "Terminé")
+    tasks[index] = done_task
+    print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
     print("******* Votre nouvelle liste de tâches :*******")
     for task in tasks:
         print(task[0], "=>", task[1])
     return tasks
-
 
 
 def add(tasks):
@@ -30,8 +30,9 @@ def add(tasks):
 
 
 def update(tasks):
-    updated_task = (input("Veuillez renommer votre tâche"), tasks[0][1])
-    tasks[0] = updated_task
+    index = int(input("Saissez le numéro de la tâche à modifier (à partir de 0)"))
+    updated_task = (input("Veuillez renommer votre tâche"), tasks[index][1])
+    tasks[index] = updated_task
     print("Votre tâche est renommée en :", updated_task[0])
     print("******* Votre nouvelle liste de tâches :*******")
     for task in tasks:
@@ -39,7 +40,7 @@ def update(tasks):
     return tasks
 
 
-def display_list(task, tasks):
+def display_list(tasks):
     print("******* Toutes vos tâches en cours: *******")
     pending_tasks = [task for task in tasks if task[1] == "A faire"]
     for task in pending_tasks:
@@ -52,7 +53,7 @@ def list_all(tasks):
         print(task[0], "=>", task[1])
 
 
-def list_done(task, tasks):
+def list_done(tasks):
     print("******* Toutes vos tâches terminées: *******")
     done_tasks = [task for task in tasks if task[1] == "Terminé"]
     print(done_tasks)
@@ -79,13 +80,13 @@ def do_action(commande, task, tasks):
         if commande == "add":
             task, tasks = add(tasks)
         elif commande == "done":
-            task, tasks = done(tasks)
+            tasks = done(tasks)
         elif commande == "update":
-            task, tasks = update(tasks)
+            tasks = update(tasks)
         elif commande == "list":
-            display_list(task, tasks)
+            display_list(tasks)
         elif commande == "list_done":
-            list_done(task, tasks)
+            list_done(tasks)
         elif commande == "all":
             list_all(tasks)
         else:
