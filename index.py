@@ -1,33 +1,13 @@
 def todo_list():
-    response = ""
+    menu()
+    response = input()
     liste = []
     menu_handle = {'add': add, 'done': done, 'update': update, 'list': list_not_done, 'list-done': list_done,
                    'list-all': list_all}
 
     while response != "quit":
-        menu()
-        response = input()
         try:
-            if response == 'add':
-                action = menu_handle.get('add')
-                action(liste)
-            elif response == 'done':
-                action = menu_handle.get('done')
-                action(liste)
-            elif response == 'update':
-                action = menu_handle.get('update')
-                action(liste)
-            elif response == 'list':
-                action = menu_handle.get('list')
-                action(liste)
-            elif response == 'list-done':
-                action = menu_handle.get('list-done')
-                action(liste)
-            elif response == 'list-all':
-                action = menu_handle.get('list-all')
-                action(liste)
-            else:
-                raise Exception
+            menu_handle.get(response)(liste)
 
         except Exception as e:
             message = "la commande n'existe pas"
@@ -35,7 +15,8 @@ def todo_list():
                 message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
 
             print(e)
-
+        menu()
+        response = input()
 
 
 def add(l):
