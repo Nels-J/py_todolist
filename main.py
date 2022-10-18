@@ -1,36 +1,36 @@
 def add():
     user_task = input("Veuillez saisir votre nouvelle tâche")
-    return user_task
+    task = (user_task, False)
+    return task
 
     # print('VOUS AVEZ TAPE ADD')
     # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
-def done():
-    print('VOUS AVEZ TAPE DONE')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def done(task):
+    return task[0], True
 
 
-def update():
-    print('VOUS AVEZ TAPE UPDATE')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def update(task):
+    task_new_name = input("Veuillez saisir le nouveau nom de la tâche")
+    done = task[1]
+    return task_new_name, done
 
 
 def list(task):
     print(task)
 
-    # print('VOUS AVEZ TAPE LIST')
-    # raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+
+# print('VOUS AVEZ TAPE LIST')
+# raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
 
 
-def list_done():
-    print('VOUS AVEZ TAPE LIST DONE')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def list_done(task):
+    print(task)
 
 
-def list_all():
-    print('VOUS AVEZ TAPE LIST ALL')
-    raise ValueError('La fonctionnalité n\'a pas encore été implémentée !')
+def list_all(task):
+    print(task)
 
 
 def print_menu():
@@ -44,20 +44,21 @@ def print_menu():
     print("Quitter (command 'quit')")
 
 
-def user_input(user_choice, task):
+def user_command(user_choice, task):
     try:
         if user_choice == 'add':
             return add()
         elif user_choice == 'done':
-            done()
+            return done(task)
         elif user_choice == 'update':
-            update()
+            return update(task)
         elif user_choice == 'list':
-            return list(task)
+            list(task)
+            return task
         elif user_choice == 'list-done':
-            list_done()
+            list_done(task)
         elif user_choice == 'list-all':
-            list_all()
+            list_all(task)
         else:
             raise ValueError('La fonctionnalité n\'existe pas !')
 
@@ -67,14 +68,14 @@ def user_input(user_choice, task):
 
 def main():
     want_to_quit = False
-    task = ""
+    task = ()
     while not want_to_quit:
         print_menu()
         user_choice = input('Que souhaitez-vous faire ?\n')
         if user_choice == 'quit':
             want_to_quit = True
         else:
-            task = user_input(user_choice, task)
+            task = user_command(user_choice, task)
 
 
 if __name__ == '__main__':
