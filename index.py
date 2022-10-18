@@ -1,28 +1,31 @@
 def todo_list():
-    menu()
     response = ""
     liste = []
-    # menu_handle = {'add': ('Ajouter une tâche (add)', 'add', add)}
+    menu_handle = {'add': add, 'done': done, 'update': update, 'list': list_not_done, 'list-done': list_done,
+                   'list-all': list_all}
 
     while response != "quit":
+        menu()
         response = input()
         try:
-
-            # menu_handle.get('add')[2](liste)
             if response == 'add':
-                add(liste)
+                action = menu_handle.get('add')
+                action(liste)
             elif response == 'done':
-                done(liste)
+                action = menu_handle.get('done')
+                action(liste)
             elif response == 'update':
-                update(liste)
+                action = menu_handle.get('update')
+                action(liste)
             elif response == 'list':
-                list_not_done(liste)
+                action = menu_handle.get('list')
+                action(liste)
             elif response == 'list-done':
-                list_done(liste)
+                action = menu_handle.get('list-done')
+                action(liste)
             elif response == 'list-all':
-                list_all(liste)
-            elif response == 'quit':
-                return
+                action = menu_handle.get('list-all')
+                action(liste)
             else:
                 raise Exception
 
@@ -32,7 +35,7 @@ def todo_list():
                 message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
 
             print(e)
-        menu()
+
 
 
 def add(l):
