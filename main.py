@@ -10,21 +10,25 @@ def main_menu():
     print("********Que voulez-vous faire ?**********")
 
     response = input()
+    if response != 'quit':
+        user_input_handle(response)
+        main_menu()
+
+
+def user_input_handle(message):
     try:
-        if response == 'add':
+        if message == 'add':
             add()
-        elif response == 'done':
+        elif message == 'done':
             done()
-        elif response == 'update':
+        elif message == 'update':
             update()
-        elif response == 'list':
+        elif message == 'list':
             list_not_done()
-        elif response == 'list-done':
+        elif message == 'list-done':
             list_done()
-        elif response == 'list-all':
+        elif message == 'list-all':
             list_all()
-        elif response == 'quit':
-            return
         else:
             raise Exception
 
@@ -32,9 +36,7 @@ def main_menu():
         message = "la commande n'existe pas"
         if e.__class__ == NotImplementedError:
             message = 'désolé vous ne pouvez pas utiliser cette fonction pour l\'instant'
-
         print(message)
-    main_menu()
 
 
 def add():
