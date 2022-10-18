@@ -96,13 +96,14 @@ def print_menu(menu):
     # print("list-done : Lister les tâches terminées")
     # print("list-all  : Lister toutes les tâches")
     for cle, valeur in menu.items():
-        print(cle,":",valeur[0])
+        print(cle, ":", valeur[0])
     print("quit : Quitter")
 
 
 def is_valid(user_choice, menu):
     # vérifier que user_choice est une clé du dictionnaire menu
     return True
+
 
 def user_command(tasks, user_choice, menu):
     try:
