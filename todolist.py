@@ -1,30 +1,33 @@
+def main():
+    action = ask_commande()
+    while action != "quitter":
+        do_commande(action)
+        action = ask_commande()
+    print("Goodbye\n")
+
+
 def done():
-    raise NotImplementedError("commande non implémentée")
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def add():
-    raise NotImplementedError("commande non implémentée")
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def update():
-    raise NotImplementedError("commande non implémentée")
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def display_list():
-    raise NotImplementedError("commande non implémentée")
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def list_done():
-    raise NotImplementedError("commande non implémentée")
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def list_all():
-    raise NotImplementedError("commande non implémentée")
-
-
-def quitter():
-    raise SystemExit
-
+    raise NotImplementedError("Commande non implémentée\n")
 
 
 def menu():
@@ -37,12 +40,13 @@ def menu():
     print("Quitter : quitter")
 
 
-
-
-
-def main():
+def ask_commande():
     menu()
-    commande = input("Enter a command: ")
+    commande = input("\nEnter a command: ")
+    return commande
+
+
+def do_commande(commande):
     try:
         if commande == "add":
             add()
@@ -56,15 +60,11 @@ def main():
             list_done()
         elif commande == "list-all":
             list_all()
-        elif commande == "quitter":
-            quitter()
         else:
-            raise ValueError("Commande inconnue")
-    except(ValueError, NotImplementedError)as e:
+            raise ValueError("Commande inconnue\n")
+    except(ValueError, NotImplementedError) as e:
         print(e)
+
+
+if __name__ == "__main__":
     main()
-
-
-main()
-
-
