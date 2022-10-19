@@ -1,44 +1,51 @@
 def main():
-    task = ("", "")
+    tasks = []
+    tasks = remplir_tasks(tasks)
     action = ask_action()
     while action != "quit":
-        task = do_action(action, task)
+        tasks = do_action(action, tasks)
         action = ask_action()
     print("Goodbye\n")
 
 
-def done(task):
-    new_task = (task[0], "Terminé")
-    return new_task
-
-
-def add():
-    task = (input("Saisir la tache : "), "A faire")
+def add(tasks):
+    tasks[0] = (input("Saisir la tache : "), False)
     print(f'''Vous venez de créer la tache: 
-        {task[0]}
+        {tasks[0][0]}
         ''')
-    return task
+    return tasks
 
 
-def update(task):
-    if task[0]:
-        new_task = (input(f'''Ancienne tâche : {task[0]}
-            Modifier la tache : '''), task[1])
+def done(tasks):
+    tasks[0] = (tasks[0][0], True)
+    return tasks
+
+
+def update(tasks):
+    if tasks[0][0]:
+        tasks[0] = (input(f'''Ancienne tâche : {tasks[0][0]}
+            Modifier la tache : '''), tasks[0][1])
         print(f'''Vous venez de modifier la tache comme suit: 
-            {new_task[0]}
+            {tasks[0][0]}
             ''')
-        return new_task
+        return tasks
     else:
         print("Pas de tâche")
 
 
-def display_list(task):
-    if task[1] == "A faire":
-        print(task[0])
+def list_pending(tasks):
+    if not tasks[0][1]:
+        print(tasks[0][0])
 
 
-def list_all(task):
-    print(task)
+def list_done(tasks):
+    if tasks[0][1]:
+        print(tasks[0][0])
+
+
+def list_all(tasks):
+    list_pending(tasks)
+    list_done(tasks)
 
 
 def menu():
@@ -47,7 +54,7 @@ def menu():
     print("Mettre à jour : update")
     print("Afficher la liste des tâches non terminées: list")
     print("Afficher la liste des tâches terminées : list_done")
-    print("Afficher toutes les tâches : all")
+    print("Afficher toutes les tâches : list_all")
     print("Quitter : quit")
 
 
@@ -57,31 +64,35 @@ def ask_action():
     return commande
 
 
-def list_done(task):
-    if task[1] != "A faire":
-        print(task[0])
-
-
-def do_action(commande, task):
+def do_action(command, tasks):
     try:
-        if commande == "add":
-            task = add()
-        elif commande == "done":
-            task = done(task)
-        elif commande == "update":
-            task = update(task)
-        elif commande == "list":
-            display_list(task)
-        elif commande == "list_done":
-            list_done(task)
-        elif commande == "all":
-            list_all(task)
+        if command == "add":
+            tasks = add(tasks)
+        elif command == "done":
+            tasks = done(tasks)
+        elif command == "update":
+            tasks = update(tasks)
+        elif command == "list":
+            list_pending(tasks)
+        elif command == "list_done":
+            list_done(tasks)
+        elif command == "list_all":
+            list_all(tasks)
         else:
             raise ValueError("Commande inconnue\n")
     except(ValueError, NotImplementedError) as e:
         print(e)
+    return tasks
 
-    return task
+
+def remplir_tasks(tasks):
+    tasks.append(("Manger", False))
+    tasks.append(("Boire", True))
+    tasks.append(("Travailler", False))
+    tasks.append(("Dormir", True))
+    tasks.append(("Marcher", False))
+    tasks.append(("Courir", True))
+    return tasks
 
 
 if __name__ == "__main__":
