@@ -16,14 +16,14 @@ def add(tasks):
 
 
 def validate_user_input_number(tasks, wanted_action):
-    list_index = []
     number = None
+    list_index = []
     if wanted_action == "terminer":
         list_index = [index for index, task in enumerate(tasks) if not task[1]]
-    else:
+    elif wanted_action == "modifier":
         list_index = [index for index, task in enumerate(tasks)]
     try:
-        number = int(input("Quelle tâche voulez-vous "+ wanted_action + " ?"))
+        number = int(input("Quelle tâche voulez-vous " + wanted_action + " ?"))
         if number not in list_index:
             raise Exception("Le numéro que vous avez donné est invalide !")
     except Exception as e:
