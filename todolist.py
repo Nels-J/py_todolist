@@ -1,4 +1,4 @@
-# from Main import Main
+# from /home/kply/PycharmProjects/py_todolist/Main.py import Main
 
 
 def print_menu():
@@ -12,34 +12,39 @@ def print_menu():
     print("quit      : exit the application")
 
 
-def add_task(list_tasks, user_input):
-    if user_input == "add":
-        new_task = (input('Name of task :'), False)
-        list_tasks.append(new_task)
-        print('task saved ;-)')
-    elif user_input == "add2":
-        i = 0
-        while i < 5:
-            new_task = "task" + str(i + 1), False
-            list_tasks.append(new_task)
+class AddTask:
+    @classmethod
+    def add_task(cls, list_tasks, user_input):
+        if user_input == "add":
+            new_task = (input('Name of task :'), False)
+            list_tasks.add_task(new_task)
             print('task saved ;-)')
-            i = i + 1
+        elif user_input == "add2":
+            i = 0
+            while i < 5:
+                new_task = "task" + str(i + 1), False
+                list_tasks.add_task(new_task)
+                print('task saved ;-)')
+                i = i + 1
 
 
-def close_task(list_tasks, user_input):
-    if user_input == "done":
-        for i, name in enumerate(list_tasks):
-            print('tache n°:', i, name[0])
-        index_task_to_close = int(input('What task do you want to close?'))
+class CloseTask:
+    @classmethod
+    def close_task(cls, list_tasks, user_input):
 
-        list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
-        print('Task closed')
-    elif user_input == "done2":
-        i = 0
-        while i < 2:
-            list_tasks[i] = (list_tasks[i][0], True)
+        if user_input == "done":
+            for i, name in enumerate(list_tasks):
+                print('tache n°:', i, name[0])
+            index_task_to_close = int(input('What task do you want to close?'))
+
+            list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
             print('Task closed')
-            i = i + 1
+        elif user_input == "done2":
+            i = 0
+            while i < 2:
+                list_tasks[i] = (list_tasks[i][0], True)
+                print('Task closed')
+                i = i + 1
 
 
 def update_task(list_tasks):
@@ -79,13 +84,13 @@ def list_all_tasks(list_tasks):
 
 def do_action(list_tasks, user_input):
     actions = {
-        "add": ("add new task", "add", add_task),
+        "add": ("add new task", "add", AddTask.add_task),
         #
-        "add2": ("add more new task", "add2", add_task),
+        # "add2": ("add more new task", "add2", add_task),
         #
-        "done2": ("close more task", "done2", close_task),
+        "done2": ("close more task", "done2", CloseTask.close_task),
         #
-        "done": ("close task", "done", close_task),
+        "done": ("close task", "done", CloseTask.close_task),
         #
         "update": ("amend task name", "update", update_task),
         #
@@ -135,5 +140,4 @@ class Main:
 
 if __name__ == "__main__":
     m = Main
-    print("todolist : ")
-    print(m.launch_todolist())
+    m.launch_todolist()
