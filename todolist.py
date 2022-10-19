@@ -60,17 +60,17 @@ def list_all_tasks(list_tasks):
 
 def do_action(list_tasks, user_input):
     actions = {
-        "add": add_task,
-        "done": close_task,
-        "update": update_task,
-        "list": list_pending_tasks,
-        "list-done": list_done_tasks,
-        "list-all": list_all_tasks
+        "add": ('add new task', add_task),
+        "done": ('close task', close_task),
+        "update": ('amend task name', update_task),
+        "list": ('list pending tasks', list_pending_tasks),
+        "list-done": ('list closed tasks', list_done_tasks),
+        "list-all": ('list_all_tasks', list_all_tasks),
     }
     try:
         if user_input in actions.keys():
-            do = actions.get(user_input)
-            do(list_tasks)
+            label, action = actions.get(user_input)
+            action(list_tasks)
         else:
             raise Exception('invalid command, please retry')
     except Exception as err:
