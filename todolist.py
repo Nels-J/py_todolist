@@ -122,9 +122,12 @@ def ask_action(cli):
 
 def do_action(commande, tasks, menu, cli):
     try:
-        tasks = menu[commande][2](tasks, cli)
-    except Exception as e:
-        cli.print(f"La commande {e} n'est pas valide")
+        if commande in menu:
+            tasks = menu[commande][2](tasks, cli)
+        else:
+            raise InvalidCommandException
+    except InvalidCommandException as e:
+        cli.print(e)
     return tasks
 
 
