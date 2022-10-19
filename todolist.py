@@ -1,9 +1,8 @@
+from Tasks import Tasks
 from UI import UI
 
 
 def main():
-    tasks = []
-    tasks = remplir_tasks(tasks)
     menu = {
         "add": ("Ajouter une ligne", add),
         "done": ("Marquer comme terminée", done),
@@ -15,76 +14,61 @@ def main():
     UI.print_menu(menu)
     action = UI.interact("\nQue souhaitez-vous faire ? ")
     while action != "quit":
-        tasks = do_action(menu, action, tasks)
+        tasks = do_action(menu, action)
         action = UI.interact("\nQue souhaitez-vous faire ? ")
     UI.afficher("Goodbye\n")
 
 
-def add(tasks):
-    tasks.append((UI.interact("Saisir le nom de la tache : "), False))
-    UI.afficher("Tâche créée !")
-    return tasks
+def update():
+    pass
 
 
-def validate_user_input_number(tasks, wanted_action):
-    number = None
-    list_index = []
-    if wanted_action == "terminer":
-        list_index = [index for index, task in enumerate(tasks) if not task[1]]
-    elif wanted_action == "modifier":
-        list_index = [index for index, task in enumerate(tasks)]
-    try:
-        number = int(UI.interact("Quelle tâche voulez-vous " + wanted_action + " ?"))
-        if number not in list_index:
-            raise Exception("Le numéro que vous avez donné est invalide !")
-    except Exception as e:
-        UI.afficher(e)
-        validate_user_input_number(tasks, wanted_action)
-    return number
+def done():
+    pass
 
 
-def done(tasks):
-    list_pending(tasks)
-    number = validate_user_input_number(tasks, "terminer")
-    tasks[number] = (tasks[number][0], True)
-    UI.afficher(f'tache numéro {number} terminée')
-    return tasks
+def list_all():
+    list_pending()
+    list_done()
 
 
-def update(tasks):
-    list_all(tasks)
-    number = validate_user_input_number(tasks, "modifier")
-    task_new_name = UI.interact("Entrez le nouveau nom de la tâche à modifier")
-    tasks[number] = (task_new_name, tasks[number][1])
-    UI.afficher(f'tache numéro {number} modifiée')
-    return tasks
-
-
-def list_pending(tasks):
-    wanted_status = False
+def list_pending():
     wanted_tasks_string = "en cours"
-    UI.list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    wanted_tasks = tasks.list_pending()
+    if len(wanted_tasks) > 0:
+        UI.afficher(f'liste des tâches {wanted_tasks_string} :')
+        for task in wanted_tasks:
+            UI.afficher(f'{task[0]} : {task[1]}')
+    else:
+        UI.afficher(f'Pas de tâche  {wanted_tasks_string}')
 
 
-def list_done(tasks):
-    wanted_status = True
+def list_done():
     wanted_tasks_string = "terminées"
-    UI.list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    wanted_tasks = tasks.list_done()
+    if len(wanted_tasks) > 0:
+        UI.afficher(f'liste des tâches {wanted_tasks_string} :')
+        for task in wanted_tasks:
+            UI.afficher(f'{task[0]} : {task[1]}')
+    else:
+        UI.afficher(f'Pas de tâche  {wanted_tasks_string}')
 
 
-def list_all(tasks):
-    list_pending(tasks)
-    list_done(tasks)
+def add():
+    label = UI.interact("Saisir le nom de la tache : ")
+    tasks.add(label)
+    UI.afficher("Tâche créée !")
 
 
-def do_action(menu, command, tasks):
+def do_action(menu, command):
     try:
         if command in menu.keys():
-            menu[command][1](tasks)
+            menu[command][1]()
         else:
             raise Exception("Commande inconnue")
     except Exception as e:
         UI.afficher(e)
+        raise
     return tasks
 
 
@@ -99,5 +83,6 @@ def remplir_tasks(tasks):
 
 
 if __name__ == "__main__":
+    tasks = Tasks()
     UI = UI()
     main()
