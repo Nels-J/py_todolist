@@ -23,13 +23,20 @@ def add_task(list_tasks, user_input):
             i = i + 1
 
 
-def close_task(list_tasks):
-    for i, name in enumerate(list_tasks):
-        print('tache n°:', i, name[0])
-    index_task_to_close = int(input('What task do you want to close?'))
+def close_task(list_tasks, user_input):
+    if user_input == "done":
+        for i, name in enumerate(list_tasks):
+            print('tache n°:', i, name[0])
+        index_task_to_close = int(input('What task do you want to close?'))
 
-    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
-    print('Task closed')
+        list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
+        print('Task closed')
+    elif user_input == "done2":
+        i = 0
+        while i < 2:
+            list_tasks[i] = (list_tasks[i][0], True)
+            print('Task closed')
+            i = i + 1
 
 
 def update_task(list_tasks):
@@ -70,7 +77,10 @@ def list_all_tasks(list_tasks):
 def do_action(list_tasks, user_input):
     actions = {
         "add": add_task,
+        #
         "add2": add_task,
+        "done2": close_task,
+        #
         "done": close_task,
         "update": update_task,
         "list": list_pending_tasks,
@@ -82,9 +92,14 @@ def do_action(list_tasks, user_input):
         if user_input == "add":
             do = actions.get("add")
             do(list_tasks, user_input)
+            #
         elif user_input == "add2":
             do = actions.get("add2")
             do(list_tasks, user_input)
+        elif user_input == "done2":
+            do = actions.get("done2")
+            do(list_tasks, user_input)
+            #
         elif user_input == "done":
             do = actions.get("done")
             do(list_tasks)
