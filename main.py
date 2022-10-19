@@ -22,10 +22,7 @@ def done(tasks):
     if index_tache < 0 or index_tache + 1 > len(tasks):
         print("Cette tâche n'existe pas")
     else:
-        task = (tasks[index_tache][0], True)
-        tasks[index_tache] = task
-        is_in_list = True
-        print("Tâche terminée")
+        tasks = close_task(tasks, index_tache)
     return tasks
 
 
@@ -42,8 +39,7 @@ def update(tasks):
         print("Cette tâche n'existe pas")
     else:
         nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
-        task = (nouveau_nom_tache, tasks[index_tache][1])
-        tasks[index_tache] = task
+        update_task(tasks, index_tache, nouveau_nom_tache)
         print("Tâche modifée")
     return tasks
 
@@ -123,10 +119,26 @@ def user_command(tasks, user_choice, menu):
     return tasks
 
 
+def close_task(tasks, task_number):
+    task = (tasks[task_number][0], True)
+    tasks[task_number] = task
+    return tasks
+
+
+def update_task(tasks, task_number, new_name):
+    task = (new_name, tasks[task_number][1])
+    tasks[task_number] = task
+    return tasks
+
+
 def scenario(tasks):
     add_to_list(tasks, ("t1", False))
     add_to_list(tasks, ("t2", False))
+    update_task(tasks, 1, "new T2")
+    close_task(tasks, 1)
+    list_all(tasks)
     return tasks
+
 
 def main():
     want_to_quit = False
