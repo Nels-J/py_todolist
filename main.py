@@ -1,8 +1,8 @@
 def add(tasks):
-    user_task = input("Veuillez saisir votre nouvelle tâche")
+    user_task = input("Veuillez saisir votre nouvelle tâche: ")
     task = (user_task, False)
     tasks.append(task)
-    print("tâche créée")
+    print("Tâche créée")
     return tasks
 
 
@@ -11,16 +11,16 @@ def done(tasks):
     while index_tache is None:
         try:
             list_all(tasks)
-            index_tache = int(input("Indiquez le numéro de la tâche terminée")) - 1
+            index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
         except Exception as err:
-            print("entrée invalide : merci d'entrer un entier")
+            print("Entrée invalide : merci d'entrer un entier")
     if index_tache < 0 or index_tache + 1 > len(tasks):
         print("Cette tâche n'existe pas")
     else:
         task = (tasks[index_tache][0], True)
         tasks[index_tache] = task
         is_in_list = True
-        print("tâche terminée")
+        print("Tâche terminée")
     return tasks
 
 
@@ -32,14 +32,14 @@ def update(tasks):
             index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
 
         except Exception as err:
-            print("entrée invalide : merci d'entrer un entier")
+            print("Entrée invalide : merci d'entrer un entier")
     if index_tache < 0 or index_tache + 1 > len(tasks):
         print("Cette tâche n'existe pas")
     else:
         nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
         task = (nouveau_nom_tache, tasks[index_tache][1])
         tasks[index_tache] = task
-        print("tâche modifée")
+        print("Tâche modifée")
     return tasks
 
 
@@ -88,7 +88,7 @@ def list_all(tasks):
 
 
 def print_menu(menu):
-    print("voici le menu :")
+    print("Voici le menu :")
     # print("add       : Ajouter une tâche")
     # print("done      : Effectuer une tâche")
     # print("update    : Modifier le libellé d'une tâche")
@@ -101,8 +101,10 @@ def print_menu(menu):
 
 
 def is_valid(user_choice, menu):
-    # vérifier que user_choice est une clé du dictionnaire menu
-    return True
+    if user_choice in menu:
+        return True
+    else:
+        return False
 
 
 def user_command(tasks, user_choice, menu):
