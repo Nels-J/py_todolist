@@ -1,20 +1,43 @@
-def main():
-    tasks = []
-    tasks = remplir_tasks(tasks)
-    menu = {
-        "add": ("Ajouter une ligne", add),
-        "done": ("Marquer comme terminée", done),
-        "update": ("Mettre à jour", update),
-        "list": ("Afficher la liste des tâches non terminées", list_pending),
-        "list_done": ("Afficher la liste des tâches terminées", list_done),
-        "list_all": ("Afficher toutes les tâches", list_all),
-    }
-    print_menu(menu)
-    action = input("\nQue souhaitez-vous faire ? ")
-    while action != "quit":
-        tasks = do_action(menu, action, tasks)
+# def main():
+#     tasks = []
+#     tasks = remplir_tasks(tasks)
+#     menu = {
+#         "add": ("Ajouter une ligne", add),
+#         "done": ("Marquer comme terminée", done),
+#         "update": ("Mettre à jour", update),
+#         "list": ("Afficher la liste des tâches non terminées", list_pending),
+#         "list_done": ("Afficher la liste des tâches terminées", list_done),
+#         "list_all": ("Afficher toutes les tâches", list_all),
+#     }
+#     print_menu(menu)
+#     action = input("\nQue souhaitez-vous faire ? ")
+#     while action != "quit":
+#         tasks = do_action(menu, action, tasks)
+#         action = input("\nQue souhaitez-vous faire ? ")
+#     print("Goodbye\n")
+
+class Main:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def main(cls):
+        tasks = []
+        tasks = remplir_tasks(tasks)
+        menu = {
+            "add": ("Ajouter une ligne", add),
+            "done": ("Marquer comme terminée", done),
+            "update": ("Mettre à jour", update),
+            "list": ("Afficher la liste des tâches non terminées", list_pending),
+            "list_done": ("Afficher la liste des tâches terminées", list_done),
+            "list_all": ("Afficher toutes les tâches", list_all),
+        }
+        print_menu(menu)
         action = input("\nQue souhaitez-vous faire ? ")
-    print("Goodbye\n")
+        while action != "quit":
+            tasks = do_action(menu, action, tasks)
+            action = input("\nQue souhaitez-vous faire ? ")
+        print("Goodbye\n")
 
 
 def add(tasks):
@@ -120,4 +143,4 @@ def remplir_tasks(tasks):
 
 
 if __name__ == "__main__":
-    main()
+    Main.main()
