@@ -8,9 +8,11 @@ def main():
 
 
 def done(tasks):
-
-    #Si erreur d'index
-    index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
+    index = len(tasks)
+    while index >= len(tasks):
+        index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
+        if index >= len(tasks):
+            print("valeur incorrecte")
     tasks[index] = tasks[index][0], "Terminée"
     print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
     list_all(tasks)
@@ -28,8 +30,11 @@ def add(tasks):
 
 
 def update(tasks):
-    #contrôler l'index
-    index = int(input("Saissez le numéro de la tâche à modifier (à partir de 0)"))
+    index = len(tasks)
+    while index >= len(tasks):
+        index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
+        if index >= len(tasks):
+            print("valeur incorrecte")
     tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
     print("Votre tâche est renommée en :", tasks[index][0])
     list_all(tasks)
@@ -39,7 +44,7 @@ def update(tasks):
 def display_list(tasks):
     print("******* Toutes vos tâches en cours: *******")
     for task in tasks:
-        if task[1]== "A faire":
+        if task[1] == "A faire":
             print(task[0], "=>", task[1])
 
 
@@ -52,7 +57,7 @@ def list_all(tasks):
 def list_done(tasks):
     print("******* Toutes vos tâches terminées: *******")
     for task in tasks:
-        if task[1]== "Terminée":
+        if task[1] == "Terminée":
             print(task[0], "=>", task[1])
 
 
