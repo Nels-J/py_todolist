@@ -18,13 +18,18 @@ class Interface:
 class NotImplementedException(Exception):
     pass
 
+
 class InvalidCommandException(Exception):
     pass
 
+
 class NotIntegerException(Exception):
     pass
+
+
 class NotInListIndexException(Exception):
     pass
+
 
 def add_task(list_tasks, interface):
     new_task = (input('Name of task :'), False)
@@ -34,7 +39,6 @@ def add_task(list_tasks, interface):
 
 def close_task(list_tasks, interface):
     for i, name in enumerate(list_tasks):
-
         interface.print(f"tache n°: {i} {name[0]}")
 
     try:
@@ -55,21 +59,29 @@ def close_task(list_tasks, interface):
         close_task(list_tasks, interface)
 
 
-
-
-
-
 def update_task(list_tasks, interface):
     if len(list_tasks) == 0:
         interface.print('No tasks')
         return
 
-    for i, name in enumerate(list_tasks, interface):
+    for i, name in enumerate(list_tasks):
         interface.print(f"tache n°: {i} {name[0]}")
-    index_task_to_update = int(input('What task do you want to update?'))
-    new_task_name = input('What is new name of the task?')
-    list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
-    interface.print('Task name update')
+    try:
+        index_task_to_update = int(input('What task do you want to update?'))
+        if index_task_to_update >= len(list_tasks):
+            raise NotInListIndexException
+        new_task_name = input('What is new name of the task?')
+        list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
+        interface.print('Task name update')
+    except ValueError:
+        try:
+            raise NotIntegerException
+        except NotIntegerException:
+            interface.print("not integer exception")
+            update_task(list_tasks, interface)
+    except NotInListIndexException:
+        interface.print("fhjxfglkj")
+        update_task(list_tasks, interface)
 
 
 def list_pending_tasks(list_tasks, interface):
