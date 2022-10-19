@@ -72,15 +72,19 @@ def list_wanted_tasks(tasks, wanted_status, wanted_tasks_string):
 
 
 def list_pending(tasks):
-    wanted_status = False
-    wanted_tasks_string = "en cours"
-    list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    # refacto
+    # wanted_status = False
+    # wanted_tasks_string = "en cours"
+    # list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    list_wanted_tasks(tasks, False, "en cours")
 
 
 def list_done(tasks):
-    wanted_status = True
-    wanted_tasks_string = "terminées"
-    list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    # refacto
+    # wanted_status = True
+    # wanted_tasks_string = "terminées"
+    # list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
+    list_wanted_tasks(tasks, True, "terminées")
 
 
 def list_all(tasks):
