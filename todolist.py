@@ -15,56 +15,64 @@ def add(tasks):
     return tasks
 
 
-def done(tasks):
-    list_pending(tasks)
+def validate_user_input_number(tasks, wanted_action):
+    list_index = []
+    number = None
+    if wanted_action == "terminer":
+        list_index = [index for index, task in enumerate(tasks) if not task[1]]
+    else:
+        list_index = [index for index, task in enumerate(tasks)]
     try:
-        number = int(input("Quelle tâche voulez-vous terminer ?"))
-        if number < 0 or number > len(tasks) - 1:
+        number = int(input("Quelle tâche voulez-vous "+ wanted_action + " ?"))
+        if number not in list_index:
             raise Exception("Le numéro que vous avez donné est invalide !")
-        else:
-            tasks[number] = (tasks[number][0], True)
-            print("tache numéro", number, "terminée")
     except Exception as e:
         print(e)
-        done(tasks)
+        validate_user_input_number(tasks, wanted_action)
+    return number
+
+
+def done(tasks):
+    list_pending(tasks)
+    number = validate_user_input_number(tasks, "terminer")
+    tasks[number] = (tasks[number][0], True)
+    print("tache numéro", number, "terminée")
     return tasks
 
 
 def update(tasks):
-    if tasks[0][0]:
-        tasks[0] = (input(f'''Ancienne tâche : {tasks[0][0]}
-            Modifier la tache : '''), tasks[0][1])
-        print(f'''Vous venez de modifier la tache comme suit: 
-            {tasks[0][0]}
-            ''')
-        return tasks
-    else:
-        print("Pas de tâche")
+    list_all(tasks)
+    number = validate_user_input_number(tasks, "modifier")
+    task_new_name = input("Entrez le nouveau nom de la tâche à modifier")
+    tasks[number] = (task_new_name, tasks[number][1])
+    print("tache numéro", number, "modifiée")
+    return tasks
 
 
-def list_wanted_tasks(tasks, wanted_status, wanted_tasks):
-    pending_tasks = []
+def list_wanted_tasks(tasks, wanted_status, wanted_tasks_string):
+    wanted_tasks = []
     for index, task in enumerate(tasks):
         if task[1] == wanted_status:
-            pending_tasks.append((index, task[0]))
-    if len(pending_tasks) > 0:
-        print("liste des tâches", wanted_tasks, " :")
-        for task in pending_tasks:
+            wanted_tasks.append((index, task[0]))
+    if len(wanted_tasks) > 0:
+        print("liste des tâches", wanted_tasks_string, " :")
+        for task in wanted_tasks:
             print(task[0], " : ", task[1])
     else:
-        print("Pas de tâche ", wanted_tasks)
+        print("Pas de tâche ", wanted_tasks_string)
+    return wanted_tasks
 
 
 def list_pending(tasks):
     wanted_status = False
-    wanted_tasks = "en cours"
-    list_wanted_tasks(tasks, wanted_status, wanted_tasks)
+    wanted_tasks_string = "en cours"
+    list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
 
 
 def list_done(tasks):
     wanted_status = True
-    wanted_tasks = "terminées"
-    list_wanted_tasks(tasks, wanted_status, wanted_tasks)
+    wanted_tasks_string = "terminées"
+    list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
 
 
 def list_all(tasks):
