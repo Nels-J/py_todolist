@@ -1,21 +1,19 @@
 def main():
-    task = ("", "")
     tasks = []
     action = ask_action()
     while action != "quit":
-        task = do_action(action, task, tasks)
+        tasks = do_action(action, tasks)
         action = ask_action()
     print("Goodbye\n")
 
 
 def done(tasks):
+
+    #Si erreur d'index
     index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
-    done_task = (tasks[index][0], "Terminé")
-    tasks[index] = done_task
+    tasks[index] = tasks[index][0], "Terminée"
     print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
-    print("******* Votre nouvelle liste de tâches :*******")
-    for task in tasks:
-        print(task[0], "=>", task[1])
+    list_all(tasks)
     return tasks
 
 
@@ -26,37 +24,36 @@ def add(tasks):
         ''')
     tasks.append(task)
     print("tasks=>", tasks)
-    return task, tasks
+    return tasks
 
 
 def update(tasks):
+    #contrôler l'index
     index = int(input("Saissez le numéro de la tâche à modifier (à partir de 0)"))
-    updated_task = (input("Veuillez renommer votre tâche"), tasks[index][1])
-    tasks[index] = updated_task
-    print("Votre tâche est renommée en :", updated_task[0])
-    print("******* Votre nouvelle liste de tâches :*******")
-    for task in tasks:
-        print(task[0], "=>", task[1])
+    tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
+    print("Votre tâche est renommée en :", tasks[index][0])
+    list_all(tasks)
     return tasks
 
 
 def display_list(tasks):
     print("******* Toutes vos tâches en cours: *******")
-    pending_tasks = [task for task in tasks if task[1] == "A faire"]
-    for task in pending_tasks:
-        print(task[0], "=>", task[1])
+    for task in tasks:
+        if task[1]== "A faire":
+            print(task[0], "=>", task[1])
 
 
 def list_all(tasks):
     print("******* Toutes vos tâches: *******")
-    for task in tasks:
-        print(task[0], "=>", task[1])
+    display_list(tasks)
+    list_done(tasks)
 
 
 def list_done(tasks):
     print("******* Toutes vos tâches terminées: *******")
-    done_tasks = [task for task in tasks if task[1] == "Terminé"]
-    print(done_tasks)
+    for task in tasks:
+        if task[1]== "Terminée":
+            print(task[0], "=>", task[1])
 
 
 def menu():
@@ -75,10 +72,10 @@ def ask_action():
     return commande
 
 
-def do_action(commande, task, tasks):
+def do_action(commande, tasks):
     try:
         if commande == "add":
-            task, tasks = add(tasks)
+            tasks = add(tasks)
         elif commande == "done":
             tasks = done(tasks)
         elif commande == "update":
@@ -94,7 +91,7 @@ def do_action(commande, task, tasks):
     except(ValueError, NotImplementedError) as e:
         print(e)
 
-    return task, tasks
+    return tasks
 
 
 if __name__ == "__main__":
