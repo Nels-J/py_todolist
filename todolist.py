@@ -1,6 +1,6 @@
 def main():
     tasks = []
-    tasks = remplir_tasks(tasks)
+    # tasks = remplir_tasks(tasks)
     action = ask_action()
     while action != "quit":
         tasks = do_action(action, tasks)
@@ -9,10 +9,8 @@ def main():
 
 
 def add(tasks):
-    tasks[0] = (input("Saisir la tache : "), False)
-    print(f'''Vous venez de créer la tache: 
-        {tasks[0][0]}
-        ''')
+    tasks.append((input("Saisir la tache : "), False))
+    print("Tâche créée !")
     return tasks
 
 
