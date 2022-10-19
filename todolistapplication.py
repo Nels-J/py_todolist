@@ -1,3 +1,5 @@
+
+
 class TodoListApplication:
     def __init__(self):
         self.tasks: list = []
@@ -14,27 +16,28 @@ class TodoListApplication:
         print("Quitter (command 'quit')")
 
     def add(self):
+        from task import Task
         task_name = input("Quel est le nom de votre nouvelle tache ?")
         task_status = False
-        self.tasks.append((task_name, task_status))
+        self.tasks.append(Task(task_name, task_status))
 
     def done(self):
         task_to_ckeck = input('Quelle tache souhaitez-vous accomplir ?')
         task_status = True
-        self.tasks[int(task_to_ckeck) - 1] = (self.tasks[int(task_to_ckeck) - 1][0], task_status)
+        self.tasks[int(task_to_ckeck) - 1].status = task_status
 
     def update(self):
         task_to_update = input('Quelle tâche voulez vous modifier ?')
         new_name = input('Quel est le nouveau nom de votre tâche ?')
-        self.tasks[int(task_to_update) - 1] = (new_name, self.tasks[int(task_to_update) - 1][1])
+        self.tasks[int(task_to_update) - 1].name = new_name
 
     def list_in_progress(self):
         print('Liste des tâches en cours:')
         number_of_tasks_in_progress = 0
         for count, task in enumerate(self.tasks):
-            if not task[1]:
+            if not task.status:
                 number_of_tasks_in_progress += 1
-                print(count + 1, '-', task[0])
+                print(count + 1, '-', task.name)
         if number_of_tasks_in_progress == 0:
             print('Aucune tâche en cours')
 
@@ -42,9 +45,9 @@ class TodoListApplication:
         print('Liste des tâches terminées:')
         number_of_tasks_done = 0
         for count, task in enumerate(self.tasks):
-            if task[1]:
+            if task.status:
                 number_of_tasks_done += 1
-                print(count + 1, '-', task[0])
+                print(count + 1, '-', task.name)
         if number_of_tasks_done == 0:
             print('Aucune tâche terminée')
 
