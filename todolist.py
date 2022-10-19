@@ -24,7 +24,6 @@ class InvalidValueException(Exception):
 
 
 class TasksList:
-    tasks_list: []
 
     def __init__(self):
         self.tasks_list = []
