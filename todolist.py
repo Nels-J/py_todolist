@@ -1,10 +1,9 @@
 class Main:
     def __init__(self):
-        pass
+        self.tasks = []
 
     def main(self):
-        tasks = []
-        tasks = remplir_tasks(tasks)
+        self.tasks = remplir_tasks(self.tasks)
         menu = {
             "add": ("Ajouter une ligne", Tasks.add),
             "done": ("Marquer comme terminée", done),
@@ -16,7 +15,7 @@ class Main:
         print_menu(menu)
         action = input("\nQue souhaitez-vous faire ? ")
         while action != "quit":
-            tasks = do_action(menu, action, tasks)
+            self.tasks = do_action(menu, action, self.tasks)
             action = input("\nQue souhaitez-vous faire ? ")
         print("Goodbye\n")
 
