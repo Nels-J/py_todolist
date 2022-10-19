@@ -1,21 +1,3 @@
-# def main():
-#     tasks = []
-#     tasks = remplir_tasks(tasks)
-#     menu = {
-#         "add": ("Ajouter une ligne", add),
-#         "done": ("Marquer comme terminée", done),
-#         "update": ("Mettre à jour", update),
-#         "list": ("Afficher la liste des tâches non terminées", list_pending),
-#         "list_done": ("Afficher la liste des tâches terminées", list_done),
-#         "list_all": ("Afficher toutes les tâches", list_all),
-#     }
-#     print_menu(menu)
-#     action = input("\nQue souhaitez-vous faire ? ")
-#     while action != "quit":
-#         tasks = do_action(menu, action, tasks)
-#         action = input("\nQue souhaitez-vous faire ? ")
-#     print("Goodbye\n")
-
 class Main:
     def __init__(self):
         pass
@@ -25,7 +7,7 @@ class Main:
         tasks = []
         tasks = remplir_tasks(tasks)
         menu = {
-            "add": ("Ajouter une ligne", add),
+            "add": ("Ajouter une ligne", Tasks.add),
             "done": ("Marquer comme terminée", done),
             "update": ("Mettre à jour", update),
             "list": ("Afficher la liste des tâches non terminées", list_pending),
@@ -40,10 +22,21 @@ class Main:
         print("Goodbye\n")
 
 
-def add(tasks):
-    tasks.append((input("Saisir le nom de la tache : "), False))
-    print("Tâche créée !")
-    return tasks
+class Tasks:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def add(cls, tasks):
+        tasks.append((input("Saisir le nom de la tache : "), False))
+        print("Tâche créée !")
+        return tasks
+
+
+# def add(tasks):
+#     tasks.append((input("Saisir le nom de la tache : "), False))
+#     print("Tâche créée !")
+#     return tasks
 
 
 def validate_user_input_number(tasks, wanted_action):
