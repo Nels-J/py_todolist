@@ -8,14 +8,21 @@ def main():
 
 
 def done(tasks):
-    index = len(tasks)
-    while index >= len(tasks):
-        index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
-        if index >= len(tasks):
-            print("valeur incorrecte")
-    tasks[index] = tasks[index][0], "Terminée"
-    print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
-    list_all(tasks)
+    pending = []
+    for task in tasks:
+        if task[1] == "A faire":
+            pending.append(task)
+    if not pending:
+        print('Pas de tâche')
+    else:
+        index = len(tasks)
+        while index >= len(tasks):
+            index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
+            if index >= len(tasks):
+                print("valeur incorrecte")
+        tasks[index] = tasks[index][0], "Terminée"
+        print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
+        list_all(tasks)
     return tasks
 
 
@@ -30,14 +37,17 @@ def add(tasks):
 
 
 def update(tasks):
-    index = len(tasks)
-    while index >= len(tasks):
-        index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
-        if index >= len(tasks):
-            print("valeur incorrecte")
-    tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
-    print("Votre tâche est renommée en :", tasks[index][0])
-    list_all(tasks)
+    if not tasks:
+        print('Pas de tâche')
+    else:
+        index = len(tasks)
+        while index >= len(tasks):
+            index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
+            if index >= len(tasks):
+                print("valeur incorrecte")
+        tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
+        print("Votre tâche est renommée en :", tasks[index][0])
+        list_all(tasks)
     return tasks
 
 
