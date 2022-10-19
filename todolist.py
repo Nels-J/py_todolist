@@ -55,7 +55,7 @@ def close_task(list_tasks, interface):
             interface.print("not integer exception")
             close_task(list_tasks, interface)
     except NotInListIndexException:
-        interface.print("fhjxfglkj")
+        interface.print("l'index n'est pas valide")
         close_task(list_tasks, interface)
 
 
@@ -80,7 +80,7 @@ def update_task(list_tasks, interface):
             interface.print("not integer exception")
             update_task(list_tasks, interface)
     except NotInListIndexException:
-        interface.print("fhjxfglkj")
+        interface.print("l'index n'est pas valide")
         update_task(list_tasks, interface)
 
 
