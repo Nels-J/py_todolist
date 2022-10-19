@@ -2,8 +2,7 @@ class Main:
     def __init__(self):
         pass
 
-    @classmethod
-    def main(cls):
+    def main(self):
         tasks = []
         tasks = remplir_tasks(tasks)
         menu = {
@@ -31,12 +30,6 @@ class Tasks:
         tasks.append((input("Saisir le nom de la tache : "), False))
         print("Tâche créée !")
         return tasks
-
-
-# def add(tasks):
-#     tasks.append((input("Saisir le nom de la tache : "), False))
-#     print("Tâche créée !")
-#     return tasks
 
 
 def validate_user_input_number(tasks, wanted_action):
@@ -136,4 +129,5 @@ def remplir_tasks(tasks):
 
 
 if __name__ == "__main__":
-    Main.main()
+    main = Main()
+    main.main()
