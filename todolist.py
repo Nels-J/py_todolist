@@ -1,3 +1,6 @@
+# from Main import Main
+
+
 def print_menu():
     print("add       : add new task")
     print("add2      : add more new task")
@@ -103,17 +106,34 @@ def do_action(list_tasks, user_input):
         return list_tasks
 
 
-def main():
-    print('\nWelcome to your To Do List application !\n')
-    list_tasks = []
-    user_input = ""
-    while user_input != "quit":
-        print_menu()
-        user_input = input("Please enter your command :")
-        list_tasks = do_action(list_tasks, user_input)
-    print("Goodbye")
-    print('╭∩╮(◉_◉)╭∩╮')
+# def main():
+#     print('\nWelcome to your To Do List application !\n')
+#     list_tasks = []
+#     user_input = ""
+#     while user_input != "quit":
+#         print_menu()
+#         user_input = input("Please enter your command :")
+#         list_tasks = do_action(list_tasks, user_input)
+#     print("Goodbye")
+#     print('╭∩╮(◉_◉)╭∩╮')
+
+class Main:
+    def __init__(self):
+        print("hello")
+
+    @classmethod
+    def launch_todolist(cls):
+        list_tasks = []
+        user_input = ""
+        while user_input != "quit":
+            print_menu()
+            user_input = input("Please enter your command :")
+            list_tasks = do_action(list_tasks, user_input)
+        print("Goodbye")
+        print('╭∩╮(◉_◉)╭∩╮')
 
 
 if __name__ == "__main__":
-    main()
+    m = Main
+    print("todolist : ")
+    print(m.launch_todolist())
