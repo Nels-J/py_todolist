@@ -29,10 +29,11 @@ class TasksList:
         self.tasks_list = []
 
     def add_task(self, tasks, interface_display):
-        task = (input("Saisir la tache : "), "A faire")
-        interface_display.print(f'Vous venez de créer la tache: {task[0]}')
+        task_name = input("Saisir la tache : ")
+        task = Task(task_name)
+        interface_display.print(f'Vous venez de créer la tache: {task.name}')
         self.tasks_list.append(task)
-        interface_display.print(f"tasks=> {self.tasks_list}")
+        self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
     def update_task(self, tasks, interface_display):
@@ -47,18 +48,18 @@ class TasksList:
                         raise InvalidValueException
                 except InvalidValueException as e:
                     interface_display.print(e)
-            self.tasks_list[index] = input("Veuillez renommer votre tâche"), self.tasks_list[index][1]
-            interface_display.print(f"Votre tâche est renommée en : {self.tasks_list[index][0]}")
+            self.tasks_list[index].name = input("Veuillez renommer votre tâche")
+            interface_display.print(f"Votre tâche est renommée en : {self.tasks_list[index].name}")
             self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
     def mark_task_as_done(self, tasks, interface_display):
-        pending = []
+        pending_tasks = []
         for task in self.tasks_list:
-            if task[1] == "A faire":
-                pending.append(task)
-        if not pending:
-            interface_display.no_tasks()
+            if task.status == "A faire":
+                pending_tasks.append(task)
+        if not pending_tasks:
+            interface_display.print("Il n'y a pas de tâche en cours")
         else:
             index = len(self.tasks_list)
             while index >= len(self.tasks_list):
@@ -66,19 +67,21 @@ class TasksList:
                     index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
                     if index >= len(self.tasks_list):
                         raise InvalidValueException
+                except Exception:
+                    interface_display.print("Merci de saisir un nombre")
                 except InvalidValueException as e:
                     interface_display.print(e)
-            self.tasks_list[index] = self.tasks_list[index][0], "Terminée"
+            self.tasks_list[index].status = "Terminée"
             interface_display.print(
-                f'Votre tâche: {self.tasks_list[index][0]} est à présent: {self.tasks_list[index][1]}')
+                f'Votre tâche: {self.tasks_list[index].name} est à présent: {self.tasks_list[index].status}')
             self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
     def display_pending_tasks(self, tasks, interface_display):
         interface_display.print("******* Toutes vos tâches en cours: *******")
         for task in self.tasks_list:
-            if task[1] == "A faire":
-                interface_display.print(f"{task[0]} => {task[1]}")
+            if task.status == "A faire":
+                interface_display.print(f"{task.name} => {task.status}")
         return self.tasks_list
 
     def display_all_tasks(self, tasks, interface_display):
@@ -90,9 +93,15 @@ class TasksList:
     def display_done_tasks(self, tasks, interface_display):
         interface_display.print("******* Toutes vos tâches terminées: *******")
         for task in self.tasks_list:
-            if task[1] == "Terminée":
-                interface_display.print(f"{task[0]} => {task[1]}")
+            if task.status == "Terminée":
+                interface_display.print(f"{task.name} => {task.status}")
         return self.tasks_list
+
+
+class Task:
+    def __init__(self, name):
+        self.name = name
+        self.status = "A faire"
 
 
 def main():
