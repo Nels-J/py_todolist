@@ -1,11 +1,16 @@
-class Main:
+class Tasklist:
     def __init__(self):
         self.tasks = []
 
+class Main:
+    def __init__(self):
+        self.tasks = []
+        self.tasklist = Tasklist()
+
     def main(self):
-        self.tasks = remplir_tasks(self.tasks)
+        self.tasklist.tasks = remplir_tasks(self.tasklist.tasks)
         menu = {
-            "add": ("Ajouter une ligne", Tasks.add),
+            "add": ("Ajouter une ligne", add),
             "done": ("Marquer comme terminée", done),
             "update": ("Mettre à jour", update),
             "list": ("Afficher la liste des tâches non terminées", list_pending),
@@ -15,20 +20,14 @@ class Main:
         print_menu(menu)
         action = input("\nQue souhaitez-vous faire ? ")
         while action != "quit":
-            self.tasks = do_action(menu, action, self.tasks)
+            self.tasklist.tasks = do_action(menu, action, self.tasklist.tasks)
             action = input("\nQue souhaitez-vous faire ? ")
         print("Goodbye\n")
 
-
-class Tasks:
-    def __init__(self):
-        pass
-
-    @classmethod
-    def add(cls, tasks):
-        tasks.append((input("Saisir le nom de la tache : "), False))
-        print("Tâche créée !")
-        return tasks
+def add(tasks):
+    tasks.append((input("Saisir le nom de la tache : "), False))
+    print("Tâche créée !")
+    return tasks
 
 
 def validate_user_input_number(tasks, wanted_action):
@@ -80,18 +79,10 @@ def list_wanted_tasks(tasks, wanted_status, wanted_tasks_string):
 
 
 def list_pending(tasks):
-    # refacto
-    # wanted_status = False
-    # wanted_tasks_string = "en cours"
-    # list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
     list_wanted_tasks(tasks, False, "en cours")
 
 
 def list_done(tasks):
-    # refacto
-    # wanted_status = True
-    # wanted_tasks_string = "terminées"
-    # list_wanted_tasks(tasks, wanted_status, wanted_tasks_string)
     list_wanted_tasks(tasks, True, "terminées")
 
 
