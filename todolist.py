@@ -36,7 +36,7 @@ class TasksList:
         self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
-    def update_task(self, tasks, interface_display):
+    def update_task_in_list(self, tasks, interface_display):
         if not self.tasks_list:
             interface_display.print("Pas de tâche à afficher")
         else:
@@ -48,8 +48,7 @@ class TasksList:
                         raise InvalidValueException
                 except InvalidValueException as e:
                     interface_display.print(e)
-            self.tasks_list[index].name = input("Veuillez renommer votre tâche")
-            interface_display.print(f"Votre tâche est renommée en : {self.tasks_list[index].name}")
+            self.tasks_list[index] = self.tasks_list[index].update_task(interface_display)
             self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
@@ -103,13 +102,18 @@ class Task:
         self.name = name
         self.status = "A faire"
 
+    def update_task(self, interface_display):
+        self.name = input("Veuillez renommer votre tâche")
+        interface_display.print(f"Votre tâche est renommée en : {self.name}")
+        return self
+
 
 def main():
     interface_display = InterfaceDisplay()
     tasks = TasksList()
     menu = {
         "add": ("Ajouter une tâche", "add", tasks.add_task),
-        "update": ("Changer le nom d'une tâche", "update", tasks.update_task),
+        "update": ("Changer le nom d'une tâche", "update", tasks.update_task_in_list),
         "done": ("Marquer une tâche comme terminée", "done", tasks.mark_task_as_done),
         "list": ("Lister les tâches en cours", "list", tasks.display_pending_tasks),
         "list_done": ("Lister les tâches terminées", "list_done", tasks.display_done_tasks),
