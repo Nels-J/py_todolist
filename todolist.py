@@ -12,19 +12,28 @@ class CLUI:
     def print(self, message):
         print(message)
 
-def main():
 
+class InvalidCommandException(Exception):
+    def __init__(self):
+        super().__init__("Commande invalide")
+
+
+class InvalidValueException(Exception):
+    def __init__(self):
+        super().__init__("Valeur invalide")
+
+
+def main():
     cli = CLUI()
 
-    menu={
-        "add":("Ajouter une tâche", "add", add),
+    menu = {
+        "add": ("Ajouter une tâche", "add", add),
         "update": ("Changer le nom d'une tâche", "update", update),
         "done": ("Marquer une tâche comme terminée", "done", done),
         "list": ("Lister les tâches en cours", "list", display_list),
         "list_done": ("Lister les tâches terminées", "list_done", list_done),
         "list_all": ("Lister toutes les tâches", "list_all", list_all),
     }
-
 
     tasks = []
     action = ask_action(cli)
@@ -44,9 +53,12 @@ def done(tasks, cli):
     else:
         index = len(tasks)
         while index >= len(tasks):
-            index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
-            if index >= len(tasks):
-                cli.print("valeur incorrecte")
+            try:
+                index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
+                if index >= len(tasks):
+                    raise InvalidValueException
+            except InvalidValueException as e:
+                cli.print(e)
         tasks[index] = tasks[index][0], "Terminée"
         cli.print(f'Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}')
         list_all(tasks, cli)
@@ -67,9 +79,12 @@ def update(tasks, cli):
     else:
         index = len(tasks)
         while index >= len(tasks):
-            index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
-            if index >= len(tasks):
-                cli.print("valeur incorrecte")
+            try:
+                index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
+                if index >= len(tasks):
+                    raise InvalidValueException
+            except InvalidValueException as e:
+                cli.print(e)
         tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
         cli.print(f"Votre tâche est renommée en : {tasks[index][0]}")
         list_all(tasks, cli)
@@ -106,11 +121,10 @@ def ask_action(cli):
 
 
 def do_action(commande, tasks, menu, cli):
-
     try:
         tasks = menu[commande][2](tasks, cli)
     except Exception as e:
-        cli.print(f"Commande invalide: {e}")
+        cli.print(f"La commande {e} n'est pas valide")
     return tasks
 
 
