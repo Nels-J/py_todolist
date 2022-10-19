@@ -49,7 +49,7 @@ class TasksList:
                     interface_display.print(e)
             self.tasks_list[index] = input("Veuillez renommer votre tâche"), self.tasks_list[index][1]
             interface_display.print(f"Votre tâche est renommée en : {self.tasks_list[index][0]}")
-            list_all(self.tasks_list, interface_display)
+            self.display_all_tasks(self.tasks_list, interface_display)
         return self.tasks_list
 
     def mark_task_as_done(self, tasks, interface_display):
@@ -69,8 +69,29 @@ class TasksList:
                 except InvalidValueException as e:
                     interface_display.print(e)
             self.tasks_list[index] = self.tasks_list[index][0], "Terminée"
-            interface_display.print(f'Votre tâche: {self.tasks_list[index][0]} est à présent: {self.tasks_list[index][1]}')
-            list_all(self.tasks_list, interface_display)
+            interface_display.print(
+                f'Votre tâche: {self.tasks_list[index][0]} est à présent: {self.tasks_list[index][1]}')
+            self.display_all_tasks(self.tasks_list, interface_display)
+        return self.tasks_list
+
+    def display_pending_tasks(self, tasks, interface_display):
+        interface_display.print("******* Toutes vos tâches en cours: *******")
+        for task in self.tasks_list:
+            if task[1] == "A faire":
+                interface_display.print(f"{task[0]} => {task[1]}")
+        return self.tasks_list
+
+    def display_all_tasks(self, tasks, interface_display):
+        interface_display.print("******* Toutes vos tâches: *******")
+        self.display_pending_tasks(self.tasks_list, interface_display)
+        self.display_done_tasks(self.tasks_list, interface_display)
+        return self.tasks_list
+
+    def display_done_tasks(self, tasks, interface_display):
+        interface_display.print("******* Toutes vos tâches terminées: *******")
+        for task in self.tasks_list:
+            if task[1] == "Terminée":
+                interface_display.print(f"{task[0]} => {task[1]}")
         return self.tasks_list
 
 
@@ -81,9 +102,9 @@ def main():
         "add": ("Ajouter une tâche", "add", tasks.add_task),
         "update": ("Changer le nom d'une tâche", "update", tasks.update_task),
         "done": ("Marquer une tâche comme terminée", "done", tasks.mark_task_as_done),
-        "list": ("Lister les tâches en cours", "list", display_list),
-        "list_done": ("Lister les tâches terminées", "list_done", list_done),
-        "list_all": ("Lister toutes les tâches", "list_all", list_all),
+        "list": ("Lister les tâches en cours", "list", tasks.display_pending_tasks),
+        "list_done": ("Lister les tâches terminées", "list_done", tasks.display_done_tasks),
+        "list_all": ("Lister toutes les tâches", "list_all", tasks.display_all_tasks),
     }
 
     interface_display.display_menu()
@@ -92,51 +113,6 @@ def main():
         tasks.tasks_list = do_action(command, tasks.tasks_list, menu, interface_display)
         command = input("\nEnter a command: ")
     interface_display.print("Goodbye!")
-
-
-# def done(tasks, interface_display):
-#     pending = []
-#     for task in tasks:
-#         if task[1] == "A faire":
-#             pending.append(task)
-#     if not pending:
-#         interface_display.no_tasks()
-#     else:
-#         index = len(tasks)
-#         while index >= len(tasks):
-#             try:
-#                 index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
-#                 if index >= len(tasks):
-#                     raise InvalidValueException
-#             except InvalidValueException as e:
-#                 interface_display.print(e)
-#         tasks[index] = tasks[index][0], "Terminée"
-#         interface_display.print(f'Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}')
-#         list_all(tasks, interface_display)
-#     return tasks
-
-
-def display_list(tasks, interface_display):
-    interface_display.print("******* Toutes vos tâches en cours: *******")
-    for task in tasks:
-        if task[1] == "A faire":
-            interface_display.print(f"{task[0]} => {task[1]}")
-    return tasks
-
-
-def list_all(tasks, interface_display):
-    interface_display.print("******* Toutes vos tâches: *******")
-    display_list(tasks, interface_display)
-    list_done(tasks, interface_display)
-    return tasks
-
-
-def list_done(tasks, interface_display):
-    interface_display.print("******* Toutes vos tâches terminées: *******")
-    for task in tasks:
-        if task[1] == "Terminée":
-            interface_display.print(f"{task[0]} => {task[1]}")
-    return tasks
 
 
 def do_action(command, tasks, menu, interface_display):
