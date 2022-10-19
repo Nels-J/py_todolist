@@ -23,11 +23,24 @@ class InvalidValueException(Exception):
         super().__init__("Valeur invalide")
 
 
+class TasksList:
+    tasks_list: []
+
+    def __init__(self):
+        self.tasks_list = []
+
+    def add_task(self, tasks, interface_display):
+        task = (input("Saisir la tache : "), "A faire")
+        interface_display.print(f'Vous venez de créer la tache: {task[0]}')
+        self.tasks_list.append(task)
+        interface_display.print(f"tasks=> {self.tasks_list}")
+        return self.tasks_list
+
 def main():
     interface_display = InterfaceDisplay()
-
+    tasks = TasksList()
     menu = {
-        "add": ("Ajouter une tâche", "add", add),
+        "add": ("Ajouter une tâche", "add", tasks.add_task),
         "update": ("Changer le nom d'une tâche", "update", update),
         "done": ("Marquer une tâche comme terminée", "done", done),
         "list": ("Lister les tâches en cours", "list", display_list),
@@ -35,12 +48,12 @@ def main():
         "list_all": ("Lister toutes les tâches", "list_all", list_all),
     }
 
-    tasks = []
+
     interface_display.display_menu()
-    action = input("\nEnter a command: ")
-    while action != "quit":
-        tasks = do_action(action, tasks, menu, interface_display)
-        action = input("\nEnter a command: ")
+    command = input("\nEnter a command: ")
+    while command != "quit":
+        tasks.tasks_list = do_action(command, tasks.tasks_list, menu, interface_display)
+        command = input("\nEnter a command: ")
     interface_display.print("Goodbye!")
 
 
@@ -64,15 +77,6 @@ def done(tasks, interface_display):
         interface_display.print(f'Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}')
         list_all(tasks, interface_display)
     return tasks
-
-
-def add(tasks, interface_display):
-    task = (input("Saisir la tache : "), "A faire")
-    interface_display.print(f'Vous venez de créer la tache: {task[0]}')
-    tasks.append(task)
-    interface_display.print(f"tasks=> {tasks}")
-    return tasks
-
 
 def update(tasks, interface_display):
     if not tasks:
@@ -115,10 +119,10 @@ def list_done(tasks, interface_display):
     return tasks
 
 
-def do_action(commande, tasks, menu, interface_display):
+def do_action(command, tasks, menu, interface_display):
     try:
-        if commande in menu:
-            tasks = menu[commande][2](tasks, interface_display)
+        if command in menu:
+            tasks = menu[command][2](tasks, interface_display)
         else:
             raise InvalidCommandException
     except InvalidCommandException as e:
