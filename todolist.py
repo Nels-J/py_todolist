@@ -1,45 +1,30 @@
 # from /home/kply/PycharmProjects/py_todolist/Main.py import Main
 
-
-def print_menu():
-    print("add       : add new task")
-    print("add2      : add more new task")
-    print("done      : close task")
-    print("update    : amend task name")
-    print("list      : list pending tasks")
-    print("list-done : list closed tasks")
-    print("list-all  : list all tasks")
-    print("quit      : exit the application")
-
-
-def add_task(list_tasks, user_input):
-    if user_input == "add":
-        new_task = (input('Name of task :'), False)
-        list_tasks.append(new_task)
-        print('task saved ;-)')
-    elif user_input == "add2":
-        i = 0
-        while i < 5:
-            new_task = "task" + str(i + 1), False
-            list_tasks.append(new_task)
-            print('task saved ;-)')
-            i = i + 1
+class Interface:
+    def print_menu(self):
+        print("add       : add new task")
+        print("add2      : add more new task")
+        print("done      : close task")
+        print("update    : amend task name")
+        print("list      : list pending tasks")
+        print("list-done : list closed tasks")
+        print("list-all  : list all tasks")
+        print("quit      : exit the application")
 
 
-def close_task(list_tasks, user_input):
-    if user_input == "done":
-        for i, name in enumerate(list_tasks):
-            print('tache n°:', i, name[0])
-        index_task_to_close = int(input('What task do you want to close?'))
+def add_task(list_tasks):
+    new_task = (input('Name of task :'), False)
+    list_tasks.append(new_task)
+    print('task saved ;-)')
 
-        list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
-        print('Task closed')
-    elif user_input == "done2":
-        i = 0
-        while i < 2:
-            list_tasks[i] = (list_tasks[i][0], True)
-            print('Task closed')
-            i = i + 1
+
+def close_task(list_tasks):
+    for i, name in enumerate(list_tasks):
+        print('tache n°:', i, name[0])
+    index_task_to_close = int(input('What task do you want to close?'))
+
+    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
+    print('Task closed')
 
 
 def update_task(list_tasks):
@@ -97,7 +82,7 @@ def do_action(list_tasks, user_input):
 
     }
     try:
-        actions.get(user_input)[2](list_tasks, user_input)
+        actions.get(user_input)[2](list_tasks)
 
     except Exception as error:
         message_error = 'invalid command, please retry'
@@ -123,11 +108,11 @@ class Main:
 
     @classmethod
     def launch_todolist(cls):
-
         list_tasks = []
         user_input = ""
+        interface = Interface()
         while user_input != "quit":
-            print_menu()
+            interface.print_menu()
             user_input = input("Please enter your command :")
             list_tasks = do_action(list_tasks, user_input)
         print("Goodbye")
