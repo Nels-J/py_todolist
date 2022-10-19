@@ -1,8 +1,13 @@
 def add(tasks):
     user_task = input("Veuillez saisir votre nouvelle tâche: ")
     task = (user_task, False)
-    tasks.append(task)
+    tasks = add_to_list(tasks, task)
     print("Tâche créée")
+    return tasks
+
+
+def add_to_list(tasks, task):
+    tasks.append(task)
     return tasks
 
 
@@ -118,6 +123,11 @@ def user_command(tasks, user_choice, menu):
     return tasks
 
 
+def scenario(tasks):
+    add_to_list(tasks, ("t1", False))
+    add_to_list(tasks, ("t2", False))
+    return tasks
+
 def main():
     want_to_quit = False
     task = ()
@@ -128,6 +138,7 @@ def main():
             "list": ("Lister les tâches en cours", list),
             "list-done": ("Lister les tâches terminées", list_done),
             "list-all": ("Lister toutes les tâches", list_all),
+            "test": ("test", scenario)
             }
     print_menu(menu)
     while not want_to_quit:
