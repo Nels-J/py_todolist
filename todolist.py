@@ -1,15 +1,16 @@
 def main():
     tasks = []
     tasks = remplir_tasks(tasks)
-    action = ask_action()
+    menu()
+    action = input("\nQue souhaitez-vous faire ? ")
     while action != "quit":
         tasks = do_action(action, tasks)
-        action = ask_action()
+        action = input("\nQue souhaitez-vous faire ? ")
     print("Goodbye\n")
 
 
 def add(tasks):
-    tasks.append((input("Saisir la tache : "), False))
+    tasks.append((input("Saisir le nom de la tache : "), False))
     print("Tâche créée !")
     return tasks
 
@@ -71,12 +72,6 @@ def menu():
     print("Quitter : quit")
 
 
-def ask_action():
-    menu()
-    commande = input("\nEnter a command: ")
-    return commande
-
-
 def do_action(command, tasks):
     try:
         if command == "add":
@@ -92,7 +87,7 @@ def do_action(command, tasks):
         elif command == "list_all":
             list_all(tasks)
         else:
-            raise ValueError("Commande inconnue\n")
+            raise ValueError("Commande inconnue")
     except(ValueError, NotImplementedError) as e:
         print(e)
     return tasks
