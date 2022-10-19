@@ -1,5 +1,6 @@
 def print_menu():
     print("add       : add new task")
+    print("add2       : add more new task")
     print("done      : close task")
     print("update    : amend task name")
     print("list      : list pending tasks")
@@ -8,10 +9,18 @@ def print_menu():
     print("quit      : exit the application")
 
 
-def add_task(list_tasks):
-    new_task = (input('Name of task :'), False)
-    list_tasks.append(new_task)
-    print('task saved ;-)')
+def add_task(list_tasks, user_input):
+    if user_input == "add":
+        new_task = (input('Name of task :'), False)
+        list_tasks.append(new_task)
+        print('task saved ;-)')
+    elif user_input == "add2":
+        i = 0
+        while i < 5:
+            new_task = "task" + str(i + 1), False
+            list_tasks.append(new_task)
+            print('task saved ;-)')
+            i = i + 1
 
 
 def close_task(list_tasks):
@@ -61,6 +70,7 @@ def list_all_tasks(list_tasks):
 def do_action(list_tasks, user_input):
     actions = {
         "add": add_task,
+        "add2": add_task,
         "done": close_task,
         "update": update_task,
         "list": list_pending_tasks,
@@ -71,7 +81,10 @@ def do_action(list_tasks, user_input):
     try:
         if user_input == "add":
             do = actions.get("add")
-            do(list_tasks)
+            do(list_tasks, user_input)
+        elif user_input == "add2":
+            do = actions.get("add2")
+            do(list_tasks, user_input)
         elif user_input == "done":
             do = actions.get("done")
             do(list_tasks)
