@@ -1,6 +1,6 @@
 class CLUI:
 
-    def display(self):
+    def display_menu(self):
         print("Ajouter une ligne : add ")
         print("Marquer comme terminée : done")
         print("Mettre à jour : update")
@@ -36,7 +36,7 @@ def main():
     }
 
     tasks = []
-    cli.display()
+    cli.display_menu()
     action = input("\nEnter a command: ")
     while action != "quit":
         tasks = do_action(action, tasks, menu, cli)
