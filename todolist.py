@@ -36,10 +36,11 @@ def main():
     }
 
     tasks = []
-    action = ask_action(cli)
+    cli.display()
+    action = input("\nEnter a command: ")
     while action != "quit":
         tasks = do_action(action, tasks, menu, cli)
-        action = ask_action(cli)
+        action = input("\nEnter a command: ")
     cli.print("Goodbye!")
 
 
@@ -112,12 +113,6 @@ def list_done(tasks, cli):
         if task[1] == "Terminée":
             cli.print(f"{task[0]} => {task[1]}")
     return tasks
-
-
-def ask_action(cli):
-    cli.display()
-    commande = input("\nEnter a command: ")
-    return commande
 
 
 def do_action(commande, tasks, menu, cli):
