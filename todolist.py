@@ -156,19 +156,54 @@ class Main:
     def __init__(self):
         print("hello")
 
-    @classmethod
-    def launch_todolist(cls):
+
+    def launch_todolist(self):
         list_tasks = []
         user_input = ""
         interface = Interface()
         while user_input != "quit":
             interface.print_menu()
             user_input = input("Please enter your command :")
-            list_tasks = do_action(list_tasks, user_input, interface)
+            list_tasks = self.new_do_action(list_tasks, user_input, interface)
         interface.print("Goodbye")
         interface.print('╭∩╮(◉_◉)╭∩╮')
 
+    def new_do_action(self, list_tasks, user_input, interface ):
+        actions = {
+            "add": ("add new task", "add", add_task),
+            #
+            # "add2": ("add more new task", "add2", add_task),
+            #
+            "done2": ("close more task", "done2", close_task),
+            #
+            "done": ("close task", "done", close_task),
+            #
+            "update": ("amend task name", "update", update_task),
+            #
+            "list": ("list pending tasks", "list", list_pending_tasks),
+            #
+            "list-done": ("list closed tasks", "list-done", list_done_tasks),
+            #
+            "list-all": ("list all tasks", "list-all", list_all_tasks),
+
+        }
+        try:
+            actions.get(user_input)[2](list_tasks, interface)
+        except TypeError as e:
+            try:
+                raise InvalidCommandException
+            except InvalidCommandException as error:
+                interface.print("commande invalide")
+        except NotImplementedException as err:
+            interface.print("coucou, c'est pas bon")
+
+
+
+        finally:
+            pass
+        return list_tasks
+
 
 if __name__ == "__main__":
-    m = Main
+    m = Main()
     m.launch_todolist()
