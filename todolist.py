@@ -1,4 +1,20 @@
+class CLUI:
+
+    def display(self):
+        print("Ajouter une ligne : add ")
+        print("Marquer comme terminée : done")
+        print("Mettre à jour : update")
+        print("Afficher la liste des tâches non terminées: list")
+        print("Afficher la liste des tâches terminées : list_done")
+        print("Afficher toutes les tâches : all")
+        print("Quitter : quit")
+
+    def print(self, message):
+        print(message)
+
 def main():
+
+    cli = CLUI()
 
     menu={
         "add":("Ajouter une tâche", "add", add),
@@ -11,101 +27,90 @@ def main():
 
 
     tasks = []
-    action = ask_action()
+    action = ask_action(cli)
     while action != "quit":
-        tasks = do_action(action, tasks, menu)
-        action = ask_action()
-    print("Goodbye\n")
+        tasks = do_action(action, tasks, menu, cli)
+        action = ask_action(cli)
+    cli.print("Goodbye!")
 
 
-def done(tasks):
+def done(tasks, cli):
     pending = []
     for task in tasks:
         if task[1] == "A faire":
             pending.append(task)
     if not pending:
-        print('Pas de tâche')
+        cli.no_tasks()
     else:
         index = len(tasks)
         while index >= len(tasks):
             index = int(input("Saissez le numéro de la tâche à clôturer (à partir de 0)"))
             if index >= len(tasks):
-                print("valeur incorrecte")
+                cli.print("valeur incorrecte")
         tasks[index] = tasks[index][0], "Terminée"
-        print(f'''Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}''')
-        list_all(tasks)
+        cli.print(f'Votre tâche: {tasks[index][0]} est à présent: {tasks[index][1]}')
+        list_all(tasks, cli)
     return tasks
 
 
-def add(tasks):
+def add(tasks, cli):
     task = (input("Saisir la tache : "), "A faire")
-    print(f'''Vous venez de créer la tache: 
-        {task[0]}
-        ''')
+    cli.print(f'Vous venez de créer la tache: {task[0]}')
     tasks.append(task)
-    print("tasks=>", tasks)
+    cli.print(f"tasks=> {tasks}")
     return tasks
 
 
-def update(tasks):
+def update(tasks, cli):
     if not tasks:
-        print('Pas de tâche')
+        cli.print("Pas de tâche à afficher")
     else:
         index = len(tasks)
         while index >= len(tasks):
             index = int(input("Saissez le numéro de la tâche à renommer (à partir de 0)"))
             if index >= len(tasks):
-                print("valeur incorrecte")
+                cli.print("valeur incorrecte")
         tasks[index] = input("Veuillez renommer votre tâche"), tasks[index][1]
-        print("Votre tâche est renommée en :", tasks[index][0])
-        list_all(tasks)
+        cli.print(f"Votre tâche est renommée en : {tasks[index][0]}")
+        list_all(tasks, cli)
     return tasks
 
 
-def display_list(tasks):
-    print("******* Toutes vos tâches en cours: *******")
+def display_list(tasks, cli):
+    cli.print("******* Toutes vos tâches en cours: *******")
     for task in tasks:
         if task[1] == "A faire":
-            print(task[0], "=>", task[1])
+            cli.print(f"{task[0]} => {task[1]}")
     return tasks
 
 
-def list_all(tasks):
-    print("******* Toutes vos tâches: *******")
-    display_list(tasks)
-    list_done(tasks)
+def list_all(tasks, cli):
+    cli.print("******* Toutes vos tâches: *******")
+    display_list(tasks, cli)
+    list_done(tasks, cli)
     return tasks
 
 
-def list_done(tasks):
-    print("******* Toutes vos tâches terminées: *******")
+def list_done(tasks, cli):
+    cli.print("******* Toutes vos tâches terminées: *******")
     for task in tasks:
         if task[1] == "Terminée":
-            print(task[0], "=>", task[1])
+            cli.print(f"{task[0]} => {task[1]}")
     return tasks
 
-def menu():
-    print("Ajouter une ligne : add ")
-    print("Marquer comme terminée : done")
-    print("Mettre à jour : update")
-    print("Afficher la liste des tâches non terminées: list")
-    print("Afficher la liste des tâches terminées : list_done")
-    print("Afficher toutes les tâches : all")
-    print("Quitter : quit")
 
-
-def ask_action():
-    menu()
+def ask_action(cli):
+    cli.display()
     commande = input("\nEnter a command: ")
     return commande
 
 
-def do_action(commande, tasks, menu):
+def do_action(commande, tasks, menu, cli):
 
     try:
-        tasks = menu[commande][2](tasks)
+        tasks = menu[commande][2](tasks, cli)
     except Exception as e:
-        print("Commande invalide", e)
+        cli.print(f"Commande invalide: {e}")
     return tasks
 
 
