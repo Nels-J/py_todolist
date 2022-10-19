@@ -16,7 +16,17 @@ def add(tasks):
 
 
 def done(tasks):
-    tasks[0] = (tasks[0][0], True)
+    list_pending(tasks)
+    try:
+        number = int(input("Quelle tâche voulez-vous terminer ?"))
+        if number < 0 or number > len(tasks) - 1:
+            raise Exception("Le numéro que vous avez donné est invalide !")
+        else:
+            tasks[number] = (tasks[number][0], True)
+            print("tache numéro", number, "terminée")
+    except Exception as e:
+        print(e)
+        done(tasks)
     return tasks
 
 
@@ -87,8 +97,8 @@ def do_action(command, tasks):
         elif command == "list_all":
             list_all(tasks)
         else:
-            raise ValueError("Commande inconnue")
-    except(ValueError, NotImplementedError) as e:
+            raise Exception("Commande inconnue")
+    except Exception as e:
         print(e)
     return tasks
 
