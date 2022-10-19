@@ -1,4 +1,6 @@
 from Interface import Interface
+from InvalidCommand import InvalidCommand
+from Tasks import Tasks
 
 
 def add_task(list_tasks):
@@ -66,9 +68,9 @@ def do_action(list_tasks, user_input):
             label, action = actions.get(user_input)
             action(list_tasks)
         else:
-            raise Exception('invalid command, please retry')
-    except Exception as err:
-        interface.print(err)
+            raise invalid_command
+    except invalid_command:
+        interface.print("La commande est invalide")
     finally:
         return list_tasks
 
@@ -87,4 +89,5 @@ def main():
 
 if __name__ == "__main__":
     interface = Interface()
+    invalid_command = InvalidCommand()
     main()
