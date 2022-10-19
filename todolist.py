@@ -10,10 +10,11 @@ def add_task(list_tasks):
 
 
 def close_task(list_tasks):
-    for i, name in enumerate(list_tasks):
-        interface.print(f'tache n°: {i} {name[0]}')
+    for i, task in enumerate(list_tasks):
+        interface.print(f'tache n°: {i} {task.name}')
     index_task_to_close = int(interface.input('What task do you want to close?'))
-    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
+    task = list_tasks[index_task_to_close]
+    task.done()
     interface.print('Task closed')
 
 
@@ -35,15 +36,15 @@ def update_task(list_tasks):
 def list_pending_tasks(list_tasks):
     interface.print("List of your pending tasks :")
     for task in list_tasks:
-        if not task[1]:
-            interface.print(task[0])
+        if not task.status:
+            interface.print(task.name)
 
 
 def list_done_tasks(list_tasks):
     interface.print("List of your tasks already done :")
     for task in list_tasks:
-        if task[1]:
-            interface.print(task[0])
+        if task.status:
+            interface.print(task.name)
 
 
 def list_all_tasks(list_tasks):
