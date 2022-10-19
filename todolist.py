@@ -31,22 +31,29 @@ def update(tasks):
         print("Pas de tâche")
 
 
-def list_pending(tasks):
+def list_wanted_tasks(tasks, wanted_status, wanted_tasks):
     pending_tasks = []
     for index, task in enumerate(tasks):
-        if not task[1]:
+        if task[1] == wanted_status:
             pending_tasks.append((index, task[0]))
     if len(pending_tasks) > 0:
-        print("liste des tâches en cours :")
+        print("liste des tâches", wanted_tasks, " :")
         for task in pending_tasks:
             print(task[0], " : ", task[1])
     else:
-        print("Pas de tâche en cours")
+        print("Pas de tâche ", wanted_tasks)
+
+
+def list_pending(tasks):
+    wanted_status = False
+    wanted_tasks = "en cours"
+    list_wanted_tasks(tasks, wanted_status, wanted_tasks)
 
 
 def list_done(tasks):
-    if tasks[0][1]:
-        print(tasks[0][0])
+    wanted_status = True
+    wanted_tasks = "terminées"
+    list_wanted_tasks(tasks, wanted_status, wanted_tasks)
 
 
 def list_all(tasks):
