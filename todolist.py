@@ -1,6 +1,6 @@
 def main():
     tasks = []
-    # tasks = remplir_tasks(tasks)
+    tasks = remplir_tasks(tasks)
     action = ask_action()
     while action != "quit":
         tasks = do_action(action, tasks)
@@ -32,8 +32,16 @@ def update(tasks):
 
 
 def list_pending(tasks):
-    if not tasks[0][1]:
-        print(tasks[0][0])
+    pending_tasks = []
+    for index, task in enumerate(tasks):
+        if not task[1]:
+            pending_tasks.append((index, task[0]))
+    if len(pending_tasks) > 0:
+        print("liste des tâches en cours :")
+        for task in pending_tasks:
+            print(task[0], " : ", task[1])
+    else:
+        print("Pas de tâche en cours")
 
 
 def list_done(tasks):
