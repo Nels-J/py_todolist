@@ -20,6 +20,12 @@ class NotImplementedException(Exception):
 
 class InvalidCommandException(Exception):
     pass
+
+class NotIntegerException(Exception):
+    pass
+class NotInListIndexException(Exception):
+    pass
+
 def add_task(list_tasks, interface):
     new_task = (input('Name of task :'), False)
     list_tasks.append(new_task)
@@ -28,11 +34,29 @@ def add_task(list_tasks, interface):
 
 def close_task(list_tasks, interface):
     for i, name in enumerate(list_tasks):
-        interface.print('tache n°:', i, name[0])
-    index_task_to_close = int(input('What task do you want to close?'))
 
-    list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
-    interface.print('Task closed')
+        interface.print(f"tache n°: {i} {name[0]}")
+
+    try:
+        index_task_to_close = int(input('What task do you want to close?'))
+        if index_task_to_close >= len(list_tasks):
+            raise NotInListIndexException
+
+        list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
+        interface.print('Task closed')
+    except ValueError:
+        try:
+            raise NotIntegerException
+        except NotIntegerException:
+            interface.print("not integer exception")
+            close_task(list_tasks, interface)
+    except NotInListIndexException:
+        interface.print("fhjxfglkj")
+        close_task(list_tasks, interface)
+
+
+
+
 
 
 def update_task(list_tasks, interface):
@@ -41,7 +65,7 @@ def update_task(list_tasks, interface):
         return
 
     for i, name in enumerate(list_tasks, interface):
-        interface.print('tache n°:', i, name[0])
+        interface.print(f"tache n°: {i} {name[0]}")
     index_task_to_update = int(input('What task do you want to update?'))
     new_task_name = input('What is new name of the task?')
     list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
@@ -66,8 +90,8 @@ def list_all_tasks(list_tasks, interface):
     if len(list_tasks) == 0:
         interface.print('No tasks')
         return
-    list_done_tasks(list_tasks)
-    list_pending_tasks(list_tasks)
+    list_done_tasks(list_tasks, interface)
+    list_pending_tasks(list_tasks, interface)
 
 
 def do_action(list_tasks, user_input, interface):
@@ -90,12 +114,15 @@ def do_action(list_tasks, user_input, interface):
 
     }
     try:
-        actions.get(user_input)[2](list_tasks)
-
+        actions.get(user_input)[2](list_tasks, interface)
+    except TypeError as e:
+        try:
+            raise InvalidCommandException
+        except InvalidCommandException as error:
+            interface.print(e)
     except NotImplementedException as err:
         interface.print("coucou, c'est pas bon")
-    except InvalidCommandException as error:
-        interface.print('invalid command, please retry')
+
 
 
     finally:
