@@ -89,12 +89,6 @@ def list_all(tasks):
 
 def print_menu(menu):
     print("voici le menu :")
-    # print("add       : Ajouter une tâche")
-    # print("done      : Effectuer une tâche")
-    # print("update    : Modifier le libellé d'une tâche")
-    # print("list      : Lister les tâches en cours")
-    # print("list-done : Lister les tâches terminées")
-    # print("list-all  : Lister toutes les tâches")
     for cle, valeur in menu.items():
         print(cle, ":", valeur[0])
     print("quit : Quitter")
@@ -116,10 +110,20 @@ def user_command(tasks, user_choice, menu):
     return tasks
 
 
+def remplir_tasks(tasks):
+    tasks.append(("dormir", False))
+    tasks.append(("manger", True))
+    tasks.append(("boire", False))
+    tasks.append(("travailler", True))
+    tasks.append(("shopping", False))
+    tasks.append(("se brosser les dents", True))
+    return tasks
+
+
 def main():
     want_to_quit = False
-    task = ()
     tasks = []
+    tasks = remplir_tasks(tasks)
     menu = {"add": ("Ajouter une tâche", add),
             "done": ("Effectuer une tâche", done),
             "update": ("Modifier le libellé d'une tâche", update),
