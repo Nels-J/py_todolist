@@ -1,58 +1,52 @@
-def print_menu():
-    print("add       : add new task")
-    print("done      : close task")
-    print("update    : amend task name")
-    print("list      : list pending tasks")
-    print("list-done : list closed tasks")
-    print("list-all  : list all tasks")
-    print("quit      : exit the application")
+from Interface import Interface
 
 
 def add_task(list_tasks):
-    new_task = (input('Name of task :'), False)
+    new_task = (interface.input('Name of task :'), False)
     list_tasks.append(new_task)
-    print('task saved ;-)')
+    interface.print('task saved ;-)')
 
 
 def close_task(list_tasks):
     for i, name in enumerate(list_tasks):
-        print('tache n°:', i, name[0])
-    index_task_to_close = int(input('What task do you want to close?'))
+        interface.print(f'tache n°: {i} {name[0]}')
+    index_task_to_close = int(interface.input('What task do you want to close?'))
 
     list_tasks[index_task_to_close] = (list_tasks[index_task_to_close][0], True)
-    print('Task closed')
+    interface.print('Task closed')
 
 
 def update_task(list_tasks):
     if len(list_tasks) == 0:
-        print('No tasks')
+        interface.print('No tasks')
         return
 
     for i, name in enumerate(list_tasks):
-        print('tache n°:', i, name[0])
-    index_task_to_update = int(input('What task do you want to update?'))
-    new_task_name = input('What is new name of the task?')
+        interface.print(f'tache n°: {i} {name[0]}')
+
+    index_task_to_update = int(interface.input('What task do you want to update?'))
+    new_task_name = interface.input('What is new name of the task?')
     list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
-    print('Task name update')
+    interface.print('Task name update')
 
 
 def list_pending_tasks(list_tasks):
-    print("List of your pending tasks :")
+    interface.print("List of your pending tasks :")
     for task in list_tasks:
         if not task[1]:
-            print(task[0])
+            interface.print(task[0])
 
 
 def list_done_tasks(list_tasks):
-    print("List of your tasks already done :")
+    interface.print("List of your tasks already done :")
     for task in list_tasks:
         if task[1]:
-            print(task[0])
+            interface.print(task[0])
 
 
 def list_all_tasks(list_tasks):
     if len(list_tasks) == 0:
-        print('No tasks')
+        interface.print('No tasks')
         return
     list_done_tasks(list_tasks)
     list_pending_tasks(list_tasks)
@@ -74,23 +68,23 @@ def do_action(list_tasks, user_input):
         else:
             raise Exception('invalid command, please retry')
     except Exception as err:
-        print(err)
+        interface.print(err)
     finally:
         return list_tasks
 
 
 def main():
-    print('\nWelcome to your To Do List application !\n')
+    interface.print('\nWelcome to your To Do List application !\n')
     list_tasks = []
-    print_menu()
-    user_input = input("Please enter your command :")
+    interface.print_menu()
+    user_input = interface.input("Please enter your command :")
     while user_input != "quit":
         list_tasks = do_action(list_tasks, user_input)
-        print_menu()
-        user_input = input("Please enter your command :")
-    print("Goodbye")
-    print('╭∩╮(◉_◉)╭∩╮')
+        interface.print_menu()
+        user_input = interface.input("Please enter your command :")
+    interface.print("Goodbye ╭∩╮(◉_◉)╭∩╮")
 
 
 if __name__ == "__main__":
+    interface = Interface()
     main()
