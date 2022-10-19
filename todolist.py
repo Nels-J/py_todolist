@@ -170,7 +170,7 @@ class Main:
 
     def new_do_action(self, list_tasks, user_input, interface ):
         actions = {
-            "add": ("add new task", "add", add_task),
+            "add": ("add new task", "add", self.new_add_task),
             #
             # "add2": ("add more new task", "add2", add_task),
             #
@@ -201,6 +201,12 @@ class Main:
 
         finally:
             pass
+        return list_tasks
+
+    def new_add_task(self, list_tasks, interface):
+        new_task = (input('Name of task :'), False)
+        list_tasks.append(new_task)
+        interface.print('task saved ;-)')
         return list_tasks
 
 
