@@ -65,9 +65,14 @@ class TodoListApplication:
             'list-all': self.list_all,
         }
         try:
+            choices[user_choice]
+        except KeyError:
+            print("Commande inexistante")
+            return self.tasks
+        try:
             choices[user_choice]()
         except Exception:
-            print("Commande inexistante")
+            print("Erreur dans la fonction")
         return self.tasks
 
     def main(self):
