@@ -60,23 +60,33 @@ def list_all_tasks(list_tasks):
 
 def do_action(list_tasks, user_input):
     actions = {
-        "add": add_task
+        "add": add_task,
+        "done": close_task,
+        "update": update_task,
+        "list": list_pending_tasks,
+        "list-done": list_done_tasks,
+        "list-all": list_all_tasks,
+
     }
     try:
         if user_input == "add":
             do = actions.get("add")
             do(list_tasks)
         elif user_input == "done":
-            do = close_task
+            do = actions.get("done")
             do(list_tasks)
         elif user_input == "update":
-            update_task(list_tasks)
+            do = actions.get("update")
+            do(list_tasks)
         elif user_input == "list":
-            list_pending_tasks(list_tasks)
+            do = actions.get("list")
+            do(list_tasks)
         elif user_input == "list-done":
-            list_done_tasks(list_tasks)
+            do = actions.get("list-done")
+            do(list_tasks)
         elif user_input == "list-all":
-            list_all_tasks(list_tasks)
+            do = actions.get("list-all")
+            do(list_tasks)
         elif user_input == "quit":
             return
         else:
