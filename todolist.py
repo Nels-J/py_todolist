@@ -1,10 +1,10 @@
 from Interface import Interface
 from InvalidCommandException import InvalidCommandException
-from Tasks import Tasks
+from Task import Task
 
 
 def add_task(list_tasks):
-    new_task = (interface.input('Name of task :'), False)
+    new_task = Task(interface.input('Name of task :'))
     list_tasks.append(new_task)
     interface.print('task saved ;-)')
 
@@ -22,12 +22,13 @@ def update_task(list_tasks):
         interface.print('No tasks')
         return
 
-    for i, name in enumerate(list_tasks):
-        interface.print(f'tache n°: {i} {name[0]}')
+    for i, task in enumerate(list_tasks):
+        interface.print(f'tache n°: {i} {task.name}')
 
     index_task_to_update = int(interface.input('What task do you want to update?'))
     new_task_name = interface.input('What is new name of the task?')
-    list_tasks[index_task_to_update] = (new_task_name, list_tasks[index_task_to_update][1])
+    task = list_tasks[index_task_to_update]
+    task.update(new_task_name)
     interface.print('Task name update')
 
 
