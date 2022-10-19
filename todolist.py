@@ -1,8 +1,19 @@
 def main():
+
+    menu={
+        "add":("Ajouter une tâche", "add", add),
+        "update": ("Changer le nom d'une tâche", "update", update),
+        "done": ("Marquer une tâche comme terminée", "done", done),
+        "list": ("Lister les tâches en cours", "list", display_list),
+        "list_done": ("Lister les tâches terminées", "list_done", list_done),
+        "list_all": ("Lister toutes les tâches", "list_all", list_all),
+    }
+
+
     tasks = []
     action = ask_action()
     while action != "quit":
-        tasks = do_action(action, tasks)
+        tasks = do_action(action, tasks, menu)
         action = ask_action()
     print("Goodbye\n")
 
@@ -56,12 +67,14 @@ def display_list(tasks):
     for task in tasks:
         if task[1] == "A faire":
             print(task[0], "=>", task[1])
+    return tasks
 
 
 def list_all(tasks):
     print("******* Toutes vos tâches: *******")
     display_list(tasks)
     list_done(tasks)
+    return tasks
 
 
 def list_done(tasks):
@@ -69,7 +82,7 @@ def list_done(tasks):
     for task in tasks:
         if task[1] == "Terminée":
             print(task[0], "=>", task[1])
-
+    return tasks
 
 def menu():
     print("Ajouter une ligne : add ")
@@ -87,25 +100,12 @@ def ask_action():
     return commande
 
 
-def do_action(commande, tasks):
-    try:
-        if commande == "add":
-            tasks = add(tasks)
-        elif commande == "done":
-            tasks = done(tasks)
-        elif commande == "update":
-            tasks = update(tasks)
-        elif commande == "list":
-            display_list(tasks)
-        elif commande == "list_done":
-            list_done(tasks)
-        elif commande == "all":
-            list_all(tasks)
-        else:
-            raise ValueError("Commande inconnue\n")
-    except(ValueError, NotImplementedError) as e:
-        print(e)
+def do_action(commande, tasks, menu):
 
+    try:
+        tasks = menu[commande][2](tasks)
+    except Exception as e:
+        print("Commande invalide", e)
     return tasks
 
 
