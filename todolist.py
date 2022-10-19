@@ -82,11 +82,12 @@ def do_action(list_tasks, user_input):
 def main():
     print('\nWelcome to your To Do List application !\n')
     list_tasks = []
-    user_input = ""
+    print_menu()
+    user_input = input("Please enter your command :")
     while user_input != "quit":
+        list_tasks = do_action(list_tasks, user_input)
         print_menu()
         user_input = input("Please enter your command :")
-        list_tasks = do_action(list_tasks, user_input)
     print("Goodbye")
     print('╭∩╮(◉_◉)╭∩╮')
 
