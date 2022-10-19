@@ -1,10 +1,18 @@
 def main():
     tasks = []
     tasks = remplir_tasks(tasks)
-    menu()
+    menu = {
+        "add": ("Ajouter une ligne", add),
+        "done": ("Marquer comme terminée", done),
+        "update": ("Mettre à jour", update),
+        "list": ("Afficher la liste des tâches non terminées", list_pending),
+        "list_done": ("Afficher la liste des tâches terminées", list_done),
+        "list_all": ("Afficher toutes les tâches", list_all),
+    }
+    print_menu(menu)
     action = input("\nQue souhaitez-vous faire ? ")
     while action != "quit":
-        tasks = do_action(action, tasks)
+        tasks = do_action(menu, action, tasks)
         action = input("\nQue souhaitez-vous faire ? ")
     print("Goodbye\n")
 
@@ -80,30 +88,16 @@ def list_all(tasks):
     list_done(tasks)
 
 
-def menu():
-    print("Ajouter une ligne : add ")
-    print("Marquer comme terminée : done")
-    print("Mettre à jour : update")
-    print("Afficher la liste des tâches non terminées: list")
-    print("Afficher la liste des tâches terminées : list_done")
-    print("Afficher toutes les tâches : list_all")
-    print("Quitter : quit")
+def print_menu(menu):
+    for key, value in menu.items():
+        print("--", key, "=>", value[0], )
+    print("quit :  Quitter ")
 
 
-def do_action(command, tasks):
+def do_action(menu, command, tasks):
     try:
-        if command == "add":
-            tasks = add(tasks)
-        elif command == "done":
-            tasks = done(tasks)
-        elif command == "update":
-            tasks = update(tasks)
-        elif command == "list":
-            list_pending(tasks)
-        elif command == "list_done":
-            list_done(tasks)
-        elif command == "list_all":
-            list_all(tasks)
+        if command in menu.keys():
+            menu[command][1](tasks)
         else:
             raise Exception("Commande inconnue")
     except Exception as e:
