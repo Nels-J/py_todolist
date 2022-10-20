@@ -11,7 +11,3 @@ class UI:
             self.afficher(f'-- {key} => {value[0]}')
         self.afficher("quit :  Quitter ")
 
-    def print_list_tasks(self, tasks, wanted_tasks_string):
-        self.afficher(f'liste des tâches {wanted_tasks_string} :')
-        for task in tasks:
-            self.afficher(f'{task[0]} : {task[1]}')

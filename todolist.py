@@ -19,14 +19,6 @@ def main():
     UI.afficher("Goodbye\n")
 
 
-def update():
-    pass
-
-
-def done():
-    pass
-
-
 def list_all():
     list_pending()
     list_done()
@@ -58,6 +50,38 @@ def add():
     label = UI.interact("Saisir le nom de la tache : ")
     tasks.add(label)
     UI.afficher("Tâche créée !")
+
+
+def done():
+    list_pending()
+    number = validate_user_input_number("terminer")
+    tasks.list[number].done()
+    UI.afficher(f'tache numéro {number} terminée')
+
+
+def update():
+    list_all()
+    number = validate_user_input_number("modifier")
+    task_new_name = UI.interact("Entrez le nouveau nom de la tâche à modifier")
+    tasks.list[number].update(task_new_name)
+    UI.afficher(f'tache numéro {number} modifiée')
+
+
+def validate_user_input_number(wanted_action):
+    number = None
+    list_index = []
+    if wanted_action == "terminer":
+        list_index = [index for index, task in enumerate(tasks.list) if not task.status]
+    elif wanted_action == "modifier":
+        list_index = [index for index, task in enumerate(tasks.list)]
+    try:
+        number = int(UI.interact("Quelle tâche voulez-vous " + wanted_action + " ?"))
+        if number not in list_index:
+            raise Exception("Le numéro que vous avez donné est invalide !")
+    except Exception as e:
+        UI.afficher(e)
+        validate_user_input_number(wanted_action)
+    return number
 
 
 def do_action(menu, command):

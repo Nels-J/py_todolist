@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8341fcd4-f5a4-4a2a-ba49-42ff471867cd" name="Changes" comment="create method remplir_bdd for testing">
-      <change afterPath="$PROJECT_DIR$/Task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todolist.py" beforeDir="false" afterPath="$PROJECT_DIR$/todolist.py" afterDir="false" />
     </list>
@@ -32,14 +31,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/mltixier/Bureau/python/py_todolist"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mltixier/Bureau/python/py_todolist&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.todolist">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,7 +99,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666014549707</updated>
-      <workItem from="1666178042033" duration="9552000" />
+      <workItem from="1666178042033" duration="9705000" />
+      <workItem from="1666247904961" duration="1686000" />
     </task>
     <task id="LOCAL-00001" summary="update method add_task">
       <created>1666078844566</created>
