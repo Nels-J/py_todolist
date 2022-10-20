@@ -1,28 +1,30 @@
+from listTasks import ListTasks
+
+
 class ActionMenu:
 
     def __init__(self):
-        self.tasks: list = []
+        self.tasks = ListTasks()
 
     def add(self):
-        from task import Task
         task_name = input("Quel est le nom de votre nouvelle tache ?")
         task_status = False
-        self.tasks.append(Task(task_name, task_status))
+        self.tasks.addTask(task_name, task_status)
 
     def done(self):
-        task_to_ckeck = input('Quelle tache souhaitez-vous accomplir ?')
+        task_to_check = input('Quelle tache souhaitez-vous accomplir ?')
         task_status = True
-        self.tasks[int(task_to_ckeck) - 1].status = task_status
+        self.tasks.done_task(task_to_check, task_status)
 
     def update(self):
         task_to_update = input('Quelle tâche voulez vous modifier ?')
         new_name = input('Quel est le nouveau nom de votre tâche ?')
-        self.tasks[int(task_to_update) - 1].name = new_name
+        self.tasks.update_task(task_to_update, new_name)
 
     def list_in_progress(self):
         print('Liste des tâches en cours:')
         number_of_tasks_in_progress = 0
-        for count, task in enumerate(self.tasks):
+        for count, task in enumerate(self.tasks.tasks):
             if not task.status:
                 number_of_tasks_in_progress += 1
                 print(count + 1, '-', task.name)
@@ -32,7 +34,7 @@ class ActionMenu:
     def list_done(self):
         print('Liste des tâches terminées:')
         number_of_tasks_done = 0
-        for count, task in enumerate(self.tasks):
+        for count, task in enumerate(self.tasks.tasks):
             if task.status:
                 number_of_tasks_done += 1
                 print(count + 1, '-', task.name)
@@ -61,4 +63,5 @@ class ActionMenu:
             choices[user_choice]()
         except Exception:
             print("Erreur dans la fonction")
+            raise
         return self.tasks

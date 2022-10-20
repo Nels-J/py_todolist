@@ -1,3 +1,4 @@
+from actionMenu import ActionMenu
 
 
 class TodoListApplication:
@@ -16,7 +17,6 @@ class TodoListApplication:
         print("Quitter (command 'quit')")
 
     def start(self):
-        from actionMenu import ActionMenu
         menu = ActionMenu()
         self.print_menu()
         user_choice = input('Que souhaitez-vous faire ?\n')
