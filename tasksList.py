@@ -47,7 +47,7 @@ class TasksList:
             if index_task_to_update >= len(self.list):
                 raise NotInListIndexException
             new_task_name = input('What is new name of the task?')
-            self.list[index_task_to_update].name = new_task_name
+            self.list[index_task_to_update].update(new_task_name)
             interface.print('Task name update')
         except ValueError:
             try:
