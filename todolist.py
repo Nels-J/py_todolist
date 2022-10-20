@@ -112,36 +112,68 @@ class Task:
         return self
 
 
-def main():
-    interface_display = InterfaceDisplay()
-    tasks = TasksList()
-    menu = {
-        "add": ("Ajouter une tâche", "add", tasks.add_task),
-        "update": ("Changer le nom d'une tâche", "update", tasks.update_task_in_list),
-        "done": ("Marquer une tâche comme terminée", "done", tasks.mark_task_as_done_in_list),
-        "list": ("Lister les tâches en cours", "list", tasks.display_pending_tasks),
-        "list_done": ("Lister les tâches terminées", "list_done", tasks.display_done_tasks),
-        "list_all": ("Lister toutes les tâches", "list_all", tasks.display_all_tasks),
-    }
+# def main():
+#     interface_display = InterfaceDisplay()
+#     tasks = TasksList()
+#     menu = {
+#         "add": ("Ajouter une tâche", "add", tasks.add_task),
+#         "update": ("Changer le nom d'une tâche", "update", tasks.update_task_in_list),
+#         "done": ("Marquer une tâche comme terminée", "done", tasks.mark_task_as_done_in_list),
+#         "list": ("Lister les tâches en cours", "list", tasks.display_pending_tasks),
+#         "list_done": ("Lister les tâches terminées", "list_done", tasks.display_done_tasks),
+#         "list_all": ("Lister toutes les tâches", "list_all", tasks.display_all_tasks),
+#     }
+#
+#     interface_display.display_menu()
+#     command = input("\nEnter a command: ")
+#     while command != "quit":
+#         tasks.tasks_list = do_action(command, tasks.tasks_list, menu, interface_display)
+#         command = input("\nEnter a command: ")
+#     interface_display.print("Goodbye!")
 
-    interface_display.display_menu()
-    command = input("\nEnter a command: ")
-    while command != "quit":
-        tasks.tasks_list = do_action(command, tasks.tasks_list, menu, interface_display)
+
+# def do_action(command, tasks, menu, interface_display):
+#     try:
+#         if command in menu:
+#             tasks = menu[command][2](interface_display)
+#         else:
+#             raise InvalidCommandException
+#     except InvalidCommandException as e:
+#         interface_display.print(e)
+#     return tasks
+
+
+class App:
+
+    def start(self):
+        interface_display = InterfaceDisplay()
+        tasks = TasksList()
+        menu = {
+            "add": ("Ajouter une tâche", "add", tasks.add_task),
+            "update": ("Changer le nom d'une tâche", "update", tasks.update_task_in_list),
+            "done": ("Marquer une tâche comme terminée", "done", tasks.mark_task_as_done_in_list),
+            "list": ("Lister les tâches en cours", "list", tasks.display_pending_tasks),
+            "list_done": ("Lister les tâches terminées", "list_done", tasks.display_done_tasks),
+            "list_all": ("Lister toutes les tâches", "list_all", tasks.display_all_tasks),
+        }
+        interface_display.display_menu()
         command = input("\nEnter a command: ")
-    interface_display.print("Goodbye!")
+        while command != "quit":
+            tasks.tasks_list = self.do_action(command, tasks.tasks_list, menu, interface_display)
+            command = input("\nEnter a command: ")
+        interface_display.print("Goodbye!")
 
-
-def do_action(command, tasks, menu, interface_display):
-    try:
-        if command in menu:
-            tasks = menu[command][2](interface_display)
-        else:
-            raise InvalidCommandException
-    except InvalidCommandException as e:
-        interface_display.print(e)
-    return tasks
+    def do_action(self, command, tasks_list, menu, interface_display):
+        try:
+            if command in menu:
+                tasks_list = menu[command][2](interface_display)
+            else:
+                raise InvalidCommandException
+        except InvalidCommandException as e:
+            interface_display.print(e)
+        return tasks_list
 
 
 if __name__ == "__main__":
-    main()
+    app = App()
+    app.start()
