@@ -116,10 +116,13 @@ class Menu:
         }
 
     def do_action(self, command, interface_display):
-        if command in self.menu_options.keys():
-            return self.menu_options[command][1](interface_display)
-        else:
-            interface_display.print("Commande invalide")
+        try:
+            if command in self.menu_options.keys():
+                return self.menu_options[command][1](interface_display)
+            else:
+                raise InvalidCommandException
+        except InvalidCommandException as e:
+            interface_display.print(e)
 
     def display(self, interface_display):
         for key, value in self.menu_options.items():
@@ -138,16 +141,6 @@ class App:
             tasks.tasks_list = menu.do_action(command, interface_display)
             command = input("\nMerci de saisir une commande : ")
         interface_display.print("Goodbye!")
-
-    def do_action(self, command, tasks_list, menu, interface_display):
-        try:
-            if command in menu:
-                tasks_list = menu[command][2](interface_display)
-            else:
-                raise InvalidCommandException
-        except InvalidCommandException as e:
-            interface_display.print(e)
-        return tasks_list
 
 
 if __name__ == "__main__":
