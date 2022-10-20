@@ -9,7 +9,7 @@ class App:
         interface_display = InterfaceDisplay()
         tasks = TasksList()
         fichier = open("tasks.txt", "w")
-        fichier.write("Ma Todolist :" + "\n")
+        fichier.write("Ma Todolist :" + "\n" + "\n")
         fichier.close()
         menu = Menu(tasks)
         menu.display(interface_display)

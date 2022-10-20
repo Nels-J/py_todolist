@@ -29,6 +29,7 @@ class TasksList:
                 except Exception:
                     interface_display.print("Merci de saisir un nombre")
             self.tasks_list[index] = self.tasks_list[index].update_task(interface_display)
+
         return self.tasks_list
 
     def mark_task_as_done_in_list(self, interface_display):
