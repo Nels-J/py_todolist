@@ -1,4 +1,5 @@
 from exceptions import NotInListIndexException, NotIntegerException, NotImplementedException, InvalidCommandException
+from Task import Task
 
 
 class TasksList:
@@ -7,7 +8,8 @@ class TasksList:
         self.list = []
 
     def add_task(self, list_tasks, interface):
-        new_task = (input('Name of task :'), False)
+        new_task_name = input('Name of task :')
+        new_task = Task(new_task_name)
         self.list.append(new_task)
         interface.print('task saved ;-)')
         return self.list
@@ -60,21 +62,21 @@ class TasksList:
     def list_pending_tasks(self, list_tasks, interface):
         interface.print("List of your pending tasks :")
         for task in self.list:
-            if not task[1]:
-                interface.print(task[0])
+            if not task.status:
+                interface.print(task.name)
 
     def list_done_tasks(self, list_tasks, interface):
         interface.print("List of your tasks already done :")
         for count, task in enumerate(self.list):
-            if task[1]:
-                interface.print(str(count) + " - " + task[0])
+            if task.status:
+                interface.print(str(count) + " - " + task.name)
 
     def list_all_tasks(self, list_tasks, interface):
         try:
             if len(self.list) == 0:
                 interface.print('No tasks')
                 return
-            self.list_done_tasks(self.list, interface)
             self.list_pending_tasks(self.list, interface)
+            self.list_done_tasks(self.list, interface)
         except Exception as e:
             print(e)
