@@ -23,7 +23,7 @@ class TasksList:
             if index_task_to_close >= len(self.list):
                 raise NotInListIndexException
 
-            self.list[index_task_to_close].status = True
+            self.list[index_task_to_close].done()
             interface.print('Task closed')
         except ValueError:
             try:

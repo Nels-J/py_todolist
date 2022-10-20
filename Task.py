@@ -6,3 +6,6 @@ class Task:
 
     def update(self, new_name):
         self.name = new_name
+
+    def done(self):
+        self.status = True
