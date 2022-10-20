@@ -68,9 +68,9 @@ class TasksList:
 
     def display_pending_tasks(self, interface_display):
         interface_display.print("******* Toutes vos tâches en cours: *******")
-        for task in self.tasks_list:
+        for index, task in enumerate(self.tasks_list):
             if task.status == "A faire":
-                interface_display.print(f"{task.name} => {task.status}")
+                interface_display.print(f"{index} : {task.name}")
         return self.tasks_list
 
     def display_all_tasks(self, interface_display):
@@ -81,9 +81,9 @@ class TasksList:
 
     def display_done_tasks(self, interface_display):
         interface_display.print("******* Toutes vos tâches terminées: *******")
-        for task in self.tasks_list:
+        for index, task in enumerate(self.tasks_list):
             if task.status == "Terminée":
-                interface_display.print(f"{task.name} => {task.status}")
+                interface_display.print(f"{index} : {task.name}")
         return self.tasks_list
 
 
