@@ -8,11 +8,12 @@ class App:
     def start(self):
         interface_display = InterfaceDisplay()
         tasks = TasksList()
+        fichier = open("tasks.txt", "w")
         menu = Menu(tasks)
         menu.display(interface_display)
         command = input("\nMerci de saisir une commande : ")
         while command != "quit":
-            tasks.tasks_list = menu.do_action(command, interface_display)
+            tasks.tasks_list = menu.do_action(command, interface_display, fichier)
             command = input("\nMerci de saisir une commande : ")
         interface_display.print("Goodbye!")
 
