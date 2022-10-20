@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8341fcd4-f5a4-4a2a-ba49-42ff471867cd" name="Changes" comment="create method remplir_bdd for testing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todolist.py" beforeDir="false" afterPath="$PROJECT_DIR$/todolist.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +100,7 @@
       <option name="presentableId" value="Default" />
       <updated>1666014549707</updated>
       <workItem from="1666178042033" duration="9705000" />
-      <workItem from="1666247904961" duration="5162000" />
+      <workItem from="1666247904961" duration="5822000" />
     </task>
     <task id="LOCAL-00001" summary="update method add_task">
       <created>1666078844566</created>

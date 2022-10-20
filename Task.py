@@ -1,4 +1,4 @@
-from UI import UI
+from ui import UI
 
 
 class Task:
