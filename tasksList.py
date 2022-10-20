@@ -15,15 +15,15 @@ class TasksList:
         return self.list
 
     def close_task(self, list_tasks, interface):
-        for i, name in enumerate(self.list):
-            interface.print(f"tache n°: {i} {name[0]}")
+        for i, task in enumerate(self.list):
+            interface.print(f"tache n°: {i} {task.name}")
 
         try:
             index_task_to_close = int(input('What task do you want to close?'))
             if index_task_to_close >= len(self.list):
                 raise NotInListIndexException
 
-            self.list[index_task_to_close] = (self.list[index_task_to_close][0], True)
+            self.list[index_task_to_close].status = True
             interface.print('Task closed')
         except ValueError:
             try:
@@ -40,14 +40,14 @@ class TasksList:
             interface.print('No tasks')
             return
 
-        for i, name in enumerate(self.list):
-            interface.print(f"tache n°: {i} {name[0]}")
+        for i, task in enumerate(self.list):
+            interface.print(f"tache n°: {i} {task.name}")
         try:
             index_task_to_update = int(input('What task do you want to update?'))
             if index_task_to_update >= len(self.list):
                 raise NotInListIndexException
             new_task_name = input('What is new name of the task?')
-            self.list[index_task_to_update] = (new_task_name, self.list[index_task_to_update][1])
+            self.list[index_task_to_update].name = new_task_name
             interface.print('Task name update')
         except ValueError:
             try:
@@ -60,18 +60,21 @@ class TasksList:
             self.update_task(self.list, interface)
 
     def list_pending_tasks(self, list_tasks, interface):
+        #print(f"list_pending_tasks => {self.list}")
         interface.print("List of your pending tasks :")
-        for task in self.list:
+        for count, task in enumerate(self.list):
             if not task.status:
-                interface.print(task.name)
+                interface.print(f"{count}) {task.name} => {task.status}")
 
     def list_done_tasks(self, list_tasks, interface):
+        #print("list_done_tasks => {self.list}")
         interface.print("List of your tasks already done :")
         for count, task in enumerate(self.list):
             if task.status:
-                interface.print(str(count) + " - " + task.name)
+                interface.print(f"{count}) {task.name} => {task.status}")
 
     def list_all_tasks(self, list_tasks, interface):
+        #print("list_all_tasks => {self.list}")
         try:
             if len(self.list) == 0:
                 interface.print('No tasks')
