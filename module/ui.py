@@ -10,4 +10,3 @@ class UI:
         for key, value in menu_object.items():
             self.afficher(f'-- {key} => {value[0]}')
         self.afficher("quit :  Quitter ")
-

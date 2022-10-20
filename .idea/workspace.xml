@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8341fcd4-f5a4-4a2a-ba49-42ff471867cd" name="Changes" comment="create method remplir_bdd for testing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task.py" beforeDir="false" afterPath="$PROJECT_DIR$/module/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/module/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todolist.py" beforeDir="false" afterPath="$PROJECT_DIR$/todolist.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/module/ui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,14 +32,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/mltixier/Bureau/python/py_todolist&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/newage/Bureau/PythonProject/py_todolist/module.py"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/module.py" />
+      <recent name="$PROJECT_DIR$/Modul" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.todolist">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -100,7 +107,9 @@
       <option name="presentableId" value="Default" />
       <updated>1666014549707</updated>
       <workItem from="1666178042033" duration="9705000" />
-      <workItem from="1666247904961" duration="5822000" />
+      <workItem from="1666247904961" duration="6125000" />
+      <workItem from="1666257636756" duration="276000" />
+      <workItem from="1666271916090" duration="1651000" />
     </task>
     <task id="LOCAL-00001" summary="update method add_task">
       <created>1666078844566</created>

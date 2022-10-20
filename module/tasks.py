@@ -1,4 +1,4 @@
-from Task import Task
+from module.task import Task
 
 
 class Tasks:
@@ -20,4 +20,3 @@ class Tasks:
 
     def list_done(self):
         return self.list_wanted_tasks(True)
-

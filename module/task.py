@@ -1,6 +1,3 @@
-from ui import UI
-
-
 class Task:
     label = None
     status = False

@@ -1,11 +1,11 @@
-from Tasks import Tasks
-from ui import UI
+from module.tasks import Tasks
+from module.ui import UI
 
 
 class Application:
 
     def __init__(self):
-        pass
+        passa
 
     def start(self):
         menu = {
