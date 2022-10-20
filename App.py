@@ -1,7 +1,7 @@
 class Application:
     def __init__(self):
-        self.display_menu()
-        self.input = input()
+        self.status = True
+        self.task = ""
         self.task_list = []
         self.choice = {
             "add": self.add,
@@ -10,38 +10,55 @@ class Application:
             "list": self.list_all,
             "list not done": self.list_not_done,
             "list done": self.list_done,
+            "menu": self.display_menu,
         }
 
     def run(self):
         self.display_menu()
-        user_input = input()
+        user_input = input("Please enter your command :")
         while user_input != "quit":
             try:
-                self.display_menu()
                 if user_input in self.choice:
                     self.choice[user_input]()
+                else:
+                    raise NotImplementedError
             except Exception as e:
                 self.exceptions(e)
-        self.display_menu()
+            user_input = input("Please enter your command :")
 
-    def add(self, task):
-        return self.task_list.append(task)
+    def add(self):
+        self.task = input("What task should I add ?")
+        return self.task_list.append((self.task, self.status))
 
     def done(self):
-        pass
+        self.list_not_done()
+        user_input = int(input("Quelle tache voulez vous effectuer ?")) - 1
+        self.task_list[user_input] = self.task_list[user_input][0], False
 
     def update(self):
-        pass
+        self.list_all()
+        user_input = int(input("Quelle tache voulez vous editer ?")) - 1
+        user_new_task = input("Donner un nouveau libellé: ")
+        self.task_list[user_input] = (user_new_task, self.task_list[user_input][self.status])
 
     def list_all(self):
-        for task in self.task_list:
-            print(task)
+        if len(self.task_list) == 0:
+            print("il n'y a rien ici")
+        else:
+            print("En cours")
+            self.list_not_done()
+            print("Terminée")
+            self.list_done()
 
     def list_not_done(self):
-        pass
+        for idx, item in enumerate(self.task_list):
+            if item[1]:
+                print(f"{idx + 1},   correspond à la tache  ,  {item[0]}")
 
     def list_done(self):
-        pass
+        for idx, item in enumerate(self.task_list):
+            if not item[1]:
+                print(f"{idx + 1},   correspond à la tache  ,  {item[0]}")
 
     def exceptions(self, e):
         print(e)
@@ -55,6 +72,7 @@ class Application:
             \nLister les tâches terminées (list-done)
             \nLister toutes les tâches (list-all)"
             \nQuitter (quit)")
+            \nafficher le menu (menu)")
             \n********Que voulez-vous faire ?**********
         """)
 
