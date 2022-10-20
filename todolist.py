@@ -9,11 +9,13 @@ class App:
         interface_display = InterfaceDisplay()
         tasks = TasksList()
         fichier = open("tasks.txt", "w")
+        fichier.write("Ma Todolist :" + "\n")
+        fichier.close()
         menu = Menu(tasks)
         menu.display(interface_display)
         command = input("\nMerci de saisir une commande : ")
         while command != "quit":
-            tasks.tasks_list = menu.do_action(command, interface_display, fichier)
+            tasks.tasks_list = menu.do_action(command, interface_display)
             command = input("\nMerci de saisir une commande : ")
         interface_display.print("Goodbye!")
 

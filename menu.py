@@ -12,10 +12,10 @@ class Menu:
             "list_all": ("Lister toutes les tâches", tasks.display_all_tasks),
         }
 
-    def do_action(self, command, interface_display, fichier):
+    def do_action(self, command, interface_display):
         try:
             if command in self.menu_options.keys():
-                return self.menu_options[command][1](interface_display, fichier)
+                return self.menu_options[command][1](interface_display)
             else:
                 raise InvalidCommandException
         except InvalidCommandException as e:
