@@ -1,4 +1,4 @@
-from Tasks import Tasks
+from package.Tasks import Tasks
 from ui import UI
 
 
@@ -13,14 +13,15 @@ class Application:
             "done": ("Marquer comme terminée", self.done),
             "update": ("Mettre à jour", self.update),
             "list": ("Afficher la liste des tâches non terminées", self.list_pending),
-            "list_done": ("Afficher la liste des tâches terminées", self.list_done),
-            "list_all": ("Afficher toutes les tâches", self.list_all),
+            "list-done": ("Afficher la liste des tâches terminées", self.list_done),
+            "list-all": ("Afficher toutes les tâches", self.list_all),
         }
         ui.print_menu(menu)
         action = ui.interact("\nQue souhaitez-vous faire ? ")
         while action != "quit":
             self.do_action(menu, action)
             action = ui.interact("\nQue souhaitez-vous faire ? ")
+        tasks.close_file()
         ui.afficher("Goodbye\n")
 
     def add(self):

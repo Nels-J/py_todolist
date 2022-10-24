@@ -1,12 +1,15 @@
-from Task import Task
+from package.Task import Task
 
 
 class Tasks:
-    list = []
+    def __init__(self):
+
+        self.file = open("persistance.txt", "w+")
 
     def add(self, label):
-        task = Task(label)
-        self.list.append(task)
+        task_label = Task(label)
+        self.file.write(f'{task.get_task()}\n')
+        print(self.file.read())
 
     def list_wanted_tasks(self, wanted_status):
         wanted_tasks = []
@@ -21,3 +24,5 @@ class Tasks:
     def list_done(self):
         return self.list_wanted_tasks(True)
 
+    def close_file(self):
+        self.file.close()

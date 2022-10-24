@@ -1,6 +1,3 @@
-from ui import UI
-
-
 class Task:
     label = None
     status = False
@@ -13,3 +10,7 @@ class Task:
 
     def update(self, task_new_name):
         self.label = task_new_name
+
+    def get_task(self):
+        return self.label
+
