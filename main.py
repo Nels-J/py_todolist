@@ -1,12 +1,5 @@
 from Task import Task
-
-
-class TasksList:
-    list_tasks = []
-
-    def add(self, label):
-        task = Task(label)
-        self.list_tasks.append(task)
+from TasksList import TasksList
 
 
 class Application:
@@ -34,8 +27,7 @@ class Application:
 
     def add(self, tasks):
         user_task = input("Veuillez saisir votre nouvelle tâche: ")
-        task = Task(user_task)
-        tasks.list_tasks.append(task)
+        tasks.add(user_task)
         print("Tâche créée")
         return tasks
 
