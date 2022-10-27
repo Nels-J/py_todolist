@@ -53,20 +53,20 @@ class Application:
     def list(self, tasks):
         pending_tasks = tasks.list_according_to_status(False)
         if len(pending_tasks) > 0:
-            print("Les tâches en cours sont :")
+            self.interface.undone_tasks_are()
             for pending_task in pending_tasks:
                 print(pending_task[0] + 1, ":", pending_task[1].label)
         else:
-            self.interface.no_current_undone_task()
+            self.interface.no_undone_task()
 
     def list_done(self, tasks):
         done_tasks = tasks.list_according_to_status(True)
         if len(done_tasks) > 0:
-            print("Les tâches terminées sont :")
+            self.interface.done_tasks_are()
             for done_task in done_tasks:
                 print(done_task[0] + 1, ":", done_task[1].label)
         else:
-            self.interface.no_current_done_task()
+            self.interface.no_done_task()
 
     def list_all(self, tasks):
         done_tasks = []
@@ -77,18 +77,18 @@ class Application:
             else:
                 pending_tasks.append((task, index))
         if len(pending_tasks) > 0:
-            print('Voici les tâches en cours :')
+            self.interface.undone_tasks_are()
             for task in pending_tasks:
                 print(task[1] + 1, ":", task[0].label)
         if len(done_tasks) > 0:
-            print('Voici les tâches terminées :')
+            self.interface.done_tasks_are()
             for task in done_tasks:
                 print(task[1] + 1, ":", task[0].label)
 
     def add(self, tasks):
-        user_task = input("Veuillez saisir votre nouvelle tâche: ")
+        user_task = self.interface.ask_new_task_name()
         tasks.add(user_task)
-        print("Tâche créée")
+        self.interface.new_task_created()
         return tasks
 
     def update(self, tasks):
@@ -96,15 +96,15 @@ class Application:
         index_tache = None
         while index_tache is None:
             try:
-                index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
+                index_tache = int(self.interface.ask_nb_of_task_to_modify()) - 1
             except Exception as err:
                 print("Entrée invalide : merci d'entrer un entier")
         if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
-            print("Cette tâche n'existe pas")
+            self.interface.task_does_not_exist()
         else:
-            nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
+            nouveau_nom_tache = self.interface.ask_new_task_name()
             tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].update(nouveau_nom_tache)
-            print("Tâche modifée")
+            self.interface.modified_task_notification()
         return tasks
 
     def done(self, tasks):
@@ -112,13 +112,14 @@ class Application:
         while index_tache is None:
             try:
                 self.list(tasks)
-                index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
+                index_tache = int(self.interface.ask_nb_of_task_to_close()) - 1
             except Exception as err:
                 print("Entrée invalide : merci d'entrer un entier")
         if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
-            print("Cette tâche n'existe pas")
+            self.interface.task_does_not_exist()
         else:
             tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].close()
+            self.interface.closed_task_notification()
         return tasks
 
 
