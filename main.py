@@ -12,7 +12,7 @@ class Application:
         want_to_quit = False
         tasks = TasksList()
         menu = {"add": ("Ajouter une tâche", self.add),
-                "done": ("Effectuer une tâche", self.done),
+                "close": ("Terminer une tâche", self.done),
                 "update": ("Modifier le libellé d'une tâche", self.update),
                 "list": ("Lister les tâches en cours", self.list),
                 "list-done": ("Lister les tâches terminées", self.list_done),
@@ -55,7 +55,7 @@ class Application:
         if len(pending_tasks) > 0:
             self.interface.undone_tasks_are()
             for pending_task in pending_tasks:
-                print(pending_task[0] + 1, ":", pending_task[1].label)
+                self.interface.display_task_with_nb(pending_task)
         else:
             self.interface.no_undone_task()
 
@@ -64,26 +64,13 @@ class Application:
         if len(done_tasks) > 0:
             self.interface.done_tasks_are()
             for done_task in done_tasks:
-                print(done_task[0] + 1, ":", done_task[1].label)
+                self.interface.display_task_with_nb(done_task)
         else:
             self.interface.no_done_task()
 
     def list_all(self, tasks):
-        done_tasks = []
-        pending_tasks = []
-        for index, task in enumerate(tasks.list_tasks):
-            if task.is_done:
-                done_tasks.append((task, index))
-            else:
-                pending_tasks.append((task, index))
-        if len(pending_tasks) > 0:
-            self.interface.undone_tasks_are()
-            for task in pending_tasks:
-                print(task[1] + 1, ":", task[0].label)
-        if len(done_tasks) > 0:
-            self.interface.done_tasks_are()
-            for task in done_tasks:
-                print(task[1] + 1, ":", task[0].label)
+        self.list(tasks)
+        self.list_done(tasks)
 
     def add(self, tasks):
         user_task = self.interface.ask_new_task_name()

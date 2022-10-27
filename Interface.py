@@ -42,5 +42,7 @@ class Interface:
     def closed_task_notification(self):
         print("Tâche terminée")
     def ask_nb_of_task_to_close(self):
-
        return input("Indiquez le numéro de la tâche terminée : ")
+
+    def display_task_with_nb(self, task):
+        print(task[0] + 1, ":", task[1].label)
