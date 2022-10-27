@@ -84,7 +84,7 @@ class Application:
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
         self.update_task(tasks, 1, "new T2")
-        # close_task(tasks, 1)
+        close_task(tasks, 1)
         self.list_all(tasks)
 
     def update(self, tasks):
@@ -130,26 +130,10 @@ def done(tasks):
             index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
         except Exception as err:
             print("Entrée invalide : merci d'entrer un entier")
-    if index_tache < 0 or index_tache + 1 > len(tasks):
+    if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
         print("Cette tâche n'existe pas")
     else:
         tasks = close_task(tasks, index_tache)
-    return tasks
-
-
-def update(tasks):
-    index_tache = None
-    while index_tache is None:
-        try:
-            index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
-        except Exception as err:
-            print("Entrée invalide : merci d'entrer un entier")
-    if index_tache < 0 or index_tache + 1 > len(tasks):
-        print("Cette tâche n'existe pas")
-    else:
-        nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
-        update_task(tasks, index_tache, nouveau_nom_tache)
-        print("Tâche modifée")
     return tasks
 
 
@@ -192,9 +176,9 @@ def user_command(tasks, user_choice, menu):
 
 
 def close_task(tasks, task_number):
-    task = (tasks.tasks_list[task_number][0], True)
-    tasks[task_number] = task
+    tasks.list_tasks[task_number].is_done = True
     return tasks
+
 
 
 
