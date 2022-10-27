@@ -1,14 +1,68 @@
-def add(tasks):
-    user_task = input("Veuillez saisir votre nouvelle tâche: ")
-    task = (user_task, False)
-    tasks = add_to_list(tasks, task)
-    print("Tâche créée")
-    return tasks
+from Task import Task
 
 
-def add_to_list(tasks, task):
-    tasks.append(task)
-    return tasks
+class TasksList:
+    list_tasks = []
+
+    def add(self, label):
+        task = Task(label)
+        self.list_tasks.append(task)
+        print(self.list_tasks)
+
+class Application:
+    def __init__(self):
+        pass
+
+    def launch(self):
+        want_to_quit = False
+        tasks = TasksList()
+        menu = {"add": ("Ajouter une tâche", self.add),
+                "done": ("Effectuer une tâche", done),
+                "update": ("Modifier le libellé d'une tâche", update),
+                "list": ("Lister les tâches en cours", self.list),
+                "list-done": ("Lister les tâches terminées", list_done),
+                "list-all": ("Lister toutes les tâches", list_all),
+                "test": ("test", scenario)
+                }
+        print_menu(menu)
+        while not want_to_quit:
+            user_choice = input('Que souhaitez-vous faire ?\n')
+            if user_choice == 'quit':
+                want_to_quit = True
+            else:
+                tasks = user_command(tasks, user_choice, menu)
+
+    def add(self, tasks):
+        user_task = input("Veuillez saisir votre nouvelle tâche: ")
+        task = Task(user_task)
+        tasks.list_tasks.append(task)
+        print("Tâche créée")
+        return tasks
+
+    def list(self, tasks):
+        pending_tasks = []
+        for index, item in enumerate(tasks.list_tasks):
+            print(tasks.list_tasks)
+            if not item.is_done:
+                pending_tasks.append((index, item))
+        if len(pending_tasks) > 0:
+            print("Les tâches en cours sont :")
+            for pending_task in pending_tasks:
+                print(pending_task[0] + 1, ":", pending_task[1].label)
+        else:
+            print("Aucune tâche en cours pour l'instant!")
+
+    def list_done(self, tasks):
+        done_tasks = []
+        for index, item in enumerate(tasks.list_tasks):
+            if item.is_done:
+                done_tasks.append((index, item))
+        if len(done_tasks) > 0:
+            print("Les tâches terminées sont :")
+            for done_task in done_tasks:
+                print(done_task[0] + 1, ":", done_task[1].label)
+        else:
+            print("Aucune tâche finie pour l'instant!")
 
 
 def done(tasks):
@@ -44,28 +98,15 @@ def update(tasks):
     return tasks
 
 
-def list(tasks):
-    pending_tasks = []
-    for index, item in enumerate(tasks):
-        if not item[1]:
-            pending_tasks.append((index, item))
-    if len(pending_tasks) > 0:
-        print("Les tâches en cours sont :")
-        for pending_task in pending_tasks:
-            print(pending_task[0] + 1, ":", pending_task[1][0])
-    else:
-        print("Aucune tâche en cours pour l'instant!")
-
-
 def list_done(tasks):
     done_tasks = []
-    for index, item in enumerate(tasks):
-        if item[1]:
+    for index, item in enumerate(tasks.list_tasks):
+        if item.is_done:
             done_tasks.append((index, item))
     if len(done_tasks) > 0:
         print("Les tâches terminées sont :")
         for done_task in done_tasks:
-            print(done_task[0] + 1, ":", done_task[1][0])
+            print(done_task[0] + 1, ":", done_task[1].label)
     else:
         print("Aucune tâche finie pour l'instant!")
 
@@ -90,12 +131,6 @@ def list_all(tasks):
 
 def print_menu(menu):
     print("Voici le menu :")
-    # print("add       : Ajouter une tâche")
-    # print("done      : Effectuer une tâche")
-    # print("update    : Modifier le libellé d'une tâche")
-    # print("list      : Lister les tâches en cours")
-    # print("list-done : Lister les tâches terminées")
-    # print("list-all  : Lister toutes les tâches")
     for cle, valeur in menu.items():
         print(cle, ":", valeur[0])
     print("quit : Quitter")
@@ -120,46 +155,26 @@ def user_command(tasks, user_choice, menu):
 
 
 def close_task(tasks, task_number):
-    task = (tasks[task_number][0], True)
+    task = (tasks.tasks_list[task_number][0], True)
     tasks[task_number] = task
     return tasks
 
 
 def update_task(tasks, task_number, new_name):
-    task = (new_name, tasks[task_number][1])
+    task = (new_name, tasks.tasks_list[task_number].label)
     tasks[task_number] = task
     return tasks
 
 
 def scenario(tasks):
-    add_to_list(tasks, ("t1", False))
-    add_to_list(tasks, ("t2", False))
+    tasks.add(Task('t1'))
+    tasks.add(Task('T2'))
     update_task(tasks, 1, "new T2")
     close_task(tasks, 1)
     list_all(tasks)
     return tasks
 
 
-def main():
-    want_to_quit = False
-    task = ()
-    tasks = []
-    menu = {"add": ("Ajouter une tâche", add),
-            "done": ("Effectuer une tâche", done),
-            "update": ("Modifier le libellé d'une tâche", update),
-            "list": ("Lister les tâches en cours", list),
-            "list-done": ("Lister les tâches terminées", list_done),
-            "list-all": ("Lister toutes les tâches", list_all),
-            "test": ("test", scenario)
-            }
-    print_menu(menu)
-    while not want_to_quit:
-        user_choice = input('Que souhaitez-vous faire ?\n')
-        if user_choice == 'quit':
-            want_to_quit = True
-        else:
-            tasks = user_command(tasks, user_choice, menu)
-
-
 if __name__ == '__main__':
-    main()
+    app = Application()
+    app.launch()
