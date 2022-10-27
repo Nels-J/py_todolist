@@ -1,9 +1,11 @@
+from Interface import Interface
 from Task import Task
 from TasksList import TasksList
 
 
 class Application:
     def __init__(self):
+        self.interface = Interface()
         pass
 
     def launch(self):
@@ -17,9 +19,9 @@ class Application:
                 "list-all": ("Lister toutes les tâches", self.list_all),
                 "test": ("test", self.scenario)
                 }
-        self.print_menu(menu)
+        self.interface.print_menu(menu)
         while not want_to_quit:
-            user_choice = input('Que souhaitez-vous faire ?\n')
+            user_choice = self.interface.ask_action()
             if user_choice == 'quit':
                 want_to_quit = True
             else:
@@ -44,15 +46,9 @@ class Application:
     def scenario(self, tasks):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
-        self.update_task(tasks, 1, "new T2")
+        # self.update_task(tasks, 1, "new T2")
         # self.close_task(tasks, 1)
         self.list_all(tasks)
-
-    def print_menu(self, menu):
-        print("Voici le menu :")
-        for cle, valeur in menu.items():
-            print(cle, ":", valeur[0])
-        print("quit : Quitter")
 
     def list(self, tasks):
         pending_tasks = tasks.list_according_to_status(False)
@@ -61,7 +57,7 @@ class Application:
             for pending_task in pending_tasks:
                 print(pending_task[0] + 1, ":", pending_task[1].label)
         else:
-            print("Aucune tâche en cours pour l'instant!")
+            self.interface.no_current_undone_task()
 
     def list_done(self, tasks):
         done_tasks = tasks.list_according_to_status(True)
@@ -70,7 +66,7 @@ class Application:
             for done_task in done_tasks:
                 print(done_task[0] + 1, ":", done_task[1].label)
         else:
-            print("Aucune tâche finie pour l'instant!")
+            self.interface.no_current_done_task()
 
     def list_all(self, tasks):
         done_tasks = []
@@ -107,12 +103,8 @@ class Application:
             print("Cette tâche n'existe pas")
         else:
             nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
-            self.update_task(tasks, index_tache, nouveau_nom_tache)
+            tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].update(nouveau_nom_tache)
             print("Tâche modifée")
-        return tasks
-
-    def update_task(self, tasks, task_number, new_name):
-        tasks.list_tasks[task_number].label = new_name
         return tasks
 
     def done(self, tasks):
