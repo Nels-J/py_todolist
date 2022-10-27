@@ -7,7 +7,6 @@ class TasksList:
     def add(self, label):
         task = Task(label)
         self.list_tasks.append(task)
-        print(self.list_tasks)
 
 
 class Application:
@@ -43,7 +42,6 @@ class Application:
     def list(self, tasks):
         pending_tasks = []
         for index, item in enumerate(tasks.list_tasks):
-            print(tasks.list_tasks)
             if not item.is_done:
                 pending_tasks.append((index, item))
         if len(pending_tasks) > 0:
@@ -85,7 +83,7 @@ class Application:
     def scenario(self, tasks):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
-        # update_task(tasks, 1, "new T2")
+        update_task(tasks, 1, "new T2")
         # close_task(tasks, 1)
         self.list_all(tasks)
 
@@ -123,23 +121,7 @@ def update(tasks):
     index_tache = None
     while index_tache is None:
         try:
-            done_tasks = []
-            pending_tasks = []
-            for index, task in enumerate(tasks.list_tasks):
-                if task.is_done:
-                    done_tasks.append((task, index))
-                else:
-                    pending_tasks.append((task, index))
-            if len(pending_tasks) > 0:
-                print('Voici les tâches en cours :')
-                for task in pending_tasks:
-                    print(task[1] + 1, ":", task[0].label)
-            if len(done_tasks) > 0:
-                print('Voici les tâches terminées :')
-                for task in done_tasks:
-                    print(task[1] + 1, ":", task[0].label)
             index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
-
         except Exception as err:
             print("Entrée invalide : merci d'entrer un entier")
     if index_tache < 0 or index_tache + 1 > len(tasks):
@@ -196,8 +178,7 @@ def close_task(tasks, task_number):
 
 
 def update_task(tasks, task_number, new_name):
-    task = (new_name, tasks.tasks_list[task_number].label)
-    tasks[task_number] = task
+    tasks.list_tasks[task_number].label = new_name
     return tasks
 
 
