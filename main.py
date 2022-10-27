@@ -20,17 +20,17 @@ class Application:
                 "done": ("Effectuer une tâche", self.done),
                 "update": ("Modifier le libellé d'une tâche", self.update),
                 "list": ("Lister les tâches en cours", self.list),
-                "list-done": ("Lister les tâches terminées", list_done),
+                "list-done": ("Lister les tâches terminées", self.list_done),
                 "list-all": ("Lister toutes les tâches", self.list_all),
                 "test": ("test", self.scenario)
                 }
-        print_menu(menu)
+        self.print_menu(menu)
         while not want_to_quit:
             user_choice = input('Que souhaitez-vous faire ?\n')
             if user_choice == 'quit':
                 want_to_quit = True
             else:
-                tasks = user_command(tasks, user_choice, menu)
+                tasks = self.user_command(tasks, user_choice, menu)
 
     def add(self, tasks):
         user_task = input("Veuillez saisir votre nouvelle tâche: ")
@@ -139,43 +139,39 @@ class Application:
         tasks.list_tasks[task_number].is_done = True
         return tasks
 
-
-def list_done(tasks):
-    done_tasks = []
-    for index, item in enumerate(tasks.list_tasks):
-        if item.is_done:
-            done_tasks.append((index, item))
-    if len(done_tasks) > 0:
-        print("Les tâches terminées sont :")
-        for done_task in done_tasks:
-            print(done_task[0] + 1, ":", done_task[1].label)
-    else:
-        print("Aucune tâche finie pour l'instant!")
-
-
-def print_menu(menu):
-    print("Voici le menu :")
-    for cle, valeur in menu.items():
-        print(cle, ":", valeur[0])
-    print("quit : Quitter")
-
-
-def is_valid(user_choice, menu):
-    if user_choice in menu:
-        return True
-    else:
-        return False
-
-
-def user_command(tasks, user_choice, menu):
-    try:
-        if is_valid(user_choice, menu):
-            menu[user_choice][1](tasks)
+    def list_done(self, tasks):
+        done_tasks = []
+        for index, item in enumerate(tasks.list_tasks):
+            if item.is_done:
+                done_tasks.append((index, item))
+        if len(done_tasks) > 0:
+            print("Les tâches terminées sont :")
+            for done_task in done_tasks:
+                print(done_task[0] + 1, ":", done_task[1].label)
         else:
-            raise ValueError('La fonctionnalité n\'existe pas !')
-    except ValueError as e:
-        print(e)
-    return tasks
+            print("Aucune tâche finie pour l'instant!")
+
+    def print_menu(self, menu):
+        print("Voici le menu :")
+        for cle, valeur in menu.items():
+            print(cle, ":", valeur[0])
+        print("quit : Quitter")
+
+    def is_valid(self, user_choice, menu):
+        if user_choice in menu:
+            return True
+        else:
+            return False
+
+    def user_command(self, tasks, user_choice, menu):
+        try:
+            if self.is_valid(user_choice, menu):
+                menu[user_choice][1](tasks)
+            else:
+                raise ValueError('La fonctionnalité n\'existe pas !')
+        except ValueError as e:
+            print(e)
+        return tasks
 
 
 if __name__ == '__main__':
