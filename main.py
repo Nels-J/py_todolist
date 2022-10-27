@@ -10,8 +10,6 @@ class Application:
         pass
 
     def launch(self):
-        want_to_quit = False
-        tasks = TasksList()
         menu = {"add": ("Ajouter une tâche", self.add),
                 "close": ("Terminer une tâche", self.close),
                 "update": ("Modifier le libellé d'une tâche", self.update),
@@ -21,37 +19,28 @@ class Application:
                 "test": ("test", self.scenario)
                 }
         self.interface.print_menu(menu)
-        while not want_to_quit:
-            user_choice = self.interface.ask_action()
-            if user_choice == 'quit':
-                want_to_quit = True
-            else:
-                tasks = self.user_command(tasks, user_choice, menu)
+        action = user_choice = self.interface.ask_action()
+        while action != "quit":
+            self.user_command(user_choice, menu)
+            action = user_choice = self.interface.ask_action()
 
-    def is_valid(self, user_choice, menu):
-        if user_choice in menu:
-            return True
-        else:
-            return False
-
-    def user_command(self, tasks, user_choice, menu):
+    def user_command(self, user_choice, menu):
         try:
-            if self.is_valid(user_choice, menu):
-                menu[user_choice][1](tasks)
+            if user_choice in menu.keys():
+                menu[user_choice][1]()
             else:
                 raise MenuEntryDoesNotExist()
         except MenuEntryDoesNotExist:
             self.interface.menu_entry_does_not_exist()
-        return tasks
 
-    def scenario(self, tasks):
+    def scenario(self):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
         tasks.list[0].update('new t1')
         tasks.list[1].close()
-        self.list_all(tasks)
+        self.list_all()
 
-    def list(self, tasks):
+    def list(self):
         pending_tasks = tasks.list_according_to_status(False)
         if len(pending_tasks) > 0:
             self.interface.undone_tasks_are()
@@ -60,7 +49,7 @@ class Application:
         else:
             self.interface.no_undone_task()
 
-    def list_done(self, tasks):
+    def list_done(self):
         done_tasks = tasks.list_according_to_status(True)
         if len(done_tasks) > 0:
             self.interface.done_tasks_are()
@@ -69,18 +58,18 @@ class Application:
         else:
             self.interface.no_done_task()
 
-    def list_all(self, tasks):
-        self.list(tasks)
-        self.list_done(tasks)
+    def list_all(self):
+        self.list()
+        self.list_done()
 
-    def add(self, tasks):
+    def add(self):
         user_task = self.interface.ask_new_task_name()
         tasks.add(user_task)
         self.interface.new_task_created()
         return tasks
 
-    def update(self, tasks):
-        self.list(tasks)
+    def update(self):
+        self.list()
         task_index = None
         while task_index is None:
             try:
@@ -100,11 +89,11 @@ class Application:
                     self.interface.modified_task_notification()
                 return tasks
 
-    def close(self, tasks):
+    def close(self):
         task_index = None
         while task_index is None:
             try:
-                self.list(tasks)
+                self.list()
                 task_index = self.interface.ask_nb_of_task_to_close()
                 if isinstance(int(task_index), int):
                     task_index = int(task_index) - 1
@@ -122,5 +111,6 @@ class Application:
 
 
 if __name__ == '__main__':
+    tasks = TasksList()
     app = Application()
     app.launch()
