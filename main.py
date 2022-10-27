@@ -114,19 +114,19 @@ def list_done(tasks):
 def list_all(tasks):
     done_tasks = []
     pending_tasks = []
-    for index, task in enumerate(tasks):
-        if task[1]:
+    for index, task in enumerate(tasks.list_tasks):
+        if task.is_done:
             done_tasks.append((task, index))
         else:
             pending_tasks.append((task, index))
     if len(pending_tasks) > 0:
         print('Voici les tâches en cours :')
         for task in pending_tasks:
-            print(task[1] + 1, ":", task[0][0])
+            print(task[1] + 1, ":", task[0].label)
     if len(done_tasks) > 0:
         print('Voici les tâches terminées :')
         for task in done_tasks:
-            print(task[1] + 1, ":", task[0][0])
+            print(task[1] + 1, ":", task[0].label)
 
 
 def print_menu(menu):
@@ -169,8 +169,8 @@ def update_task(tasks, task_number, new_name):
 def scenario(tasks):
     tasks.add(Task('t1'))
     tasks.add(Task('T2'))
-    update_task(tasks, 1, "new T2")
-    close_task(tasks, 1)
+   # update_task(tasks, 1, "new T2")
+   # close_task(tasks, 1)
     list_all(tasks)
     return tasks
 
