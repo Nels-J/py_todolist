@@ -25,11 +25,34 @@ class Application:
             else:
                 tasks = self.user_command(tasks, user_choice, menu)
 
-    def add(self, tasks):
-        user_task = input("Veuillez saisir votre nouvelle tâche: ")
-        tasks.add(user_task)
-        print("Tâche créée")
+    def is_valid(self, user_choice, menu):
+        if user_choice in menu:
+            return True
+        else:
+            return False
+
+    def user_command(self, tasks, user_choice, menu):
+        try:
+            if self.is_valid(user_choice, menu):
+                menu[user_choice][1](tasks)
+            else:
+                raise ValueError('La fonctionnalité n\'existe pas !')
+        except ValueError as e:
+            print(e)
         return tasks
+
+    def scenario(self, tasks):
+        tasks.add(Task('t1'))
+        tasks.add(Task('T2'))
+        self.update_task(tasks, 1, "new T2")
+        # self.close_task(tasks, 1)
+        self.list_all(tasks)
+
+    def print_menu(self, menu):
+        print("Voici le menu :")
+        for cle, valeur in menu.items():
+            print(cle, ":", valeur[0])
+        print("quit : Quitter")
 
     def list(self, tasks):
         pending_tasks = tasks.list_according_to_status(False)
@@ -66,12 +89,11 @@ class Application:
             for task in done_tasks:
                 print(task[1] + 1, ":", task[0].label)
 
-    def scenario(self, tasks):
-        tasks.add(Task('t1'))
-        tasks.add(Task('T2'))
-        self.update_task(tasks, 1, "new T2")
-        self.close_task(tasks, 1)
-        self.list_all(tasks)
+    def add(self, tasks):
+        user_task = input("Veuillez saisir votre nouvelle tâche: ")
+        tasks.add(user_task)
+        print("Tâche créée")
+        return tasks
 
     def update(self, tasks):
         self.list(tasks)
@@ -104,33 +126,7 @@ class Application:
         if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
             print("Cette tâche n'existe pas")
         else:
-            tasks = self.close_task(tasks, index_tache)
-        return tasks
-
-    def close_task(self, tasks, task_number):
-        tasks.list_tasks[task_number].is_done = True
-        return tasks
-
-    def print_menu(self, menu):
-        print("Voici le menu :")
-        for cle, valeur in menu.items():
-            print(cle, ":", valeur[0])
-        print("quit : Quitter")
-
-    def is_valid(self, user_choice, menu):
-        if user_choice in menu:
-            return True
-        else:
-            return False
-
-    def user_command(self, tasks, user_choice, menu):
-        try:
-            if self.is_valid(user_choice, menu):
-                menu[user_choice][1](tasks)
-            else:
-                raise ValueError('La fonctionnalité n\'existe pas !')
-        except ValueError as e:
-            print(e)
+            tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].close()
         return tasks
 
 

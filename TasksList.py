@@ -10,7 +10,7 @@ class TasksList:
 
     def list_according_to_status(self, status):
         tasks = []
-        for index, item in enumerate(self.list_tasks):
-            if item.is_done == status:
-                tasks.append((index, item))
+        for index, task in enumerate(self.list_tasks):
+            if task.is_done == status:
+                tasks.append((index, task))
         return tasks
