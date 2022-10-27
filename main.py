@@ -83,23 +83,28 @@ class Application:
     def scenario(self, tasks):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
-        update_task(tasks, 1, "new T2")
+        self.update_task(tasks, 1, "new T2")
         # close_task(tasks, 1)
         self.list_all(tasks)
 
     def update(self, tasks):
+        self.list(tasks)
         index_tache = None
         while index_tache is None:
             try:
                 index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
             except Exception as err:
                 print("Entrée invalide : merci d'entrer un entier")
-        if index_tache < 0 or index_tache + 1 > len(tasks):
+        if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
             print("Cette tâche n'existe pas")
         else:
             nouveau_nom_tache = input("Veuillez saisir le nouveau nom de la tâche")
-            update_task(tasks, index_tache, nouveau_nom_tache)
+            self.update_task(tasks, index_tache, nouveau_nom_tache)
             print("Tâche modifée")
+        return tasks
+
+    def update_task(self, tasks, task_number, new_name):
+        tasks.list_tasks[task_number].label = new_name
         return tasks
 
 
@@ -192,9 +197,6 @@ def close_task(tasks, task_number):
     return tasks
 
 
-def update_task(tasks, task_number, new_name):
-    tasks.list_tasks[task_number].label = new_name
-    return tasks
 
 
 if __name__ == '__main__':
