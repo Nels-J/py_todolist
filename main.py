@@ -1,7 +1,7 @@
+from Exceptions import MenuEntryDoesNotExist, NotAnIntException
 from Interface import Interface
 from Task import Task
 from TasksList import TasksList
-
 
 class Application:
     def __init__(self):
@@ -12,7 +12,7 @@ class Application:
         want_to_quit = False
         tasks = TasksList()
         menu = {"add": ("Ajouter une tâche", self.add),
-                "close": ("Terminer une tâche", self.done),
+                "close": ("Terminer une tâche", self.close),
                 "update": ("Modifier le libellé d'une tâche", self.update),
                 "list": ("Lister les tâches en cours", self.list),
                 "list-done": ("Lister les tâches terminées", self.list_done),
@@ -38,9 +38,9 @@ class Application:
             if self.is_valid(user_choice, menu):
                 menu[user_choice][1](tasks)
             else:
-                raise ValueError('La fonctionnalité n\'existe pas !')
-        except ValueError as e:
-            print(e)
+                raise MenuEntryDoesNotExist()
+        except MenuEntryDoesNotExist:
+            self.interface.menu_entry_does_not_exist()
         return tasks
 
     def scenario(self, tasks):
@@ -83,31 +83,41 @@ class Application:
         index_tache = None
         while index_tache is None:
             try:
-                index_tache = int(self.interface.ask_nb_of_task_to_modify()) - 1
-            except Exception as err:
-                print("Entrée invalide : merci d'entrer un entier")
-        if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
-            self.interface.task_does_not_exist()
-        else:
-            nouveau_nom_tache = self.interface.ask_new_task_name()
-            tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].update(nouveau_nom_tache)
-            self.interface.modified_task_notification()
-        return tasks
+                index_tache = self.interface.ask_nb_of_task_to_modify()
+                if isinstance(index_tache, int):
+                    index_tache = int(index_tache) - 1
+                else:
+                    raise NotAnIntException()
+            except NotAnIntException:
+                self.interface.not_an_int_error()
+            else:
+                if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
+                    self.interface.task_does_not_exist()
+                else:
+                    nouveau_nom_tache = self.interface.ask_new_task_name()
+                    tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].update(nouveau_nom_tache)
+                    self.interface.modified_task_notification()
+                return tasks
 
-    def done(self, tasks):
+    def close(self, tasks):
         index_tache = None
         while index_tache is None:
             try:
                 self.list(tasks)
-                index_tache = int(self.interface.ask_nb_of_task_to_close()) - 1
-            except Exception as err:
-                print("Entrée invalide : merci d'entrer un entier")
-        if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
-            self.interface.task_does_not_exist()
-        else:
-            tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].close()
-            self.interface.closed_task_notification()
-        return tasks
+                index_tache = self.interface.ask_nb_of_task_to_close()
+                if isinstance(index_tache, int):
+                    index_tache = int(index_tache) - 1
+                else:
+                    raise NotAnIntException()
+            except NotAnIntException:
+                self.interface.not_an_int_error()
+            else:
+                if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
+                    self.interface.task_does_not_exist()
+                else:
+                    tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].close()
+                    self.interface.closed_task_notification()
+                return tasks
 
 
 if __name__ == '__main__':

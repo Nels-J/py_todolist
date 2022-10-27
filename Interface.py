@@ -46,3 +46,9 @@ class Interface:
 
     def display_task_with_nb(self, task):
         print(task[0] + 1, ":", task[1].label)
+
+    def menu_entry_does_not_exist(self):
+        print (self.translate('Cette fonctionnalité n\'existe pas'))
+
+    def not_an_int_error(self):
+        print(self.translate("Entrée invalide : merci d'entrer un entier"))
