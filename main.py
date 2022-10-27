@@ -9,6 +9,7 @@ class TasksList:
         self.list_tasks.append(task)
         print(self.list_tasks)
 
+
 class Application:
     def __init__(self):
         pass
@@ -21,8 +22,8 @@ class Application:
                 "update": ("Modifier le libellé d'une tâche", update),
                 "list": ("Lister les tâches en cours", self.list),
                 "list-done": ("Lister les tâches terminées", list_done),
-                "list-all": ("Lister toutes les tâches", list_all),
-                "test": ("test", scenario)
+                "list-all": ("Lister toutes les tâches", self.list_all),
+                "test": ("test", self.scenario)
                 }
         print_menu(menu)
         while not want_to_quit:
@@ -64,12 +65,50 @@ class Application:
         else:
             print("Aucune tâche finie pour l'instant!")
 
+    def list_all(self, tasks):
+        done_tasks = []
+        pending_tasks = []
+        for index, task in enumerate(tasks.list_tasks):
+            if task.is_done:
+                done_tasks.append((task, index))
+            else:
+                pending_tasks.append((task, index))
+        if len(pending_tasks) > 0:
+            print('Voici les tâches en cours :')
+            for task in pending_tasks:
+                print(task[1] + 1, ":", task[0].label)
+        if len(done_tasks) > 0:
+            print('Voici les tâches terminées :')
+            for task in done_tasks:
+                print(task[1] + 1, ":", task[0].label)
+
+    def scenario(self, tasks):
+        tasks.add(Task('t1'))
+        tasks.add(Task('T2'))
+        # update_task(tasks, 1, "new T2")
+        # close_task(tasks, 1)
+        self.list_all(tasks)
+
 
 def done(tasks):
     index_tache = None
     while index_tache is None:
         try:
-            list_all(tasks)
+            done_tasks = []
+            pending_tasks = []
+            for index, task in enumerate(tasks.list_tasks):
+                if task.is_done:
+                    done_tasks.append((task, index))
+                else:
+                    pending_tasks.append((task, index))
+            if len(pending_tasks) > 0:
+                print('Voici les tâches en cours :')
+                for task in pending_tasks:
+                    print(task[1] + 1, ":", task[0].label)
+            if len(done_tasks) > 0:
+                print('Voici les tâches terminées :')
+                for task in done_tasks:
+                    print(task[1] + 1, ":", task[0].label)
             index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
         except Exception as err:
             print("Entrée invalide : merci d'entrer un entier")
@@ -84,7 +123,21 @@ def update(tasks):
     index_tache = None
     while index_tache is None:
         try:
-            list_all(tasks)
+            done_tasks = []
+            pending_tasks = []
+            for index, task in enumerate(tasks.list_tasks):
+                if task.is_done:
+                    done_tasks.append((task, index))
+                else:
+                    pending_tasks.append((task, index))
+            if len(pending_tasks) > 0:
+                print('Voici les tâches en cours :')
+                for task in pending_tasks:
+                    print(task[1] + 1, ":", task[0].label)
+            if len(done_tasks) > 0:
+                print('Voici les tâches terminées :')
+                for task in done_tasks:
+                    print(task[1] + 1, ":", task[0].label)
             index_tache = int(input("Indiquez le numéro de la tâche à modifier")) - 1
 
         except Exception as err:
@@ -109,24 +162,6 @@ def list_done(tasks):
             print(done_task[0] + 1, ":", done_task[1].label)
     else:
         print("Aucune tâche finie pour l'instant!")
-
-
-def list_all(tasks):
-    done_tasks = []
-    pending_tasks = []
-    for index, task in enumerate(tasks.list_tasks):
-        if task.is_done:
-            done_tasks.append((task, index))
-        else:
-            pending_tasks.append((task, index))
-    if len(pending_tasks) > 0:
-        print('Voici les tâches en cours :')
-        for task in pending_tasks:
-            print(task[1] + 1, ":", task[0].label)
-    if len(done_tasks) > 0:
-        print('Voici les tâches terminées :')
-        for task in done_tasks:
-            print(task[1] + 1, ":", task[0].label)
 
 
 def print_menu(menu):
@@ -163,15 +198,6 @@ def close_task(tasks, task_number):
 def update_task(tasks, task_number, new_name):
     task = (new_name, tasks.tasks_list[task_number].label)
     tasks[task_number] = task
-    return tasks
-
-
-def scenario(tasks):
-    tasks.add(Task('t1'))
-    tasks.add(Task('T2'))
-   # update_task(tasks, 1, "new T2")
-   # close_task(tasks, 1)
-    list_all(tasks)
     return tasks
 
 
