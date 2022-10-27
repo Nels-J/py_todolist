@@ -17,7 +17,7 @@ class Application:
         want_to_quit = False
         tasks = TasksList()
         menu = {"add": ("Ajouter une tâche", self.add),
-                "done": ("Effectuer une tâche", done),
+                "done": ("Effectuer une tâche", self.done),
                 "update": ("Modifier le libellé d'une tâche", self.update),
                 "list": ("Lister les tâches en cours", self.list),
                 "list-done": ("Lister les tâches terminées", list_done),
@@ -84,7 +84,7 @@ class Application:
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
         self.update_task(tasks, 1, "new T2")
-        close_task(tasks, 1)
+        self.close_task(tasks, 1)
         self.list_all(tasks)
 
     def update(self, tasks):
@@ -107,34 +107,37 @@ class Application:
         tasks.list_tasks[task_number].label = new_name
         return tasks
 
+    def done(self, tasks):
+        index_tache = None
+        while index_tache is None:
+            try:
+                done_tasks = []
+                pending_tasks = []
+                for index, task in enumerate(tasks.list_tasks):
+                    if task.is_done:
+                        done_tasks.append((task, index))
+                    else:
+                        pending_tasks.append((task, index))
+                if len(pending_tasks) > 0:
+                    print('Voici les tâches en cours :')
+                    for task in pending_tasks:
+                        print(task[1] + 1, ":", task[0].label)
+                if len(done_tasks) > 0:
+                    print('Voici les tâches terminées :')
+                    for task in done_tasks:
+                        print(task[1] + 1, ":", task[0].label)
+                index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
+            except Exception as err:
+                print("Entrée invalide : merci d'entrer un entier")
+        if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
+            print("Cette tâche n'existe pas")
+        else:
+            tasks = self.close_task(tasks, index_tache)
+        return tasks
 
-def done(tasks):
-    index_tache = None
-    while index_tache is None:
-        try:
-            done_tasks = []
-            pending_tasks = []
-            for index, task in enumerate(tasks.list_tasks):
-                if task.is_done:
-                    done_tasks.append((task, index))
-                else:
-                    pending_tasks.append((task, index))
-            if len(pending_tasks) > 0:
-                print('Voici les tâches en cours :')
-                for task in pending_tasks:
-                    print(task[1] + 1, ":", task[0].label)
-            if len(done_tasks) > 0:
-                print('Voici les tâches terminées :')
-                for task in done_tasks:
-                    print(task[1] + 1, ":", task[0].label)
-            index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
-        except Exception as err:
-            print("Entrée invalide : merci d'entrer un entier")
-    if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
-        print("Cette tâche n'existe pas")
-    else:
-        tasks = close_task(tasks, index_tache)
-    return tasks
+    def close_task(self, tasks, task_number):
+        tasks.list_tasks[task_number].is_done = True
+        return tasks
 
 
 def list_done(tasks):
@@ -173,14 +176,6 @@ def user_command(tasks, user_choice, menu):
     except ValueError as e:
         print(e)
     return tasks
-
-
-def close_task(tasks, task_number):
-    tasks.list_tasks[task_number].is_done = True
-    return tasks
-
-
-
 
 
 if __name__ == '__main__':
