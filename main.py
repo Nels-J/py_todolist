@@ -3,6 +3,7 @@ from Interface import Interface
 from Task import Task
 from TasksList import TasksList
 
+
 class Application:
     def __init__(self):
         self.interface = Interface()
@@ -46,8 +47,8 @@ class Application:
     def scenario(self, tasks):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
-        # self.update_task(tasks, 1, "new T2")
-        # self.close_task(tasks, 1)
+        tasks.list[0].update('new t1')
+        tasks.list[1].close()
         self.list_all(tasks)
 
     def list(self, tasks):
@@ -80,42 +81,42 @@ class Application:
 
     def update(self, tasks):
         self.list(tasks)
-        index_tache = None
-        while index_tache is None:
+        task_index = None
+        while task_index is None:
             try:
-                index_tache = self.interface.ask_nb_of_task_to_modify()
-                if isinstance(index_tache, int):
-                    index_tache = int(index_tache) - 1
+                task_index = self.interface.ask_nb_of_task_to_modify()
+                if isinstance(int(task_index), int):
+                    task_index = int(task_index) - 1
                 else:
                     raise NotAnIntException()
             except NotAnIntException:
                 self.interface.not_an_int_error()
             else:
-                if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
+                if task_index < 0 or task_index + 1 > len(tasks.list):
                     self.interface.task_does_not_exist()
                 else:
                     nouveau_nom_tache = self.interface.ask_new_task_name()
-                    tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].update(nouveau_nom_tache)
+                    tasks.list[task_index] = tasks.list[task_index].update(nouveau_nom_tache)
                     self.interface.modified_task_notification()
                 return tasks
 
     def close(self, tasks):
-        index_tache = None
-        while index_tache is None:
+        task_index = None
+        while task_index is None:
             try:
                 self.list(tasks)
-                index_tache = self.interface.ask_nb_of_task_to_close()
-                if isinstance(index_tache, int):
-                    index_tache = int(index_tache) - 1
+                task_index = self.interface.ask_nb_of_task_to_close()
+                if isinstance(int(task_index), int):
+                    task_index = int(task_index) - 1
                 else:
                     raise NotAnIntException()
             except NotAnIntException:
                 self.interface.not_an_int_error()
             else:
-                if index_tache < 0 or index_tache + 1 > len(tasks.list_tasks):
+                if task_index < 0 or task_index + 1 > len(tasks.list):
                     self.interface.task_does_not_exist()
                 else:
-                    tasks.list_tasks[index_tache] = tasks.list_tasks[index_tache].close()
+                    tasks.list[task_index] = tasks.list[task_index].close()
                     self.interface.closed_task_notification()
                 return tasks
 
