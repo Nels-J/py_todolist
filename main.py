@@ -32,10 +32,7 @@ class Application:
         return tasks
 
     def list(self, tasks):
-        pending_tasks = []
-        for index, item in enumerate(tasks.list_tasks):
-            if not item.is_done:
-                pending_tasks.append((index, item))
+        pending_tasks = tasks.list_according_to_status(False)
         if len(pending_tasks) > 0:
             print("Les tâches en cours sont :")
             for pending_task in pending_tasks:
@@ -44,10 +41,7 @@ class Application:
             print("Aucune tâche en cours pour l'instant!")
 
     def list_done(self, tasks):
-        done_tasks = []
-        for index, item in enumerate(tasks.list_tasks):
-            if item.is_done:
-                done_tasks.append((index, item))
+        done_tasks = tasks.list_according_to_status(True)
         if len(done_tasks) > 0:
             print("Les tâches terminées sont :")
             for done_task in done_tasks:
@@ -103,21 +97,7 @@ class Application:
         index_tache = None
         while index_tache is None:
             try:
-                done_tasks = []
-                pending_tasks = []
-                for index, task in enumerate(tasks.list_tasks):
-                    if task.is_done:
-                        done_tasks.append((task, index))
-                    else:
-                        pending_tasks.append((task, index))
-                if len(pending_tasks) > 0:
-                    print('Voici les tâches en cours :')
-                    for task in pending_tasks:
-                        print(task[1] + 1, ":", task[0].label)
-                if len(done_tasks) > 0:
-                    print('Voici les tâches terminées :')
-                    for task in done_tasks:
-                        print(task[1] + 1, ":", task[0].label)
+                self.list(tasks)
                 index_tache = int(input("Indiquez le numéro de la tâche terminée : ")) - 1
             except Exception as err:
                 print("Entrée invalide : merci d'entrer un entier")
@@ -130,18 +110,6 @@ class Application:
     def close_task(self, tasks, task_number):
         tasks.list_tasks[task_number].is_done = True
         return tasks
-
-    def list_done(self, tasks):
-        done_tasks = []
-        for index, item in enumerate(tasks.list_tasks):
-            if item.is_done:
-                done_tasks.append((index, item))
-        if len(done_tasks) > 0:
-            print("Les tâches terminées sont :")
-            for done_task in done_tasks:
-                print(done_task[0] + 1, ":", done_task[1].label)
-        else:
-            print("Aucune tâche finie pour l'instant!")
 
     def print_menu(self, menu):
         print("Voici le menu :")
