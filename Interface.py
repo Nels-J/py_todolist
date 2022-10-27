@@ -52,3 +52,6 @@ class Interface:
 
     def not_an_int_error(self):
         print(self.translate("Entrée invalide : merci d'entrer un entier"))
+
+    def goodbye(self):
+        print(self.translate('Goodbye!'))

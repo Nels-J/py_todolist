@@ -1,0 +1,2 @@
+class NotAnIntException(Exception):
+    pass

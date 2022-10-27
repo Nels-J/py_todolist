@@ -1,4 +1,5 @@
-from Exceptions import MenuEntryDoesNotExist, NotAnIntException
+from Exceptions.NotAnIntException import NotAnIntException
+from Exceptions.MenuEntryDoesNotExist import MenuEntryDoesNotExist
 from Interface import Interface
 from Task import Task
 from TasksList import TasksList
@@ -23,6 +24,7 @@ class Application:
         while action != "quit":
             self.user_command(user_choice, menu)
             action = user_choice = self.interface.ask_action()
+        self.interface.goodbye()
 
     def user_command(self, user_choice, menu):
         try:
@@ -84,8 +86,8 @@ class Application:
                 if task_index < 0 or task_index + 1 > len(tasks.list):
                     self.interface.task_does_not_exist()
                 else:
-                    nouveau_nom_tache = self.interface.ask_new_task_name()
-                    tasks.list[task_index] = tasks.list[task_index].update(nouveau_nom_tache)
+                    new_task_name = self.interface.ask_new_task_name()
+                    tasks.list[task_index] = tasks.list[task_index].update(new_task_name)
                     self.interface.modified_task_notification()
                 return tasks
 
