@@ -20,30 +20,32 @@ class Application:
                 "test": ("test", self.scenario)
                 }
         self.interface.print_menu(menu)
-        save_file = open('save.txt', 'w+')
         action = user_choice = self.interface.ask_action()
         while action != "quit":
-            self.user_command(user_choice, menu, save_file)
+            self.user_command(user_choice, menu)
             action = user_choice = self.interface.ask_action()
         self.interface.goodbye()
 
-    def user_command(self, user_choice, menu, save_file):
+    def user_command(self, user_choice, menu):
         try:
-            if user_choice in menu.keys():
-                menu[user_choice][1](save_file)
+            if user_choice == "add":
+                menu[user_choice][1]()
+            elif user_choice in menu.keys():
+                menu[user_choice][1]()
             else:
                 raise MenuEntryDoesNotExist()
         except MenuEntryDoesNotExist:
             self.interface.menu_entry_does_not_exist()
 
-    def scenario(self, save_file):
+    def scenario(self):
         tasks.add(Task('t1'))
         tasks.add(Task('T2'))
         tasks.list[0].update('new t1')
         tasks.list[1].close()
-        self.list_all(save_file)
+        self.create_or_update_save_file()
+        self.list_all()
 
-    def list(self, save_file):
+    def list(self):
         pending_tasks = tasks.list_according_to_status(False)
         if len(pending_tasks) > 0:
             self.interface.undone_tasks_are()
@@ -52,7 +54,7 @@ class Application:
         else:
             self.interface.no_undone_task()
 
-    def list_done(self, save_file):
+    def list_done(self):
         done_tasks = tasks.list_according_to_status(True)
         if len(done_tasks) > 0:
             self.interface.done_tasks_are()
@@ -61,18 +63,24 @@ class Application:
         else:
             self.interface.no_done_task()
 
-    def list_all(self, save_file):
-        self.list(save_file)
-        self.list_done(save_file)
+    def list_all(self):
+        self.list()
+        self.list_done()
 
-    def add(self, save_file):
+    def create_or_update_save_file(self):
+        save_file = open('save.txt', 'w+')
+        save_file.write(tasks.print_task_list())
+        save_file.close()
+
+    def add(self):
         user_task = self.interface.ask_new_task_name()
         tasks.add(user_task)
+        self.create_or_update_save_file()
         self.interface.new_task_created()
         return tasks
 
-    def update(self, save_file):
-        self.list(save_file)
+    def update(self):
+        self.list()
         task_index = None
         while task_index is None:
             try:
@@ -90,13 +98,14 @@ class Application:
                     new_task_name = self.interface.ask_new_task_name()
                     tasks.list[task_index] = tasks.list[task_index].update(new_task_name)
                     self.interface.modified_task_notification()
+                    self.create_or_update_save_file()
                 return tasks
 
-    def close(self, save_file):
+    def close(self):
         task_index = None
         while task_index is None:
             try:
-                self.list(save_file)
+                self.list()
                 task_index = self.interface.ask_nb_of_task_to_close()
                 if isinstance(int(task_index), int):
                     task_index = int(task_index) - 1
@@ -110,6 +119,7 @@ class Application:
                 else:
                     tasks.list[task_index] = tasks.list[task_index].close()
                     self.interface.closed_task_notification()
+                    self.create_or_update_save_file()
                 return tasks
 
 
