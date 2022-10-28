@@ -70,13 +70,13 @@ class Application:
         self.list_done()
 
     def create_or_update_save_file(self):
-        save_file = open('save.txt', 'w+')
-        save_file.write(tasks.print_task_list())
-        save_file.close()
+        with open('save.txt', 'w+') as save_file:
+            save_file.write(tasks.print_task_list())
 
     def read_save_file(self):
         save_file = open('save.txt', 'r')
         print(save_file.read())
+        save_file.close()
 
     def add(self):
         user_task = self.interface.ask_new_task_name()
