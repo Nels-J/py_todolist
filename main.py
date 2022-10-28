@@ -46,6 +46,7 @@ class Application:
         self.list_all()
 
     def list(self):
+        self.read_save_file()
         pending_tasks = tasks.list_according_to_status(False)
         if len(pending_tasks) > 0:
             self.interface.undone_tasks_are()
@@ -55,6 +56,7 @@ class Application:
             self.interface.no_undone_task()
 
     def list_done(self):
+        self.read_save_file()
         done_tasks = tasks.list_according_to_status(True)
         if len(done_tasks) > 0:
             self.interface.done_tasks_are()
@@ -71,6 +73,10 @@ class Application:
         save_file = open('save.txt', 'w+')
         save_file.write(tasks.print_task_list())
         save_file.close()
+
+    def read_save_file(self):
+        save_file = open('save.txt', 'r')
+        print(save_file.read())
 
     def add(self):
         user_task = self.interface.ask_new_task_name()

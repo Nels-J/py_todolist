@@ -24,3 +24,5 @@ class TasksList:
                 string_list = string_list + '[ ] ' + str(task.label) + '\n'
 
         return string_list
+
+
